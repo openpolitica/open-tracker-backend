@@ -1,0 +1,29 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Open Politica - API",
+    "version": "0.1.0",
+    "description": "Boilerplate made for Open Politica backend in Node.JS",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://spdx.org/licenses/Apache-2.0.html"
+    },
+    "contact": {
+      "name": "OpenPolitica",
+      "url": "https://openpolitica.com",
+      "email": "hola@openpolitica.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.openpolitica.com",
+      "description": "Production Server"
+    },
+    {
+      "url": "https://staging-api.openpolitica.com",
+      "description": "Staging Server"
+    },
+    { "url": "http://localhost:3000", "description": "Development Server" }
+  ],
+  "paths": {}
+}
