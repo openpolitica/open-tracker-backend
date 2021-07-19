@@ -3,6 +3,6 @@
 const express = require("express");
 const router = express.Router();
 
-router.use("/congresista", require("./congresista"));
+router.use("/congresistas", require("./congresista"));
 
 module.exports = router;

@@ -3,6 +3,7 @@
  */
 
 const http = require("http");
+const { env } = require("process");
 const app = require("../../src/app");
 
 const debug = require("debug")("node-sequelize:server");
@@ -89,5 +90,9 @@ function onError(error) {
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  debug("Listening on " + bind);
+  console.log("Listening on " + bind);
+  if (process.env.NODE_ENV !== 'production') {
+    //debug("Listening on " + bind);
+  }
+  
 }
