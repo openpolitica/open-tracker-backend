@@ -3,10 +3,9 @@
  */
 
 const http = require('http');
-const { env } = require('process');
 const app = require('../../src/app');
 
-const debug = require('debug')('node-sequelize:server');
+//const debug = require('debug')('node-sequelize:server');
 
 const models = require('../../src/models');
 
