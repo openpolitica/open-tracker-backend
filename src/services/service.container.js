@@ -13,4 +13,4 @@ module.exports = async function serviceContainer(serviceName) {
     case 'congresista':
       return services.congresistaService;
   }
-}
+};

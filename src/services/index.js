@@ -8,6 +8,6 @@ module.exports = async function () {
   const congresistaService = setupCongresistaService(models);
 
   return {
-    congresistaService
+    congresistaService,
   };
 };

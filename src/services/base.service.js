@@ -6,7 +6,7 @@ class baseService {
       status: false,
       data: {},
       message: '',
-      responseCode: 200
+      responseCode: 200,
     };
   }
 

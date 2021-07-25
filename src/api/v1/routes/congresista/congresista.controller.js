@@ -11,28 +11,27 @@ const getCongresistas = async (request, response) => {
   try {
     const congresistaService = await serviceContainer('congresista');
 
-    const serviceResponse = await congresistaService.doListCongresistasService();
-    
-    responseCode = serviceResponse.responseCode;
-    responseData = baseController.getSuccessResponse(serviceResponse.data, serviceResponse.message)
+    const serviceResponse =
+      await congresistaService.doListCongresistasService();
 
+    responseCode = serviceResponse.responseCode;
+    responseData = baseController.getSuccessResponse(
+      serviceResponse.data,
+      serviceResponse.message,
+    );
   } catch (error) {
-    responseData = baseController.getErrorResponse('Error obtaining information');
+    responseData = baseController.getErrorResponse(
+      'Error obtaining information',
+    );
   }
 
   return response.status(responseCode).json(responseData);
 
-  
-
-
-
-  return response
-    .status(200)
-    .json({
-      "test": "hello"
-    });
-}
+  return response.status(200).json({
+    test: 'hello',
+  });
+};
 
 module.exports = {
-  getCongresistas
-}
+  getCongresistas,
+};
