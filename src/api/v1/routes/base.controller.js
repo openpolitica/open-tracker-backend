@@ -2,12 +2,12 @@
 
 class baseController {
   constructor() {
-    this.successStatus =  'OK';
+    this.successStatus = 'OK';
     this.errorStatus = 'ERROR';
     this.responseData = {
       status: '',
       data: {},
-      message: ''
+      message: '',
     };
   }
 

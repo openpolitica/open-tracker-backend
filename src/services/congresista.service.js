@@ -8,7 +8,7 @@ module.exports = function setupCongresistaService({ CongresistaModel }) {
   async function doListCongresistasService() {
     try {
       const detalleEmpresa = await CongresistaModel.findAll();
-      return baseService.getServiceResponse(200, "Success", detalleEmpresa);
+      return baseService.getServiceResponse(200, 'Success', detalleEmpresa);
     } catch (err) {
       console.error('Error: ', err);
       return baseService.getServiceResponse(500, err.message);
@@ -16,6 +16,6 @@ module.exports = function setupCongresistaService({ CongresistaModel }) {
   }
 
   return {
-    doListCongresistasService
+    doListCongresistasService,
   };
-}
+};
