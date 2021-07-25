@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Open Politica - API",
+    "title": "Open Politica - Congreso - API",
     "version": "0.1.0",
-    "description": "Boilerplate made for Open Politica backend in Node.JS",
+    "description": "API para proyecto Congreso desarrollado para backend de Open Politica in Node.JS",
     "license": {
       "name": "Apache 2.0",
       "url": "https://spdx.org/licenses/Apache-2.0.html"
@@ -16,14 +16,14 @@
   },
   "servers": [
     {
-      "url": "https://api.openpolitica.com",
+      "url": "https://api.congreso.openpolitica.com",
       "description": "Production Server"
     },
     {
-      "url": "https://staging-api.openpolitica.com",
+      "url": "https://api.dev.congreso.openpolitica.com",
       "description": "Staging Server"
     },
-    { "url": "http://localhost:3000", "description": "Development Server" }
+    { "url": "http://localhost:8000", "description": "Development Server" }
   ],
   "paths": {}
 }

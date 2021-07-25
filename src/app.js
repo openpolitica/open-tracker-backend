@@ -27,5 +27,6 @@ app.use(
 );
 
 app.use('/api/', require('./api/v1/routes'));
+app.use('/docs/', require('./docs'));
 
 module.exports = app;
