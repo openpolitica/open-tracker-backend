@@ -26,10 +26,6 @@ const getCongresistas = async (request, response) => {
   }
 
   return response.status(responseCode).json(responseData);
-
-  return response.status(200).json({
-    test: 'hello',
-  });
 };
 
 module.exports = {
