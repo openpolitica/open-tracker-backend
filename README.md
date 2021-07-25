@@ -19,7 +19,7 @@ Luego, en un archivo de variables de entorno `.env` se deben ingresar las siguie
 
 Finalmente, se puede iniciar el backend mediante la siguiente instrucción:
 ```
-npm dev
+npm run dev
 ```
 
 
