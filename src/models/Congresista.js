@@ -25,7 +25,8 @@ module.exports = function (sequelize, DataTypes) {
       id_apellido_materno: DataTypes.TEXT,
       id_sexo: DataTypes.TEXT,
       nacimiento_fecha: DataTypes.TEXT,
-      cargo_nombre: DataTypes.TEXT,
+      cargo_postulacion: DataTypes.TEXT,
+      cargo_electo: DataTypes.TEXT,
       org_politica_nombre: DataTypes.TEXT,
     },
     {
