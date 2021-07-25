@@ -5,7 +5,11 @@
   "main": "./bin/www",
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "lint": "eslint --ext js .",
+    "lint:fix": "npm run lint -- --fix",
+    "lint-only": "eslint --ext .js",
+    "lint-only:fix": "npm run lint-only -- --fix"
   },
   "repository": {
     "type": "git",
@@ -18,14 +22,20 @@
   },
   "homepage": "https://github.com/openpolitica/open-tracker-backend#readme",
   "dependencies": {
-    "dotenv": "^10.0.0",
-    "nodemon": "^2.0.12",
     "cors": "^2.8.5",
     "debug": "^4.3.2",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.12",
     "pg": "^8.6.0",
     "sequelize": "^6.6.5",
     "xhr2": "^0.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2"
   }
 }
