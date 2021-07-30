@@ -12,7 +12,7 @@ const getCongresistas = async (request, response) => {
     const congresistaService = await serviceContainer('congresista');
 
     const serviceResponse =
-      await congresistaService.doListCongresistasService();
+      await congresistaService.doListCongresistas();
 
     responseCode = serviceResponse.responseCode;
     responseData = baseController.getSuccessResponse(
