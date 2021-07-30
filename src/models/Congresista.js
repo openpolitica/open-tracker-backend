@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
-  const Congresista = sequelize.define(
-    'CongresistaModel',
+  const Congressman = sequelize.define(
+    'CongressmanModel',
     {
       hoja_vida_id: {
         type: DataTypes.INTEGER,
@@ -35,5 +35,5 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  return Congresista;
+  return Congressman;
 };

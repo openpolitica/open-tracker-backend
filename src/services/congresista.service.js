@@ -2,13 +2,13 @@
 
 const setupBaseService = require('./base.service');
 
-module.exports = function setupCongresistaService({ CongresistaModel }) {
+module.exports = function setupCongresistaService({ CongressmanModel }) {
   let baseService = new setupBaseService();
 
-  async function doListCongresistasService() {
+  async function doListCongresistas() {
     try {
-      const detalleEmpresa = await CongresistaModel.findAll();
-      return baseService.getServiceResponse(200, 'Success', detalleEmpresa);
+      const congressmanList = await CongressmanModel.findAll();
+      return baseService.getServiceResponse(200, 'Success', congressmanList);
     } catch (err) {
       console.error('Error: ', err);
       return baseService.getServiceResponse(500, err.message);
@@ -16,6 +16,6 @@ module.exports = function setupCongresistaService({ CongresistaModel }) {
   }
 
   return {
-    doListCongresistasService,
+    doListCongresistas,
   };
 };
