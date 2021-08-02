@@ -5,14 +5,14 @@ const serviceContainer = require('../../../../services/service.container');
 
 let baseController = new setupBaseController();
 
-const getCongresistas = async (request, response) => {
+const getCongresspersonList = async (request, response) => {
   let responseCode, responseData;
 
   try {
-    const congresistaService = await serviceContainer('congresista');
+    const congresspersonService = await serviceContainer('congressperson');
 
     const serviceResponse =
-      await congresistaService.doListCongresistasService();
+      await congresspersonService.doListCongressperson();
 
     responseCode = serviceResponse.responseCode;
     responseData = baseController.getSuccessResponse(
@@ -29,5 +29,5 @@ const getCongresistas = async (request, response) => {
 };
 
 module.exports = {
-  getCongresistas,
+  getCongresspersonList,
 };

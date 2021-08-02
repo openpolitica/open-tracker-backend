@@ -2,12 +2,12 @@
 
 const models = require('./../models');
 
-const setupCongresistaService = require('./congresista.service');
+const setupCongresspersonService = require('./congressperson.service');
 
 module.exports = async function () {
-  const congresistaService = setupCongresistaService(models);
+  const congresspersonService = setupCongresspersonService(models);
 
   return {
-    congresistaService,
+    congresspersonService,
   };
 };

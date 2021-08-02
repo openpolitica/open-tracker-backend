@@ -10,7 +10,7 @@ module.exports = async function serviceContainer(serviceName) {
   }
   // Return requested service
   switch (serviceName) {
-    case 'congresista':
-      return services.congresistaService;
+    case 'congressperson':
+      return services.congresspersonService;
   }
 };

@@ -5,7 +5,7 @@ const creds = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOSTNAME,
     dialect: 'postgresql',
-    logging: true,
+    logging: console.log,
   },
   test: {
     username: process.env.DB_USERNAME,
