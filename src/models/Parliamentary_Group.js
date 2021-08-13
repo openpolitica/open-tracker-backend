@@ -19,7 +19,29 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Parliamentary_Group.associate = function ({}) {};
+  Parliamentary_Group.associate = function ({ Congressperson, Commission, ParliamentaryGroup_x_Commission, Congressperson_x_ParliamentaryGroup }) {
+    Parliamentary_Group.belongsToMany(Commission, {
+      through: ParliamentaryGroup_x_Commission,
+      foreignKey: 'pgroup_id',
+      otherKey: 'commission_id'
+    });
+
+    Parliamentary_Group.hasMany(ParliamentaryGroup_x_Commission, {
+      foreignKey: 'pgroup_id',
+      sourceKey: 'pgroup_id'
+    });
+
+    Parliamentary_Group.belongsToMany(Congressperson, {
+      through: Congressperson_x_ParliamentaryGroup,
+      foreignKey: 'pgroup_id',
+      otherKey: 'commission_id'
+    });
+
+    Parliamentary_Group.hasMany(Congressperson_x_ParliamentaryGroup, {
+      foreignKey: 'pgroup_id',
+      sourceKey: 'pgroup_id'
+    });
+  };
 
   return Parliamentary_Group;
 };

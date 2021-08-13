@@ -6,12 +6,12 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
-      ubigeo: {
+      postulation_ubigeo: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
           model: 'LocationModel',
-          key: 'ubigeo',
+          key: 'postulation_ubigeo',
         },
       },
       status_id: DataTypes.INTEGER,
@@ -43,15 +43,64 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Congressperson.associate = function ({ Social_Network, Location }) {
+  Congressperson.associate = function ({ Social_Network, Location, Party, Mainboard, Commission, Parliamentary_Group, Congressperson_x_Party, Congressperson_x_Mainboard, Congressperson_x_Commission, Congressperson_x_ParliamentaryGroup }) {
     Congressperson.hasMany(Social_Network, {
       foreignKey: 'cv_id',
       sourceKey: 'cv_id',
     });
 
-    Congressperson.hasOne(Location, {
-      foreignKey: 'ubigeo',
-      sourceKey: 'ubigeo',
+    Congressperson.belongsTo(Location, {
+      foreignKey: 'postulation_ubigeo',
+      targetKey: 'postulation_ubigeo',
+    });
+
+    /**
+     * Super Many-to-many relationships
+     * See: https://sequelize.org/master/manual/advanced-many-to-many.html#the-best-of-both-worlds--the-super-many-to-many-relationship
+     */
+
+    Congressperson.belongsToMany(Party, {
+      through: Congressperson_x_Party,
+      foreignKey: 'cv_id',
+      otherKey: 'party_id'
+    });
+
+    Congressperson.hasMany(Congressperson_x_Party, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id'
+    });
+
+    Congressperson.belongsToMany(Mainboard, {
+      through: Congressperson_x_Mainboard,
+      foreignKey: 'cv_id',
+      otherKey: 'mainboard_id'
+    });
+
+    Congressperson.hasMany(Congressperson_x_Mainboard, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id'
+    });
+
+    Congressperson.belongsToMany(Commission, {
+      through: Congressperson_x_Commission,
+      foreignKey: 'cv_id',
+      otherKey: 'commission_id'
+    });
+
+    Congressperson.hasMany(Congressperson_x_Commission, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id'
+    });
+
+    Congressperson.belongsToMany(Parliamentary_Group, {
+      through: Congressperson_x_ParliamentaryGroup,
+      foreignKey: 'cv_id',
+      otherKey: 'commission_id'
+    });
+
+    Congressperson.hasMany(Congressperson_x_ParliamentaryGroup, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id'
     });
   };
 

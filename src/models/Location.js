@@ -2,7 +2,7 @@ module.exports = function (sequelize, DataTypes) {
   const Location = sequelize.define(
     'LocationModel',
     {
-      ubigeo: {
+      postulation_ubigeo: {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
@@ -15,9 +15,9 @@ module.exports = function (sequelize, DataTypes) {
   );
 
   Location.associate = function ({ Congressperson }) {
-    Location.belongsTo(Congressperson, {
-      foreignKey: 'ubigeo',
-      targetKey: 'ubigeo',
+    Location.hasMany(Congressperson, {
+      foreignKey: 'postulation_ubigeo',
+      sourceKey: 'postulation_ubigeo',
     });
   };
 
