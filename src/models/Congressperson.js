@@ -6,6 +6,14 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
+      ubigeo: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'LocationModel',
+          key: 'ubigeo',
+        },
+      },
       status_id: DataTypes.INTEGER,
       postulation_year: DataTypes.INTEGER,
       file_id: DataTypes.INTEGER,
@@ -34,6 +42,18 @@ module.exports = function (sequelize, DataTypes) {
       timestamps: false,
     },
   );
+
+  Congressperson.associate = function ({ Social_Network, Location }) {
+    Congressperson.hasMany(Social_Network, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+    });
+
+    Congressperson.hasOne(Location, {
+      foreignKey: 'ubigeo',
+      sourceKey: 'ubigeo',
+    });
+  };
 
   return Congressperson;
 };

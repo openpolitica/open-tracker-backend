@@ -15,7 +15,7 @@ const { sequelize } = require('../../src/models');
  * Sync and ping database
  */
 
- initDatabase();
+initDatabase();
 
 /**
  * Get port from environment and store in Express.
@@ -41,26 +41,32 @@ server.on('listening', onListening);
 
 function initDatabase() {
   let connected = false;
-  sequelize.authenticate().then(() => {
-    console.log("Successfully connected to the DB!");
-    connected = true;
-  }).catch((error) => {
-    console.log("Unable to connect to the DB:");
-    if (notProductionEnv) {
-      console.error("Error:", error.message);
-    }
-  });
-
-  if (connected) {
-    sequelize.sync().then(() => {
-      console.log("Successfully synchronized with the DB!");
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Successfully connected to the DB!');
       connected = true;
-    }).catch((error) => {
-      console.log("Unable to synchronize the DB:");
+    })
+    .catch(error => {
+      console.log('Unable to connect to the DB:');
       if (notProductionEnv) {
-        console.log("Error:", error.message);
+        console.error('Error:', error.message);
       }
     });
+
+  if (connected) {
+    sequelize
+      .sync()
+      .then(() => {
+        console.log('Successfully synchronized with the DB!');
+        connected = true;
+      })
+      .catch(error => {
+        console.log('Unable to synchronize the DB:');
+        if (notProductionEnv) {
+          console.log('Error:', error.message);
+        }
+      });
   }
 }
 

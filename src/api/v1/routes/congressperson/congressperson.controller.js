@@ -11,8 +11,7 @@ const getCongresspersonList = async (request, response) => {
   try {
     const congresspersonService = await serviceContainer('congressperson');
 
-    const serviceResponse =
-      await congresspersonService.doListCongressperson();
+    const serviceResponse = await congresspersonService.doListCongressperson();
 
     responseCode = serviceResponse.responseCode;
     responseData = baseController.getSuccessResponse(
