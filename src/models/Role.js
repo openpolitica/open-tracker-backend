@@ -16,24 +16,24 @@ module.exports = function (sequelize, DataTypes) {
   );
 
   Role.associate = function ({ Congressperson_x_Commission, Congressperson_x_Mainboard, Congressperson_x_ParliamentaryGroup, ParliamentaryGroup_x_Commission }) {
-    Role.belongsTo(Congressperson_x_Commission, {
+    Role.hasMany(Congressperson_x_Commission, {
       foreignKey: 'role_id',
-      targetKey: 'role_id',
+      sourceKey: 'role_id',
     });
 
-    Role.belongsTo(Congressperson_x_Mainboard, {
+    Role.hasMany(Congressperson_x_Mainboard, {
       foreignKey: 'role_id',
-      targetKey: 'role_id',
+      sourceKey: 'role_id',
     });
 
-    Role.belongsTo(Congressperson_x_ParliamentaryGroup, {
+    Role.hasMany(Congressperson_x_ParliamentaryGroup, {
       foreignKey: 'role_id',
-      targetKey: 'role_id',
+      sourceKey: 'role_id',
     });
 
-    Role.belongsTo(ParliamentaryGroup_x_Commission, {
+    Role.hasMany(ParliamentaryGroup_x_Commission, {
       foreignKey: 'role_id',
-      targetKey: 'role_id',
+      sourceKey: 'role_id',
     });
   };
 

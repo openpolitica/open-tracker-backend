@@ -32,9 +32,9 @@ module.exports = function (sequelize, DataTypes) {
       targetKey: 'pgroup_id',
     });
 
-    Congressperson_x_ParliamentaryGroup.hasOne(Role, {
+    Congressperson_x_ParliamentaryGroup.belongsTo(Role, {
       foreignKey: 'role_id',
-      sourceKey: 'role_id',
+      targetKey: 'role_id',
     });
   };
 
