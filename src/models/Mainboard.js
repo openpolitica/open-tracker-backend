@@ -19,16 +19,19 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Mainboard.associate = function ({Congressperson, Mainboard_x_Congressperson}) {
-    Mainboard.belongsToMany(Congressperson, {
-      through: Mainboard_x_Congressperson,
+  Mainboard.associate = function ({
+    CongresspersonModel,
+    CongresspersonXMainboardModel,
+  }) {
+    Mainboard.belongsToMany(CongresspersonModel, {
+      through: CongresspersonXMainboardModel,
       foreignKey: 'mainboard_id',
-      otherKey: 'cv_id'
+      otherKey: 'cv_id',
     });
 
-    Mainboard.hasMany(Mainboard_x_Congressperson, {
+    Mainboard.hasMany(CongresspersonXMainboardModel, {
       foreignKey: 'mainboard_id',
-      sourceKey: 'mainboard_id'
+      sourceKey: 'mainboard_id',
     });
   };
 

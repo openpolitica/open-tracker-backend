@@ -15,30 +15,30 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Commission.associate = function ({ Congressperson, Parliamentary_Group, ParliamentaryGroup_x_Commission, Congressperson_x_Commission }) {
+  Commission.associate = function ({ CongresspersonModel, ParliamentaryGroupModel, ParliamentaryGroupXCommissionModel, CongresspersonXCommissionModel }) {
     /**
      * Super Many-to-many relationships
      * See: https://sequelize.org/master/manual/advanced-many-to-many.html#the-best-of-both-worlds--the-super-many-to-many-relationship
      */
 
-    Commission.belongsToMany(Parliamentary_Group, {
-      through: ParliamentaryGroup_x_Commission,
+    Commission.belongsToMany(ParliamentaryGroupModel, {
+      through: ParliamentaryGroupXCommissionModel,
       foreignKey: 'commission_id',
       otherKey: 'pgroup_id'
     });
 
-    Commission.hasMany(ParliamentaryGroup_x_Commission, {
+    Commission.hasMany(ParliamentaryGroupXCommissionModel, {
       foreignKey: 'commission_id',
       sourceKey: 'commission_id'
     });
 
-    Commission.belongsToMany(Congressperson, {
-      through: Congressperson_x_Commission,
+    Commission.belongsToMany(CongresspersonModel, {
+      through: CongresspersonXCommissionModel,
       foreignKey: 'commission_id',
       otherKey: 'cv_id'
     });
 
-    Commission.hasMany(Congressperson_x_Commission, {
+    Commission.hasMany(CongresspersonXCommissionModel, {
       foreignKey: 'commission_id',
       sourceKey: 'commission_id'
     });

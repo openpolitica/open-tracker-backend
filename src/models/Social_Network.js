@@ -19,8 +19,8 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Social_Network.associate = function ({ Congressperson }) {
-    Social_Network.belongsTo(Congressperson, {
+  Social_Network.associate = function ({ CongresspersonModel }) {
+    Social_Network.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
       targetKey: 'cv_id',
     });

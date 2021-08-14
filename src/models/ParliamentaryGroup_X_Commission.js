@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
   const ParliamentaryGroup_x_Commission = sequelize.define(
-    'CongresspersonXParliamentaryGroupModel',
+    'ParliamentaryGroupXCommissionModel',
     {
       role_id: {
         type: DataTypes.INTEGER,
@@ -8,31 +8,35 @@ module.exports = function (sequelize, DataTypes) {
         references: {
           model: 'RoleModel',
           key: 'role_id',
-        }
+        },
       },
       start_date: DataTypes.DATE,
       end_date: {
         type: DataTypes.DATE,
-        allowNull: true
-      }
+        allowNull: true,
+      },
     },
     {
-      tableName: 'ParliamentaryGroup_x_Commission'
-    }
+      tableName: 'parliamentaryGroup_x_commission',
+    },
   );
 
-  ParliamentaryGroup_x_Commission.associate = function ({ Commission, Parliamentary_Group, Role }) {
-    ParliamentaryGroup_x_Commission.belongsTo(Commission, {
+  ParliamentaryGroup_x_Commission.associate = function ({
+    CommissionModel,
+    ParliamentaryGroupModel,
+    RoleModel,
+  }) {
+    ParliamentaryGroup_x_Commission.belongsTo(CommissionModel, {
       foreignKey: 'commission_id',
       targetKey: 'commission_id',
     });
 
-    ParliamentaryGroup_x_Commission.belongsTo(Parliamentary_Group, {
-      foreignKey: 'pgroup_id',
-      targetKey: 'pgroup_id',
+    ParliamentaryGroup_x_Commission.belongsTo(ParliamentaryGroupModel, {
+      foreignKey: 'parliamentary_group_id',
+      targetKey: 'parliamentary_group_id',
     });
 
-    ParliamentaryGroup_x_Commission.belongsTo(Role, {
+    ParliamentaryGroup_x_Commission.belongsTo(RoleModel, {
       foreignKey: 'role_id',
       targetKey: 'role_id',
     });

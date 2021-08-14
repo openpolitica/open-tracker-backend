@@ -19,27 +19,32 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Parliamentary_Group.associate = function ({ Congressperson, Commission, ParliamentaryGroup_x_Commission, Congressperson_x_ParliamentaryGroup }) {
-    Parliamentary_Group.belongsToMany(Commission, {
-      through: ParliamentaryGroup_x_Commission,
+  Parliamentary_Group.associate = function ({
+    CongresspersonModel,
+    CommissionModel,
+    ParliamentaryGroupXCommissionModel,
+    CongresspersonXParliamentaryGroupModel,
+  }) {
+    Parliamentary_Group.belongsToMany(CommissionModel, {
+      through: ParliamentaryGroupXCommissionModel,
       foreignKey: 'pgroup_id',
-      otherKey: 'commission_id'
+      otherKey: 'commission_id',
     });
 
-    Parliamentary_Group.hasMany(ParliamentaryGroup_x_Commission, {
-      foreignKey: 'pgroup_id',
-      sourceKey: 'pgroup_id'
+    Parliamentary_Group.hasMany(ParliamentaryGroupXCommissionModel, {
+      foreignKey: 'parliamentary_group_id',
+      sourceKey: 'parliamentary_group_id',
     });
 
-    Parliamentary_Group.belongsToMany(Congressperson, {
-      through: Congressperson_x_ParliamentaryGroup,
+    Parliamentary_Group.belongsToMany(CongresspersonModel, {
+      through: CongresspersonXParliamentaryGroupModel,
       foreignKey: 'pgroup_id',
-      otherKey: 'commission_id'
+      otherKey: 'commission_id',
     });
 
-    Parliamentary_Group.hasMany(Congressperson_x_ParliamentaryGroup, {
-      foreignKey: 'pgroup_id',
-      sourceKey: 'pgroup_id'
+    Parliamentary_Group.hasMany(CongresspersonXParliamentaryGroupModel, {
+      foreignKey: 'parliamentary_group_id',
+      sourceKey: 'parliamentary_group_id',
     });
   };
 

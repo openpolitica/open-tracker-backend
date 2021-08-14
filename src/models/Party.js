@@ -15,16 +15,19 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Party.associate = function ({ Congressperson, Congressperson_x_Party }) {
-    Party.belongsToMany(Congressperson, {
-      through: Congressperson_x_Party,
+  Party.associate = function ({
+    CongresspersonModel,
+    CongresspersonXPartyModel,
+  }) {
+    Party.belongsToMany(CongresspersonModel, {
+      through: CongresspersonXPartyModel,
       foreignKey: 'party_id',
-      otherKey: 'cv_id'
+      otherKey: 'cv_id',
     });
 
-    Party.hasMany(Congressperson_x_Party, {
+    Party.hasMany(CongresspersonXPartyModel, {
       foreignKey: 'party_id',
-      sourceKey: 'party_id'
+      sourceKey: 'party_id',
     });
   };
 

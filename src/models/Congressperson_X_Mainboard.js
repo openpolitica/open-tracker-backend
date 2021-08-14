@@ -8,31 +8,35 @@ module.exports = function (sequelize, DataTypes) {
         references: {
           model: 'RoleModel',
           key: 'role_id',
-        }
+        },
       },
       start_date: DataTypes.DATE,
       end_date: {
         type: DataTypes.DATE,
-        allowNull: true
-      }
+        allowNull: true,
+      },
     },
     {
-      tableName: 'Congressperson_x_Mainboard'
-    }
+      tableName: 'congressperson_x_mainboard',
+    },
   );
 
-  Congressperson_x_Mainboard.associate = function ({ Congressperson, Mainboard, Role }) {
-    Congressperson_x_Mainboard.belongsTo(Congressperson, {
+  Congressperson_x_Mainboard.associate = function ({
+    CongresspersonModel,
+    MainboardModel,
+    RoleModel,
+  }) {
+    Congressperson_x_Mainboard.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
       targetKey: 'cv_id',
     });
 
-    Congressperson_x_Mainboard.belongsTo(Mainboard, {
+    Congressperson_x_Mainboard.belongsTo(MainboardModel, {
       foreignKey: 'mainboard_id',
       targetKey: 'mainboard_id',
     });
 
-    Congressperson_x_Mainboard.belongsTo(Role, {
+    Congressperson_x_Mainboard.belongsTo(RoleModel, {
       foreignKey: 'role_id',
       targetKey: 'role_id',
     });

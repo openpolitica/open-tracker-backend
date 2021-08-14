@@ -6,20 +6,23 @@ module.exports = function (sequelize, DataTypes) {
       end_date: {
         type: DataTypes.DATE,
         allowNull: true,
-      }
+      },
     },
     {
-      tableName: 'congressperson_x_party'
+      tableName: 'congressperson_x_party',
     },
   );
 
-  Congressperson_x_Party.associate = function ({ Congressperson, Party }) {
-    Congressperson_x_Party.belongsTo(Congressperson, {
+  Congressperson_x_Party.associate = function ({
+    CongresspersonModel,
+    PartyModel,
+  }) {
+    Congressperson_x_Party.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
       targetKey: 'cv_id',
     });
 
-    Congressperson_x_Party.belongsTo(Party, {
+    Congressperson_x_Party.belongsTo(PartyModel, {
       foreignKey: 'party_id',
       targetKey: 'party_id',
     });

@@ -8,31 +8,35 @@ module.exports = function (sequelize, DataTypes) {
         references: {
           model: 'RoleModel',
           key: 'role_id',
-        }
+        },
       },
       start_date: DataTypes.DATE,
       end_date: {
         type: DataTypes.DATE,
-        allowNull: true
-      }
+        allowNull: true,
+      },
     },
     {
-      tableName: 'Congressperson_x_ParliamentaryGroup'
-    }
+      tableName: 'congressperson_x_parliamentarygroup',
+    },
   );
 
-  Congressperson_x_ParliamentaryGroup.associate = function ({ Congressperson, Parliamentary_Group, Role }) {
-    Congressperson_x_ParliamentaryGroup.belongsTo(Congressperson, {
+  Congressperson_x_ParliamentaryGroup.associate = function ({
+    CongresspersonModel,
+    ParliamentaryGroupModel,
+    RoleModel,
+  }) {
+    Congressperson_x_ParliamentaryGroup.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
       targetKey: 'cv_id',
     });
 
-    Congressperson_x_ParliamentaryGroup.belongsTo(Parliamentary_Group, {
-      foreignKey: 'pgroup_id',
-      targetKey: 'pgroup_id',
+    Congressperson_x_ParliamentaryGroup.belongsTo(ParliamentaryGroupModel, {
+      foreignKey: 'parliamentary_group_id',
+      targetKey: 'parliamentary_group_id',
     });
 
-    Congressperson_x_ParliamentaryGroup.belongsTo(Role, {
+    Congressperson_x_ParliamentaryGroup.belongsTo(RoleModel, {
       foreignKey: 'role_id',
       targetKey: 'role_id',
     });
