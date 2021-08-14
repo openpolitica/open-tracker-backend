@@ -16,7 +16,7 @@ module.exports = function (sequelize, DataTypes) {
 
   Location.associate = function ({ CongresspersonModel }) {
     Location.hasMany(CongresspersonModel, {
-      foreignKey: 'postulation_ubigeo',
+      foreignKey: 'ubigeo',
       sourceKey: 'postulation_ubigeo',
     });
   };

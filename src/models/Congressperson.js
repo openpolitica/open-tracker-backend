@@ -62,7 +62,7 @@ module.exports = function (sequelize, DataTypes) {
 
     Congressperson.belongsTo(LocationModel, {
       foreignKey: 'postulation_ubigeo',
-      targetKey: 'postulation_ubigeo',
+      targetKey: 'ubigeo',
     });
 
     /**
@@ -73,7 +73,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson.belongsToMany(PartyModel, {
       through: CongresspersonXPartyModel,
       foreignKey: 'cv_id',
-      otherKey: 'party_id',
+      otherKey: 'political_party_id',
     });
 
     Congressperson.hasMany(CongresspersonXPartyModel, {

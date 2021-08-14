@@ -2,8 +2,24 @@ module.exports = function (sequelize, DataTypes) {
   const Congressperson_x_Mainboard = sequelize.define(
     'CongresspersonXMainboardModel',
     {
-      role_id: {
+      cv_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'CongresspersonModel',
+          key: 'cv_id',
+        },
+      },
+      mainboard_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: 'MainboardModel',
+          key: 'mainboard_id',
+        },
+      },
+      mainboard_role_id: {
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: 'RoleModel',
@@ -37,7 +53,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Congressperson_x_Mainboard.belongsTo(RoleModel, {
-      foreignKey: 'role_id',
+      foreignKey: 'mainboard_role_id',
       targetKey: 'role_id',
     });
   };

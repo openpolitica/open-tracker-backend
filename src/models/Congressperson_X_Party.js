@@ -2,6 +2,22 @@ module.exports = function (sequelize, DataTypes) {
   const Congressperson_x_Party = sequelize.define(
     'CongresspersonXPartyModel',
     {
+      cv_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'CongresspersonModel',
+          key: 'cv_id',
+        },
+      },
+      party_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: 'PartyModel',
+          key: 'party_id',
+        },
+      },
       start_date: DataTypes.DATE,
       end_date: {
         type: DataTypes.DATE,
@@ -9,7 +25,7 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: 'congressperson_x_party',
+      tableName: 'political_party_x_congressperson',
     },
   );
 

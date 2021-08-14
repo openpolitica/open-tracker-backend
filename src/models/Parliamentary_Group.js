@@ -27,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {
   }) {
     Parliamentary_Group.belongsToMany(CommissionModel, {
       through: ParliamentaryGroupXCommissionModel,
-      foreignKey: 'pgroup_id',
+      foreignKey: 'parliamentary_group_id',
       otherKey: 'commission_id',
     });
 
@@ -38,7 +38,7 @@ module.exports = function (sequelize, DataTypes) {
 
     Parliamentary_Group.belongsToMany(CongresspersonModel, {
       through: CongresspersonXParliamentaryGroupModel,
-      foreignKey: 'pgroup_id',
+      foreignKey: 'parliamentary_group_id',
       otherKey: 'commission_id',
     });
 
