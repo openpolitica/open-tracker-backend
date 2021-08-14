@@ -2,7 +2,7 @@ module.exports = function (sequelize, DataTypes) {
   const Location = sequelize.define(
     'LocationModel',
     {
-      postulation_ubigeo: {
+      ubigeo: {
         type: DataTypes.INTEGER,
         primaryKey: true,
       },
