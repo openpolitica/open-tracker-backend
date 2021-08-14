@@ -2,16 +2,12 @@ module.exports = function (sequelize, DataTypes) {
   const Social_Network = sequelize.define(
     'SocialNetworkModel',
     {
-      cv_id: {
-        type: DataTypes.INTEGER,
+      social_network_id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        references: {
-          model: 'CongresspersonModel',
-          key: 'cv_id',
-        },
       },
-      platform: DataTypes.TEXT,
-      url: DataTypes.TEXT,
+      social_network_name: DataTypes.TEXT,
     },
     {
       tableName: 'social_network',
@@ -19,10 +15,19 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Social_Network.associate = function ({ CongresspersonModel }) {
-    Social_Network.belongsTo(CongresspersonModel, {
-      foreignKey: 'cv_id',
-      targetKey: 'cv_id',
+  Social_Network.associate = function ({
+    CongresspersonModel,
+    SocialNetworkXCongresspersonModel,
+  }) {
+    Social_Network.belongsToMany(CongresspersonModel, {
+      through: SocialNetworkXCongresspersonModel,
+      foreignKey: 'social_network_id',
+      otherKey: 'cv_id',
+    });
+
+    Social_Network.hasMany(SocialNetworkXCongresspersonModel, {
+      foreignKey: 'social_network_id',
+      sourceKey: 'social_network_id',
     });
   };
 

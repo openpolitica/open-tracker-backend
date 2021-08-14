@@ -46,7 +46,7 @@ module.exports = function (sequelize, DataTypes) {
   Congressperson.associate = function ({
     SocialNetworkModel,
     LocationModel,
-    PartyModel,
+    PoliticalPartyModel,
     MainboardModel,
     CommissionModel,
     ParliamentaryGroupModel,
@@ -54,12 +54,8 @@ module.exports = function (sequelize, DataTypes) {
     CongresspersonXMainboardModel,
     CongresspersonXCommissionModel,
     CongresspersonXParliamentaryGroupModel,
+    SocialNetworkXCongresspersonModel,
   }) {
-    Congressperson.hasMany(SocialNetworkModel, {
-      foreignKey: 'cv_id',
-      sourceKey: 'cv_id',
-    });
-
     Congressperson.belongsTo(LocationModel, {
       foreignKey: 'postulation_ubigeo',
       targetKey: 'ubigeo',
@@ -70,7 +66,18 @@ module.exports = function (sequelize, DataTypes) {
      * See: https://sequelize.org/master/manual/advanced-many-to-many.html#the-best-of-both-worlds--the-super-many-to-many-relationship
      */
 
-    Congressperson.belongsToMany(PartyModel, {
+    Congressperson.belongsToMany(SocialNetworkModel, {
+      through: SocialNetworkXCongresspersonModel,
+      foreignKey: 'cv_id',
+      otherKey: 'social_network_id',
+    });
+
+    Congressperson.hasMany(SocialNetworkXCongresspersonModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+    });
+
+    Congressperson.belongsToMany(PoliticalPartyModel, {
       through: CongresspersonXPartyModel,
       foreignKey: 'cv_id',
       otherKey: 'political_party_id',

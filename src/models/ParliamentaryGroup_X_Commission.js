@@ -18,18 +18,13 @@ module.exports = function (sequelize, DataTypes) {
           key: 'commission_id',
         },
       },
-      role_id: {
+      commission_role_id: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: 'RoleModel',
           key: 'role_id',
         },
-      },
-      start_date: DataTypes.DATE,
-      end_date: {
-        type: DataTypes.DATE,
-        allowNull: true,
       },
     },
     {
@@ -53,7 +48,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     ParliamentaryGroup_x_Commission.belongsTo(RoleModel, {
-      foreignKey: 'role_id',
+      foreignKey: 'commission_role_id',
       targetKey: 'role_id',
     });
   };

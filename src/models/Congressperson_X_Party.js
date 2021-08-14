@@ -14,7 +14,7 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'PartyModel',
+          model: 'PoliticalPartyModel',
           key: 'party_id',
         },
       },
@@ -31,14 +31,14 @@ module.exports = function (sequelize, DataTypes) {
 
   Congressperson_x_Party.associate = function ({
     CongresspersonModel,
-    PartyModel,
+    PoliticalPartyModel,
   }) {
     Congressperson_x_Party.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
       targetKey: 'cv_id',
     });
 
-    Congressperson_x_Party.belongsTo(PartyModel, {
+    Congressperson_x_Party.belongsTo(PoliticalPartyModel, {
       foreignKey: 'party_id',
       targetKey: 'party_id',
     });

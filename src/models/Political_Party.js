@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
-  const Party = sequelize.define(
-    'PartyModel',
+  const Political_Party = sequelize.define(
+    'PoliticalPartyModel',
     {
       political_party_id: {
         type: DataTypes.INTEGER,
@@ -10,26 +10,26 @@ module.exports = function (sequelize, DataTypes) {
       political_party_name: DataTypes.TEXT,
     },
     {
-      tableName: 'party',
+      tableName: 'political_party',
       timestamps: false,
     },
   );
 
-  Party.associate = function ({
+  Political_Party.associate = function ({
     CongresspersonModel,
     CongresspersonXPartyModel,
   }) {
-    Party.belongsToMany(CongresspersonModel, {
+    Political_Party.belongsToMany(CongresspersonModel, {
       through: CongresspersonXPartyModel,
       foreignKey: 'political_party_id',
       otherKey: 'cv_id',
     });
 
-    Party.hasMany(CongresspersonXPartyModel, {
+    Political_Party.hasMany(CongresspersonXPartyModel, {
       foreignKey: 'political_party_id',
       sourceKey: 'political_party_id',
     });
   };
 
-  return Party;
+  return Political_Party;
 };

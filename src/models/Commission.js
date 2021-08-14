@@ -8,7 +8,19 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
       },
       commission_name: DataTypes.TEXT,
-      commission_type: DataTypes.TEXT,
+      commission_type_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: 'CommissionTypeModel',
+          key: 'commission_type_id',
+        },
+      },
+      start_date: DataTypes.DATE,
+      end_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
     },
     {
       tableName: 'commission',
@@ -18,9 +30,15 @@ module.exports = function (sequelize, DataTypes) {
   Commission.associate = function ({
     CongresspersonModel,
     ParliamentaryGroupModel,
+    CommissionTypeModel,
     ParliamentaryGroupXCommissionModel,
     CongresspersonXCommissionModel,
   }) {
+    Commission.belongsTo(CommissionTypeModel, {
+      foreignKey: 'commission_type_id',
+      targetKey: 'commission_type_id',
+    });
+
     /**
      * Super Many-to-many relationships
      * See: https://sequelize.org/master/manual/advanced-many-to-many.html#the-best-of-both-worlds--the-super-many-to-many-relationship
