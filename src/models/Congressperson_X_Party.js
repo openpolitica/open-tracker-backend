@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
         },
       },
       party_id: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
           model: 'PartyModel',

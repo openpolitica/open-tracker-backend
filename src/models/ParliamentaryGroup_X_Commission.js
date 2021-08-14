@@ -2,8 +2,24 @@ module.exports = function (sequelize, DataTypes) {
   const ParliamentaryGroup_x_Commission = sequelize.define(
     'ParliamentaryGroupXCommissionModel',
     {
+      parliamentary_group_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: 'ParliamentaryGroupModel',
+          key: 'parliamentary_group_id',
+        },
+      },
+      commission_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+          model: 'CommissionModel',
+          key: 'commission_id',
+        },
+      },
       role_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
           model: 'RoleModel',
