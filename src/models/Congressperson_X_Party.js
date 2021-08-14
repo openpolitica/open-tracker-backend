@@ -39,8 +39,8 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Congressperson_x_Party.belongsTo(PoliticalPartyModel, {
-      foreignKey: 'party_id',
-      targetKey: 'party_id',
+      foreignKey: 'political_party_id',
+      targetKey: 'political_party_id',
     });
   };
 

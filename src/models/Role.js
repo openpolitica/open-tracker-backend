@@ -22,22 +22,22 @@ module.exports = function (sequelize, DataTypes) {
     ParliamentaryGroupXCommissionModel,
   }) {
     Role.hasMany(CongresspersonXCommissionModel, {
-      foreignKey: 'role_id',
-      sourceKey: 'commission_role_id',
+      foreignKey: 'commission_role_id',
+      sourceKey: 'role_id',
     });
 
     Role.hasMany(CongresspersonXMainboardModel, {
-      foreignKey: 'role_id',
-      sourceKey: 'mainboard_role_id',
+      foreignKey: 'mainboard_role_id',
+      sourceKey: 'role_id',
     });
 
     Role.hasMany(CongresspersonXParliamentaryGroupModel, {
-      foreignKey: 'role_id',
-      sourceKey: 'parliamentary_group_role_id',
+      foreignKey: 'parliamentary_group_role_id',
+      sourceKey: 'role_id',
     });
 
     Role.hasMany(ParliamentaryGroupXCommissionModel, {
-      foreignKey: 'role_id',
+      foreignKey: 'commission_role_id',
       sourceKey: 'role_id',
     });
   };
