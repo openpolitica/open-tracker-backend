@@ -15,6 +15,7 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
+      timestamps: false,
       tableName: 'parliamentary_group',
     },
   );
@@ -37,14 +38,16 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Parliamentary_Group.belongsToMany(CongresspersonModel, {
+      as: 'congressperson',
       through: CongresspersonXParliamentaryGroupModel,
       foreignKey: 'parliamentary_group_id',
-      otherKey: 'commission_id',
+      otherKey: 'cv_id',
     });
 
     Parliamentary_Group.hasMany(CongresspersonXParliamentaryGroupModel, {
       foreignKey: 'parliamentary_group_id',
       sourceKey: 'parliamentary_group_id',
+      as: 'parliamentary_groups',
     });
   };
 

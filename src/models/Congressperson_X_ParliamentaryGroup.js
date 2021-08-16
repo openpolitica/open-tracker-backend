@@ -33,7 +33,8 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: 'congressperson_x_parliamentarygroup',
+      timestamps: false,
+      tableName: 'parliamentary_group_x_congressperson',
     },
   );
 
@@ -50,11 +51,13 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson_x_ParliamentaryGroup.belongsTo(ParliamentaryGroupModel, {
       foreignKey: 'parliamentary_group_id',
       targetKey: 'parliamentary_group_id',
+      as: 'parliamentary_group',
     });
 
     Congressperson_x_ParliamentaryGroup.belongsTo(RoleModel, {
       foreignKey: 'parliamentary_group_role_id',
       targetKey: 'role_id',
+      as: 'role_detail',
     });
   };
 

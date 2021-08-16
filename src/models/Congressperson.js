@@ -38,7 +38,7 @@ module.exports = function (sequelize, DataTypes) {
       political_party_name: DataTypes.TEXT,
     },
     {
-      tableName: 'candidate',
+      tableName: 'congressperson',
       timestamps: false,
     },
   );
@@ -59,6 +59,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson.belongsTo(LocationModel, {
       foreignKey: 'postulation_ubigeo',
       targetKey: 'ubigeo',
+      as: 'location',
     });
 
     /**
@@ -86,6 +87,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson.hasMany(CongresspersonXPartyModel, {
       foreignKey: 'cv_id',
       sourceKey: 'cv_id',
+      as: 'congressperson_parties',
     });
 
     Congressperson.belongsToMany(MainboardModel, {
@@ -111,14 +113,16 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Congressperson.belongsToMany(ParliamentaryGroupModel, {
+      as: 'parliamentary_group',
       through: CongresspersonXParliamentaryGroupModel,
       foreignKey: 'cv_id',
-      otherKey: 'commission_id',
+      otherKey: 'parliamentary_group_id',
     });
 
     Congressperson.hasMany(CongresspersonXParliamentaryGroupModel, {
       foreignKey: 'cv_id',
       sourceKey: 'cv_id',
+      as: 'congressperson_parliamentary_groups',
     });
   };
 

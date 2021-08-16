@@ -12,6 +12,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'role',
+      timestamps: false,
     },
   );
 

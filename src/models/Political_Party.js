@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
       },
       political_party_jne_name: DataTypes.TEXT,
       political_party_name: DataTypes.TEXT,
+      political_party_logo_url: DataTypes.TEXT,
     },
     {
       tableName: 'political_party',
