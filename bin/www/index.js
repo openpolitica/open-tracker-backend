@@ -5,15 +5,17 @@
 const http = require('http');
 const app = require('../../src/app');
 
+const notProductionEnv = process.env.NODE_ENV !== 'production';
+
 //const debug = require('debug')('node-sequelize:server');
 
-const models = require('../../src/models');
+const { sequelize } = require('../../src/models');
 
 /**
- * Sync database
+ * Sync and ping database
  */
 
-models.sequelize.sync();
+initDatabase();
 
 /**
  * Get port from environment and store in Express.
@@ -36,6 +38,37 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+function initDatabase() {
+  let connected = false;
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Successfully connected to the DB!');
+      connected = true;
+    })
+    .catch(error => {
+      console.log('Unable to connect to the DB:');
+      if (notProductionEnv) {
+        console.error('Error:', error.message);
+      }
+    });
+
+  if (connected) {
+    sequelize
+      .sync()
+      .then(() => {
+        console.log('Successfully synchronized with the DB!');
+        connected = true;
+      })
+      .catch(error => {
+        console.log('Unable to synchronize the DB:');
+        if (notProductionEnv) {
+          console.log('Error:', error.message);
+        }
+      });
+  }
+}
 
 /**
  * Normalize a port into a number, string, or false.
@@ -90,7 +123,7 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   console.log('Listening on ' + bind);
-  if (process.env.NODE_ENV !== 'production') {
+  if (notProductionEnv) {
     //debug("Listening on " + bind);
   }
 }
