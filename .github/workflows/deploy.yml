@@ -8,11 +8,6 @@ on:
     branches:
     - dev
     - main
-    inputs:
-      env_type:
-        description: 'Environment type'
-        required: true
-        default: 'staging'
 
 jobs:
   deploy:
