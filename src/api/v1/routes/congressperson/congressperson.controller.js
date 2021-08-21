@@ -11,7 +11,6 @@ const getCongresspersonList = async (request, response) => {
   try {
     const congresspersonService = await serviceContainer('congressperson');
     let serviceResponse;
-    console.log('request.query:', request.query);
     if (Object.keys(request.query).length === 0) {
       serviceResponse = await congresspersonService.doListCongressperson();
     } else {
