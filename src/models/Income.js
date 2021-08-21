@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
       timestamps: false,
     },
   );
-
+  Income.removeAttribute('id');
   Income.associate = function ({ CongresspersonModel }) {
     Income.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',

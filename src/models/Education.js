@@ -21,6 +21,7 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
+  Education.removeAttribute('id');
   Education.associate = function ({ CongresspersonModel }) {
     Education.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
