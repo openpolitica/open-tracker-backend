@@ -19,6 +19,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'experience',
+      timestamps: false,
     },
   );
 

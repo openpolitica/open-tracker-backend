@@ -183,8 +183,8 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Congressperson.hasMany(AffiliationModel, {
-      foreignKey: 'cv_id',
-      sourceKey: 'cv_id',
+      foreignKey: 'dni',
+      sourceKey: 'id_dni',
       as: 'affiliations',
     });
   };

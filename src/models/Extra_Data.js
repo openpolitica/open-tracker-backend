@@ -4,6 +4,7 @@ module.exports = function (sequelize, DataTypes) {
     {
       cv_id: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
         allowNull: false,
         references: {
           model: 'CongresspersonModel',
@@ -26,6 +27,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'extra_data',
+      timestamps: false,
     },
   );
 

@@ -17,6 +17,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'judgment_ec',
+      timestamps: false,
     },
   );
 

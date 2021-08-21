@@ -21,6 +21,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'goods_movable',
+      timestamps: false,
     },
   );
 

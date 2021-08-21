@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
         },
       },
       good_type: DataTypes.TEXT,
-      location_ugigeo: DataTypes.TEXT,
+      location_ubigeo: DataTypes.TEXT,
       location_country: DataTypes.TEXT,
       location_department: DataTypes.TEXT,
       location_province: DataTypes.TEXT,
@@ -25,6 +25,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'goods_immovable',
+      timestamps: false,
     },
   );
 

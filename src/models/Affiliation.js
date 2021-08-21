@@ -2,12 +2,12 @@ module.exports = function (sequelize, DataTypes) {
   const Affiliation = sequelize.define(
     'AffiliationModel',
     {
-      cv_id: {
+      dni: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
           model: 'CongresspersonModel',
-          key: 'cv_id',
+          key: 'id_dni',
         },
       },
       active: DataTypes.BOOLEAN,
@@ -23,13 +23,14 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'affiliation',
+      timestamps: false,
     },
   );
 
   Affiliation.associate = function ({ CongresspersonModel }) {
     Affiliation.belongsTo(CongresspersonModel, {
-      foreignKey: 'cv_id',
-      targetKey: 'cv_id',
+      foreignKey: 'dni',
+      targetKey: 'id_dni',
     });
   };
 
