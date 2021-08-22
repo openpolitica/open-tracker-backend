@@ -68,7 +68,6 @@ module.exports = function setupCongresistaService({
   async function doGetCongresspersonDetail({ cv_id, id_dni }) {
     try {
       const where = cv_id ? { cv_id } : { id_dni };
-      console.log('where:', where);
       const congresspersonDetail = await CongresspersonModel.findAll({
         where,
         include: [
