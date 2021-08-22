@@ -8,15 +8,6 @@ module.exports = function setupCongresistaService({
   ParliamentaryGroupModel,
   RoleModel,
   LocationModel,
-  ExtraDataModel,
-  IncomeModel,
-  DataECModel,
-  EducationModel,
-  ExperienceModel,
-  GoodsMovableModel,
-  GoodsImmovableModel,
-  JudgmentECModel,
-  AffiliationModel,
   CongresspersonXParliamentaryGroupModel,
   CongresspersonXPartyModel,
 }) {
@@ -65,94 +56,7 @@ module.exports = function setupCongresistaService({
     }
   }
 
-  async function doGetCongresspersonDetail({ cv_id, id_dni }) {
-    try {
-      const where = cv_id ? { cv_id } : { id_dni };
-      console.log('where:', where);
-      const congresspersonDetail = await CongresspersonModel.findAll({
-        where,
-        include: [
-          {
-            model: ExtraDataModel,
-            as: 'extra_data',
-          },
-          {
-            model: IncomeModel,
-            as: 'income',
-          },
-          {
-            model: DataECModel,
-            as: 'data_ec',
-          },
-          {
-            model: EducationModel,
-            as: 'education',
-          },
-          {
-            model: ExperienceModel,
-            as: 'experience',
-          },
-          {
-            model: GoodsMovableModel,
-            as: 'goods_movable',
-          },
-          {
-            model: GoodsImmovableModel,
-            as: 'goods_immovable',
-          },
-          {
-            model: JudgmentECModel,
-            as: 'judgments',
-          },
-          {
-            model: AffiliationModel,
-            as: 'affiliations',
-          },
-          {
-            model: CongresspersonXParliamentaryGroupModel,
-            as: 'congressperson_parliamentary_groups',
-            attributes: ['start_date', 'end_date'],
-            //Separate query for join, if it's not used, trims the response fields
-            separate: true,
-            include: [
-              {
-                model: ParliamentaryGroupModel,
-                as: 'parliamentary_group',
-              },
-              { model: RoleModel, as: 'role_detail' },
-            ],
-          },
-          {
-            model: CongresspersonXPartyModel,
-            as: 'congressperson_parties',
-            attributes: ['start_date', 'end_date'],
-            separate: true,
-            include: [
-              {
-                model: PoliticalPartyModel,
-                as: 'political_party',
-              },
-            ],
-          },
-          {
-            model: LocationModel,
-            as: 'location',
-          },
-        ],
-      });
-      return baseService.getServiceResponse(
-        200,
-        'Success',
-        congresspersonDetail,
-      );
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
-    }
-  }
-
   return {
     doListCongressperson,
-    doGetCongresspersonDetail,
   };
 };
