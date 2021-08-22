@@ -55,6 +55,15 @@ module.exports = function (sequelize, DataTypes) {
     CongresspersonXCommissionModel,
     CongresspersonXParliamentaryGroupModel,
     SocialNetworkXCongresspersonModel,
+    ExtraDataModel,
+    IncomeModel,
+    DataECModel,
+    EducationModel,
+    ExperienceModel,
+    GoodsMovableModel,
+    GoodsImmovableModel,
+    JudgmentECModel,
+    AffiliationModel,
   }) {
     Congressperson.belongsTo(LocationModel, {
       foreignKey: 'postulation_ubigeo',
@@ -123,6 +132,60 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: 'cv_id',
       sourceKey: 'cv_id',
       as: 'congressperson_parliamentary_groups',
+    });
+
+    Congressperson.hasOne(ExtraDataModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+      as: 'extra_data',
+    });
+
+    Congressperson.hasOne(IncomeModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+      as: 'income',
+    });
+
+    Congressperson.hasOne(DataECModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+      as: 'data_ec',
+    });
+
+    Congressperson.hasMany(EducationModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+      as: 'education',
+    });
+
+    Congressperson.hasMany(ExperienceModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+      as: 'experience',
+    });
+
+    Congressperson.hasMany(GoodsMovableModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+      as: 'goods_movable',
+    });
+
+    Congressperson.hasMany(GoodsImmovableModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+      as: 'goods_immovable',
+    });
+
+    Congressperson.hasMany(JudgmentECModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+      as: 'judgments',
+    });
+
+    Congressperson.hasMany(AffiliationModel, {
+      foreignKey: 'dni',
+      sourceKey: 'id_dni',
+      as: 'affiliations',
     });
   };
 
