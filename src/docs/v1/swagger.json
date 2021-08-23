@@ -23,10 +23,10 @@
       "url": "https://api.dev.congreso.openpolitica.com",
       "description": "Staging Server"
     },
-    { "url": "http://localhost:8000/api", "description": "Development Server" }
+    { "url": "http://localhost:8000", "description": "Development Server" }
   ],
   "paths": {
-    "/congressperson": {
+    "/api/congressperson": {
       "get": {
         "summary": "Returns information about congresspeople. If a query parameter is not defined, returns the complete list of congresspeople. Otherwise return the information about a specific congressperson. Accepts 'cv_id' and 'id_dni' as parameters, but in case are both provided, the cv_id takes precedence.",
         "parameters": [
