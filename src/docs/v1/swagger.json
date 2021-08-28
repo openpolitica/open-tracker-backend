@@ -57,6 +57,63 @@
           }
         }
       }
+    },
+
+    "/api/parliamentary-group": {
+      "get": {
+        "summary": "Returns information about parliamentary groups. If a query parameter is not defined, returns the complete list of parliamentary groups. Otherwise return the information about a specific parliamentary group. Accepts 'slug' and 'parliamentary_group_name' as parameters, but in case are both provided, the slug takes precedence.",
+        "parameters": [
+          {
+            "in": "parliamentary_group_id",
+            "name": "slug",
+            "description": "ID of a specific parliamentary group through the slug value",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "parliamentary_group_name",
+            "description": "Name of a specific parliamentary group through the parliamentary_group_name value",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/parliamentary-group/:slug": {
+      "get": {
+        "summary": "Returns information about a specific parliamentary group through the slug value.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "description": "URL-friendly name identificator of a specific parliamentary group through the slug value",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }

@@ -6,13 +6,13 @@ module.exports = function setupCongresistaService({ ParliamentaryGroupModel }) {
   let baseService = new setupBaseService();
 
   async function doGetParliamentaryGroupList({
-    slug,
+    parliamentary_group_id,
     parliamentary_group_name,
   }) {
     try {
-      let conditions = slug
+      let conditions = parliamentary_group_id
         ? {
-            where: { slug },
+            where: { parliamentary_group_id },
           }
         : parliamentary_group_name
         ? {
@@ -33,9 +33,9 @@ module.exports = function setupCongresistaService({ ParliamentaryGroupModel }) {
     }
   }
 
-  async function doGetParliamentaryGroup({ id }) {
+  async function doGetParliamentaryGroup({ slug }) {
     try {
-      const where = { parliamentary_group_id: id };
+      const where = { slug };
       const parliamentaryGroupDetail = await ParliamentaryGroupModel.findAll({
         where,
       });

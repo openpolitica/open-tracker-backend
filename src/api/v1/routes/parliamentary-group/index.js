@@ -6,6 +6,6 @@ const parliamentaryGroupController = require('./parliamentary-group.controller')
 const router = express.Router();
 
 router.get('/', parliamentaryGroupController.getParliamentaryGroupList);
-router.get('/:id', parliamentaryGroupController.getParliamentaryGroup);
+router.get('/:slug', parliamentaryGroupController.getParliamentaryGroup);
 
 module.exports = router;
