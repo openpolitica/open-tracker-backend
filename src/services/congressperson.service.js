@@ -22,8 +22,9 @@ module.exports = function setupCongresistaService({
 }) {
   let baseService = new setupBaseService();
 
-  async function doListCongressperson() {
+  async function doGetCongresspersonList({ cv_id, id_dni }) {
     try {
+      const where = cv_id ? { cv_id } : id_dni ? { id_dni } : {};
       const congresspersonList = await CongresspersonModel.findAll({
         include: [
           {
@@ -57,6 +58,12 @@ module.exports = function setupCongresistaService({
             as: 'location',
           },
         ],
+        where,
+        order: [
+          ['id_name', 'ASC'],
+          ['id_first_surname', 'ASC'],
+          ['id_second_surname', 'ASC'],
+        ],
       });
       return baseService.getServiceResponse(200, 'Success', congresspersonList);
     } catch (err) {
@@ -65,9 +72,9 @@ module.exports = function setupCongresistaService({
     }
   }
 
-  async function doGetCongresspersonDetail({ cv_id, id_dni }) {
+  async function doGetCongresspersonDetail({ slug }) {
     try {
-      const where = cv_id ? { cv_id } : { id_dni };
+      const where = { congressperson_slug: slug };
       const congresspersonDetail = await CongresspersonModel.findAll({
         where,
         include: [
@@ -138,6 +145,11 @@ module.exports = function setupCongresistaService({
             as: 'location',
           },
         ],
+        order: [
+          ['id_name', 'ASC'],
+          ['id_first_surname', 'ASC'],
+          ['id_second_surname', 'ASC'],
+        ],
       });
       return baseService.getServiceResponse(
         200,
@@ -151,7 +163,7 @@ module.exports = function setupCongresistaService({
   }
 
   return {
-    doListCongressperson,
+    doGetCongresspersonList,
     doGetCongresspersonDetail,
   };
 };

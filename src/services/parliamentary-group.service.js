@@ -35,7 +35,7 @@ module.exports = function setupCongresistaService({ ParliamentaryGroupModel }) {
 
   async function doGetParliamentaryGroup({ slug }) {
     try {
-      const where = { slug };
+      const where = { parliamentary_group_slug: slug };
       const parliamentaryGroupDetail = await ParliamentaryGroupModel.findAll({
         where,
       });

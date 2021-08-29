@@ -59,6 +59,30 @@
       }
     },
 
+    "/api/congressperson/:slug": {
+      "get": {
+        "summary": "Returns information about a specific congressperson using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "description": "URL-friendly name identificator of a specific congressperson.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
     "/api/parliamentary-group": {
       "get": {
         "summary": "Returns information about parliamentary groups. If a query parameter is not defined, returns the complete list of parliamentary groups. Otherwise return the information about a specific parliamentary group. Accepts 'slug' and 'parliamentary_group_name' as parameters, but in case are both provided, the slug takes precedence.",
@@ -94,16 +118,16 @@
 
     "/api/parliamentary-group/:slug": {
       "get": {
-        "summary": "Returns information about a specific parliamentary group through the slug value.",
+        "summary": "Returns information about a specific parliamentary group using the slug value as the identificator.",
         "parameters": [
           {
             "in": "path",
             "name": "slug",
-            "description": "URL-friendly name identificator of a specific parliamentary group through the slug value",
+            "description": "URL-friendly name identificator of a specific parliamentary group.",
             "schema": {
               "type": "string"
             },
-            "required": false
+            "required": true
           }
         ],
         "consumes": ["application/json"],

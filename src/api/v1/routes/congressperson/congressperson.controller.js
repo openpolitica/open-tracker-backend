@@ -11,13 +11,35 @@ const getCongresspersonList = async (request, response) => {
   try {
     const congresspersonService = await serviceContainer('congressperson');
     let serviceResponse;
-    if (Object.keys(request.query).length === 0) {
-      serviceResponse = await congresspersonService.doListCongressperson();
-    } else {
-      serviceResponse = await congresspersonService.doGetCongresspersonDetail(
-        request.query,
-      );
-    }
+
+    serviceResponse = await congresspersonService.doGetCongresspersonList(
+      request.query,
+    );
+
+    responseCode = serviceResponse.responseCode;
+    responseData = baseController.getSuccessResponse(
+      serviceResponse.data,
+      serviceResponse.message,
+    );
+  } catch (error) {
+    responseData = baseController.getErrorResponse(
+      'Error obtaining information',
+    );
+  }
+
+  return response.status(responseCode).json(responseData);
+};
+
+const getCongresspersonDetail = async (request, response) => {
+  let responseCode, responseData;
+
+  try {
+    const congresspersonService = await serviceContainer('congressperson');
+    let serviceResponse;
+
+    serviceResponse = await congresspersonService.doGetCongresspersonDetail(
+      request.params,
+    );
 
     responseCode = serviceResponse.responseCode;
     responseData = baseController.getSuccessResponse(
@@ -35,4 +57,5 @@ const getCongresspersonList = async (request, response) => {
 
 module.exports = {
   getCongresspersonList,
+  getCongresspersonDetail,
 };
