@@ -57,6 +57,10 @@ module.exports = function setupCongresistaService({
             as: 'location',
           },
         ],
+        order: [
+          ['id_name', 'ASC'],
+          ['id_first_surname', 'ASC'],
+        ],
       });
       return baseService.getServiceResponse(200, 'Success', congresspersonList);
     } catch (err) {
