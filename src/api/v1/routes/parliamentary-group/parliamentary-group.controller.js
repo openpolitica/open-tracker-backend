@@ -5,16 +5,19 @@ const serviceContainer = require('../../../../services/service.container');
 
 let baseController = new setupBaseController();
 
-const getCongresspersonList = async (request, response) => {
+const getParliamentaryGroupList = async (request, response) => {
   let responseCode, responseData;
 
   try {
-    const congresspersonService = await serviceContainer('congressperson');
+    const parliamentaryGroupService = await serviceContainer(
+      'parliamentary-group',
+    );
     let serviceResponse;
 
-    serviceResponse = await congresspersonService.doGetCongresspersonList(
-      request.query,
-    );
+    serviceResponse =
+      await parliamentaryGroupService.doGetParliamentaryGroupList(
+        request.query,
+      );
 
     responseCode = serviceResponse.responseCode;
     responseData = baseController.getSuccessResponse(
@@ -30,16 +33,15 @@ const getCongresspersonList = async (request, response) => {
   return response.status(responseCode).json(responseData);
 };
 
-const getCongresspersonDetail = async (request, response) => {
+const getParliamentaryGroup = async (request, response) => {
   let responseCode, responseData;
 
   try {
-    const congresspersonService = await serviceContainer('congressperson');
-    let serviceResponse;
-
-    serviceResponse = await congresspersonService.doGetCongresspersonDetail(
-      request.params,
+    const parliamentaryGroupService = await serviceContainer(
+      'parliamentary-group',
     );
+    let serviceResponse =
+      await parliamentaryGroupService.doGetParliamentaryGroup(request.params);
 
     responseCode = serviceResponse.responseCode;
     responseData = baseController.getSuccessResponse(
@@ -56,6 +58,6 @@ const getCongresspersonDetail = async (request, response) => {
 };
 
 module.exports = {
-  getCongresspersonList,
-  getCongresspersonDetail,
+  getParliamentaryGroupList,
+  getParliamentaryGroup,
 };

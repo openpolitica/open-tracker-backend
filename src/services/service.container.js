@@ -12,5 +12,7 @@ module.exports = async function serviceContainer(serviceName) {
   switch (serviceName) {
     case 'congressperson':
       return services.congresspersonService;
+    case 'parliamentary-group':
+      return services.parliamentaryGroupService;
   }
 };

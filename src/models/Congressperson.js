@@ -14,6 +14,7 @@ module.exports = function (sequelize, DataTypes) {
           key: 'postulation_ubigeo',
         },
       },
+      congressperson_slug: DataTypes.TEXT,
       status_id: DataTypes.INTEGER,
       postulation_year: DataTypes.INTEGER,
       file_id: DataTypes.INTEGER,
@@ -122,7 +123,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Congressperson.belongsToMany(ParliamentaryGroupModel, {
-      as: 'parliamentary_group',
+      as: 'congressperson',
       through: CongresspersonXParliamentaryGroupModel,
       foreignKey: 'cv_id',
       otherKey: 'parliamentary_group_id',

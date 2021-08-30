@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
       },
       parliamentary_group_name: DataTypes.TEXT,
+      parliamentary_group_slug: DataTypes.TEXT,
       start_date: DataTypes.DATE,
       end_date: {
         type: DataTypes.DATE,
@@ -47,7 +48,7 @@ module.exports = function (sequelize, DataTypes) {
     Parliamentary_Group.hasMany(CongresspersonXParliamentaryGroupModel, {
       foreignKey: 'parliamentary_group_id',
       sourceKey: 'parliamentary_group_id',
-      as: 'parliamentary_groups',
+      as: 'congresspeople',
     });
   };
 

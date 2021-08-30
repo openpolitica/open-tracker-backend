@@ -46,6 +46,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson_x_ParliamentaryGroup.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
       targetKey: 'cv_id',
+      as: 'congressperson',
     });
 
     Congressperson_x_ParliamentaryGroup.belongsTo(ParliamentaryGroupModel, {
