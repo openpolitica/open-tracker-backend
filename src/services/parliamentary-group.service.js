@@ -2,7 +2,12 @@
 
 const setupBaseService = require('./base.service');
 
-module.exports = function setupCongresistaService({ ParliamentaryGroupModel }) {
+module.exports = function setupCongresistaService({
+  ParliamentaryGroupModel,
+  CongresspersonXParliamentaryGroupModel,
+  CongresspersonModel,
+  RoleModel,
+}) {
   let baseService = new setupBaseService();
 
   async function doGetParliamentaryGroupList({ parliamentary_group_name }) {
@@ -32,6 +37,22 @@ module.exports = function setupCongresistaService({ ParliamentaryGroupModel }) {
         : {};
       const parliamentaryGroupDetail = await ParliamentaryGroupModel.findOne({
         where,
+        include: [
+          {
+            model: CongresspersonXParliamentaryGroupModel,
+            as: 'congresspeople',
+            attributes: ['start_date', 'end_date'],
+            //Separate query for join, if it's not used, trims the response fields
+            separate: true,
+            include: [
+              {
+                model: CongresspersonModel,
+                as: 'congressperson',
+              },
+              { model: RoleModel, as: 'role_detail' },
+            ],
+          },
+        ],
       });
       return baseService.getServiceResponse(
         200,

@@ -48,7 +48,7 @@ module.exports = function (sequelize, DataTypes) {
     Parliamentary_Group.hasMany(CongresspersonXParliamentaryGroupModel, {
       foreignKey: 'parliamentary_group_id',
       sourceKey: 'parliamentary_group_id',
-      as: 'parliamentary_groups',
+      as: 'congresspeople',
     });
   };
 

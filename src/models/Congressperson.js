@@ -123,7 +123,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Congressperson.belongsToMany(ParliamentaryGroupModel, {
-      as: 'parliamentary_group',
+      as: 'congressperson',
       through: CongresspersonXParliamentaryGroupModel,
       foreignKey: 'cv_id',
       otherKey: 'parliamentary_group_id',

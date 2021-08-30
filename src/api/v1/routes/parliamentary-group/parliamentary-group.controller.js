@@ -9,12 +9,15 @@ const getParliamentaryGroupList = async (request, response) => {
   let responseCode, responseData;
 
   try {
-    const congresspersonService = await serviceContainer('parliamentary-group');
+    const parliamentaryGroupService = await serviceContainer(
+      'parliamentary-group',
+    );
     let serviceResponse;
 
-    serviceResponse = await congresspersonService.doGetParliamentaryGroupList(
-      request.query,
-    );
+    serviceResponse =
+      await parliamentaryGroupService.doGetParliamentaryGroupList(
+        request.query,
+      );
 
     responseCode = serviceResponse.responseCode;
     responseData = baseController.getSuccessResponse(
@@ -34,10 +37,11 @@ const getParliamentaryGroup = async (request, response) => {
   let responseCode, responseData;
 
   try {
-    const congresspersonService = await serviceContainer('parliamentary-group');
-    let serviceResponse = await congresspersonService.doGetParliamentaryGroup(
-      request.params,
+    const parliamentaryGroupService = await serviceContainer(
+      'parliamentary-group',
     );
+    let serviceResponse =
+      await parliamentaryGroupService.doGetParliamentaryGroup(request.params);
 
     responseCode = serviceResponse.responseCode;
     responseData = baseController.getSuccessResponse(
