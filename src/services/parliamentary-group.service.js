@@ -51,6 +51,11 @@ module.exports = function setupCongresistaService({
               },
               { model: RoleModel, as: 'role_detail' },
             ],
+            order: [
+              ['congressperson', 'id_name', 'ASC'],
+              ['congressperson', 'id_first_surname', 'ASC'],
+              ['congressperson', 'id_second_surname', 'ASC'],
+            ],
           },
         ],
       });
