@@ -5,23 +5,13 @@ const setupBaseService = require('./base.service');
 module.exports = function setupCongresistaService({ ParliamentaryGroupModel }) {
   let baseService = new setupBaseService();
 
-  async function doGetParliamentaryGroupList({
-    parliamentary_group_id,
-    parliamentary_group_name,
-  }) {
+  async function doGetParliamentaryGroupList({ parliamentary_group_name }) {
     try {
-      let conditions = parliamentary_group_id
-        ? {
-            where: { parliamentary_group_id },
-          }
-        : parliamentary_group_name
-        ? {
-            where: { parliamentary_group_name },
-          }
-        : {};
-      const parliamentaryGroupList = await ParliamentaryGroupModel.findAll(
-        conditions,
-      );
+      let where = parliamentary_group_name ? { parliamentary_group_name } : {};
+      const parliamentaryGroupList = await ParliamentaryGroupModel.findAll({
+        where,
+        order: [['parliamentary_group_name', 'ASC']],
+      });
       return baseService.getServiceResponse(
         200,
         'Success',
@@ -33,10 +23,14 @@ module.exports = function setupCongresistaService({ ParliamentaryGroupModel }) {
     }
   }
 
-  async function doGetParliamentaryGroup({ slug }) {
+  async function doGetParliamentaryGroup({ slug, id }) {
     try {
-      const where = { parliamentary_group_slug: slug };
-      const parliamentaryGroupDetail = await ParliamentaryGroupModel.findAll({
+      const where = slug
+        ? { parliamentary_group_slug: slug }
+        : id
+        ? { parliamentary_group_id: id }
+        : {};
+      const parliamentaryGroupDetail = await ParliamentaryGroupModel.findOne({
         where,
       });
       return baseService.getServiceResponse(

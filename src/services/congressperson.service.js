@@ -22,9 +22,9 @@ module.exports = function setupCongresistaService({
 }) {
   let baseService = new setupBaseService();
 
-  async function doGetCongresspersonList({ cv_id, id_dni }) {
+  async function doGetCongresspersonList({ id_dni }) {
     try {
-      const where = cv_id ? { cv_id } : id_dni ? { id_dni } : {};
+      const where = id_dni ? { id_dni } : {};
       const congresspersonList = await CongresspersonModel.findAll({
         include: [
           {
@@ -72,10 +72,14 @@ module.exports = function setupCongresistaService({
     }
   }
 
-  async function doGetCongresspersonDetail({ slug }) {
+  async function doGetCongresspersonDetail({ slug, id }) {
     try {
-      const where = { congressperson_slug: slug };
-      const congresspersonDetail = await CongresspersonModel.findAll({
+      const where = slug
+        ? { congressperson_slug: slug }
+        : id
+        ? { cv_id: id }
+        : {};
+      const congresspersonDetail = await CongresspersonModel.findOne({
         where,
         include: [
           {

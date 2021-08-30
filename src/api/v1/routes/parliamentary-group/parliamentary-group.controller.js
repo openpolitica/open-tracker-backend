@@ -35,7 +35,6 @@ const getParliamentaryGroup = async (request, response) => {
 
   try {
     const congresspersonService = await serviceContainer('parliamentary-group');
-
     let serviceResponse = await congresspersonService.doGetParliamentaryGroup(
       request.params,
     );

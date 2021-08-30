@@ -32,15 +32,6 @@
         "parameters": [
           {
             "in": "query",
-            "name": "cv_id",
-            "description": "Identificator of a specific congressperson through the cv_id value",
-            "schema": {
-              "type": "integer"
-            },
-            "required": false
-          },
-          {
-            "in": "query",
             "name": "id_dni",
             "description": "Identificator of a specific congressperson through the id_dni value",
             "schema": {
@@ -59,16 +50,41 @@
       }
     },
 
-    "/api/congressperson/:slug": {
+    "/api/congressperson/{slug}": {
       "get": {
         "summary": "Returns information about a specific congressperson using the slug value as the identificator.",
         "parameters": [
           {
             "in": "path",
             "name": "slug",
+            "pattern": "[a-z]+(?:-[a-z-]+)*",
             "description": "URL-friendly name identificator of a specific congressperson.",
             "schema": {
               "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/congressperson/{id}": {
+      "get": {
+        "summary": "Returns information about a specific congressperson using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Number identificator of a specific congressperson.",
+            "schema": {
+              "type": "integer"
             },
             "required": true
           }
@@ -87,15 +103,6 @@
       "get": {
         "summary": "Returns information about parliamentary groups. If a query parameter is not defined, returns the complete list of parliamentary groups. Otherwise return the information about a specific parliamentary group. Accepts 'slug' and 'parliamentary_group_name' as parameters, but in case are both provided, the slug takes precedence.",
         "parameters": [
-          {
-            "in": "parliamentary_group_id",
-            "name": "slug",
-            "description": "ID of a specific parliamentary group through the slug value",
-            "schema": {
-              "type": "string"
-            },
-            "required": false
-          },
           {
             "in": "query",
             "name": "parliamentary_group_name",
@@ -116,14 +123,40 @@
       }
     },
 
-    "/api/parliamentary-group/:slug": {
+    "/api/parliamentary-group/{slug}": {
       "get": {
         "summary": "Returns information about a specific parliamentary group using the slug value as the identificator.",
         "parameters": [
           {
             "in": "path",
             "name": "slug",
+            "pattern": "[a-z]+(?:-[a-z-]+)*",
             "description": "URL-friendly name identificator of a specific parliamentary group.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/parliamentary-group/{id}": {
+      "get": {
+        "summary": "Returns information about a specific parliamentary group using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+            "description": "Unique identificator (UUID) of a specific parliamentary group.",
             "schema": {
               "type": "string"
             },
