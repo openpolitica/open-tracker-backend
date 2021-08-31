@@ -1,6 +1,7 @@
 'use strict';
 
 const setupBaseService = require('./base.service');
+const { Sequelize } = require('sequelize');
 
 module.exports = function setupCongresistaService({
   ParliamentaryGroupModel,
@@ -15,6 +16,28 @@ module.exports = function setupCongresistaService({
       let where = parliamentary_group_name ? { parliamentary_group_name } : {};
       const parliamentaryGroupList = await ParliamentaryGroupModel.findAll({
         where,
+        attributes: {
+          include: [
+            [
+              Sequelize.fn('COUNT', Sequelize.col('congresspeople.cv_id')),
+              'count',
+            ],
+          ],
+        },
+        include: [
+          {
+            model: CongresspersonXParliamentaryGroupModel,
+            as: 'congresspeople',
+            attributes: [],
+            where: {
+              end_date: null,
+            },
+            // To left join, including parliamentary_group that doesn't have
+            // active congresspeople
+            required: false,
+          },
+        ],
+        group: ['ParliamentaryGroupModel.parliamentary_group_id'],
         order: [['parliamentary_group_name', 'ASC']],
       });
       return baseService.getServiceResponse(

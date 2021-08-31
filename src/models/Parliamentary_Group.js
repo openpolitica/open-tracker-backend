@@ -9,6 +9,7 @@ module.exports = function (sequelize, DataTypes) {
       },
       parliamentary_group_name: DataTypes.TEXT,
       parliamentary_group_slug: DataTypes.TEXT,
+      parliamentary_group_url: DataTypes.TEXT,
       start_date: DataTypes.DATE,
       end_date: {
         type: DataTypes.DATE,
