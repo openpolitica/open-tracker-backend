@@ -86,6 +86,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson.hasMany(SocialNetworkXCongresspersonModel, {
       foreignKey: 'cv_id',
       sourceKey: 'cv_id',
+      as: 'social_networks',
     });
 
     Congressperson.belongsToMany(PoliticalPartyModel, {

@@ -19,6 +19,8 @@ module.exports = function setupCongresistaService({
   AffiliationModel,
   CongresspersonXParliamentaryGroupModel,
   CongresspersonXPartyModel,
+  SocialNetworkModel,
+  SocialNetworkXCongresspersonModel,
 }) {
   let baseService = new setupBaseService();
 
@@ -147,6 +149,16 @@ module.exports = function setupCongresistaService({
           {
             model: LocationModel,
             as: 'location',
+          },
+          {
+            model: SocialNetworkXCongresspersonModel,
+            as: 'social_networks',
+            include: [
+              {
+                model: SocialNetworkModel,
+                as: 'social_network',
+              },
+            ],
           },
         ],
         order: [
