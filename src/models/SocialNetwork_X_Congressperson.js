@@ -22,6 +22,7 @@ module.exports = function (sequelize, DataTypes) {
       last_update_date: DataTypes.DATE,
     },
     {
+      timestamps: false,
       tableName: 'social_network_x_congressperson',
     },
   );
@@ -38,6 +39,7 @@ module.exports = function (sequelize, DataTypes) {
     SocialNetwork_x_Congressperson.belongsTo(SocialNetworkModel, {
       foreignKey: 'social_network_id',
       targetKey: 'social_network_id',
+      as: 'social_network',
     });
   };
 
