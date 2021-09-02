@@ -17,6 +17,7 @@ module.exports = function setupCongresistaService({
   GoodsImmovableModel,
   JudgmentECModel,
   AffiliationModel,
+  PlenaryModel,
   CongresspersonXParliamentaryGroupModel,
   CongresspersonXPartyModel,
   SocialNetworkModel,
@@ -58,6 +59,10 @@ module.exports = function setupCongresistaService({
           {
             model: LocationModel,
             as: 'location',
+          },
+          {
+            model: PlenaryModel,
+            as: 'plenary',
           },
         ],
         where,
@@ -159,6 +164,10 @@ module.exports = function setupCongresistaService({
                 as: 'social_network',
               },
             ],
+          },
+          {
+            model: PlenaryModel,
+            as: 'plenary',
           },
         ],
         order: [
