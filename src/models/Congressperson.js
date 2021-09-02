@@ -65,6 +65,7 @@ module.exports = function (sequelize, DataTypes) {
     GoodsImmovableModel,
     JudgmentECModel,
     AffiliationModel,
+    PlenaryModel,
   }) {
     Congressperson.belongsTo(LocationModel, {
       foreignKey: 'postulation_ubigeo',
@@ -188,6 +189,12 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: 'dni',
       sourceKey: 'id_dni',
       as: 'affiliations',
+    });
+
+    Congressperson.hasOne(PlenaryModel, {
+      foreignKey: 'cv_id',
+      sourceKey: 'cv_id',
+      as: 'plenary',
     });
   };
 
