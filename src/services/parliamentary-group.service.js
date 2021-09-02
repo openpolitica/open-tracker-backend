@@ -9,6 +9,7 @@ module.exports = function setupCongresistaService({
   CongresspersonModel,
   RoleModel,
   LocationModel,
+  PlenaryModel,
 }) {
   let baseService = new setupBaseService();
 
@@ -76,6 +77,10 @@ module.exports = function setupCongresistaService({
                   {
                     model: LocationModel,
                     as: 'location',
+                  },
+                  {
+                    model: PlenaryModel,
+                    as: 'plenary',
                   },
                 ],
               },
