@@ -14,5 +14,7 @@ module.exports = async function serviceContainer(serviceName) {
       return services.congresspersonService;
     case 'parliamentary-group':
       return services.parliamentaryGroupService;
+    case 'search':
+      return services.searchService;
   }
 };

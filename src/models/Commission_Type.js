@@ -11,6 +11,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'commission_type',
+      timestamps: false,
     },
   );
 
