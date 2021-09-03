@@ -1,0 +1,35 @@
+name: 'Deploy backend service'
+
+on:
+  push:
+    branches:
+    - dev
+  workflow_dispatch:
+    branches:
+    - dev
+    - main
+
+jobs:
+  deploy:
+    name: 'Deployment devops action'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+    
+    env:
+      DEPLOY_ACTION: deploy-backend.yml
+
+    steps:
+    - name: Dispatch trigger on development
+      if: ${{ github.ref == 'refs/heads/dev' }}
+      run: |
+        curl -X POST -H "Authorization: token ${{ secrets.DEPLOY_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/openpolitica/open-tracker-devops/actions/workflows/${{ env.DEPLOY_ACTION }}/dispatches -d '{"ref":"main", "inputs": {"env_type": "staging"}}'
+    
+    - name: Dispatch trigger on production
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: |
+        curl -X POST -H "Authorization: token ${{ secrets.DEPLOY_TOKEN }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/openpolitica/open-tracker-devops/actions/workflows/${{ env.DEPLOY_ACTION }}/dispatches -d '{"ref":"main", "inputs": {"env_type": "production"}}'
+

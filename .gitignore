@@ -1,0 +1,9 @@
+.env
+tools
+node_modules
+# macOS
+.DS_Store
+# Prod Server
+Dockerfile
+Procfile
+docker-compose.yaml

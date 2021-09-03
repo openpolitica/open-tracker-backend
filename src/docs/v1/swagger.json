@@ -1,0 +1,209 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Open Politica - Congreso - API",
+    "version": "0.1.0",
+    "description": "API para proyecto Congreso desarrollado para backend de Open Politica in Node.JS",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://spdx.org/licenses/Apache-2.0.html"
+    },
+    "contact": {
+      "name": "OpenPolitica",
+      "url": "https://openpolitica.com",
+      "email": "hola@openpolitica.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.congreso.openpolitica.com",
+      "description": "Production Server"
+    },
+    {
+      "url": "https://api.dev.congreso.openpolitica.com",
+      "description": "Staging Server"
+    },
+    { "url": "http://localhost:8000", "description": "Development Server" }
+  ],
+  "paths": {
+    "/api/congressperson": {
+      "get": {
+        "summary": "Returns information about congresspeople. If a query parameter is not defined, returns the complete list of congresspeople. Otherwise return the information about a specific congressperson. Accepts 'id_dni' as a parameter.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id_dni",
+            "description": "Identificator of a specific congressperson through the id_dni value",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/congressperson/{slug}": {
+      "get": {
+        "summary": "Returns information about a specific congressperson using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific congressperson.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/congressperson/{id}": {
+      "get": {
+        "summary": "Returns information about a specific congressperson using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Number identificator of a specific congressperson.",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/parliamentary-group": {
+      "get": {
+        "summary": "Returns information about parliamentary groups. If a query parameter is not defined, returns the complete list of parliamentary groups. Otherwise return the information about a specific parliamentary group. Accepts 'parliamentary_group_name' as a parameter.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "parliamentary_group_name",
+            "description": "Name of a specific parliamentary group through the parliamentary_group_name value",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/parliamentary-group/{slug}": {
+      "get": {
+        "summary": "Returns information about a specific parliamentary group using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific parliamentary group.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/parliamentary-group/{id}": {
+      "get": {
+        "summary": "Returns information about a specific parliamentary group using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+            "description": "Unique identificator (UUID) of a specific parliamentary group.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/search": {
+      "get": {
+        "summary": "Search for a word in multiple tables using 'query' as the word to search on the database. Use the 'limit' query parameter to limit the number of results on the search, if not provided uses 3 as default.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "description": "String used to search on the database.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limit of results obtained for each table search.",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
