@@ -21,7 +21,6 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Judgment_EC.removeAttribute('id');
   Judgment_EC.associate = function ({ CongresspersonModel }) {
     Judgment_EC.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
