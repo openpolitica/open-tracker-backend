@@ -18,6 +18,7 @@ module.exports = function (sequelize, DataTypes) {
     Location.hasMany(CongresspersonModel, {
       foreignKey: 'postulation_ubigeo',
       sourceKey: 'ubigeo',
+      as: 'congresspeople',
     });
   };
 
