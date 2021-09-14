@@ -25,7 +25,6 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Goods_Movable.removeAttribute('id');
   Goods_Movable.associate = function ({ CongresspersonModel }) {
     Goods_Movable.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',

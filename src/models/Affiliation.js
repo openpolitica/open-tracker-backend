@@ -27,7 +27,6 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Affiliation.removeAttribute('id');
   Affiliation.associate = function ({ CongresspersonModel }) {
     Affiliation.belongsTo(CongresspersonModel, {
       foreignKey: 'dni',

@@ -23,7 +23,6 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  Experience.removeAttribute('id');
   Experience.associate = function ({ CongresspersonModel }) {
     Experience.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
