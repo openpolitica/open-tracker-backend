@@ -31,6 +31,10 @@
       "description": "Endpoints to retrieve information about congressperson"
     },
     {
+      "name": "Location",
+      "description": "Endpoints to retrieve information about location"
+    },
+    {
       "name": "Parliamentary group",
       "description": "Endpoints to retrieve information about parliamentary group"
     },
@@ -100,6 +104,82 @@
             "in": "path",
             "name": "id",
             "description": "Number identificator of a specific congressperson.",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/location": {
+      "get": {
+        "tags" : [ "Location" ],
+        "summary": "Returns information about location. If a query parameter is not defined, returns the complete list of locations. Otherwise return the information about a specific location. Accepts 'ubigeo' as a parameter.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "ubigeo",
+            "description": "Identificator of a specific location through the ubigeo value",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/location/{slug}": {
+      "get": {
+        "tags" : [ "Location" ],
+        "summary": "Returns information about a specific location using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]|[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific location.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/location/{id}": {
+      "get": {
+        "tags" : [ "Location" ],
+        "summary": "Returns information about a specific location using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Number identificator of a specific location.",
             "schema": {
               "type": "integer"
             },
