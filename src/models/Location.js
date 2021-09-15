@@ -7,6 +7,7 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
       },
       location_name: DataTypes.TEXT,
+      location_slug: DataTypes.TEXT,
     },
     {
       tableName: 'location',
@@ -18,6 +19,7 @@ module.exports = function (sequelize, DataTypes) {
     Location.hasMany(CongresspersonModel, {
       foreignKey: 'postulation_ubigeo',
       sourceKey: 'ubigeo',
+      as: 'congresspeople',
     });
   };
 

@@ -25,9 +25,28 @@
     },
     { "url": "http://localhost:8000", "description": "Development Server" }
   ],
+  "tags": [
+    {
+      "name": "Congressperson",
+      "description": "Endpoints to retrieve information about congressperson"
+    },
+    {
+      "name": "Location",
+      "description": "Endpoints to retrieve information about location"
+    },
+    {
+      "name": "Parliamentary group",
+      "description": "Endpoints to retrieve information about parliamentary group"
+    },
+    {
+      "name": "Search",
+      "description": "Endpoints to search in database"
+    }
+  ],
   "paths": {
     "/api/congressperson": {
       "get": {
+        "tags" : [ "Congressperson" ],
         "summary": "Returns information about congresspeople. If a query parameter is not defined, returns the complete list of congresspeople. Otherwise return the information about a specific congressperson. Accepts 'id_dni' as a parameter.",
         "parameters": [
           {
@@ -52,6 +71,7 @@
 
     "/api/congressperson/{slug}": {
       "get": {
+        "tags" : [ "Congressperson" ],
         "summary": "Returns information about a specific congressperson using the slug value as the identificator.",
         "parameters": [
           {
@@ -77,6 +97,7 @@
 
     "/api/congressperson/{id}": {
       "get": {
+        "tags" : [ "Congressperson" ],
         "summary": "Returns information about a specific congressperson using the id value as the identificator.",
         "parameters": [
           {
@@ -99,8 +120,85 @@
       }
     },
 
+    "/api/location": {
+      "get": {
+        "tags" : [ "Location" ],
+        "summary": "Returns information about location. If a query parameter is not defined, returns the complete list of locations. Otherwise return the information about a specific location. Accepts 'ubigeo' as a parameter.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "ubigeo",
+            "description": "Identificator of a specific location through the ubigeo value",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/location/{slug}": {
+      "get": {
+        "tags" : [ "Location" ],
+        "summary": "Returns information about a specific location using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]|[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific location.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/location/{id}": {
+      "get": {
+        "tags" : [ "Location" ],
+        "summary": "Returns information about a specific location using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Number identificator of a specific location.",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
     "/api/parliamentary-group": {
       "get": {
+        "tags" : [ "Parliamentary group" ],
         "summary": "Returns information about parliamentary groups. If a query parameter is not defined, returns the complete list of parliamentary groups. Otherwise return the information about a specific parliamentary group. Accepts 'parliamentary_group_name' as a parameter.",
         "parameters": [
           {
@@ -125,6 +223,7 @@
 
     "/api/parliamentary-group/{slug}": {
       "get": {
+        "tags" : [ "Parliamentary group" ],
         "summary": "Returns information about a specific parliamentary group using the slug value as the identificator.",
         "parameters": [
           {
@@ -150,6 +249,7 @@
 
     "/api/parliamentary-group/{id}": {
       "get": {
+        "tags" : [ "Parliamentary group" ],
         "summary": "Returns information about a specific parliamentary group using the id value as the identificator.",
         "parameters": [
           {
@@ -175,6 +275,7 @@
 
     "/api/search": {
       "get": {
+        "tags" : [ "Search" ],
         "summary": "Search for a word in multiple tables using 'query' as the word to search on the database. Use the 'limit' query parameter to limit the number of results on the search, if not provided uses 3 as default.",
         "parameters": [
           {
