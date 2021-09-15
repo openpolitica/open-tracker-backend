@@ -7,6 +7,7 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
       },
       location_name: DataTypes.TEXT,
+      location_slug: DataTypes.TEXT,
     },
     {
       tableName: 'location',
