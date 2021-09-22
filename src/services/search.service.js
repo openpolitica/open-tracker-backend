@@ -1,13 +1,14 @@
 'use strict';
 
 const setupBaseService = require('./base.service');
-const { Op } = require('sequelize');
+const { Op, col, fn } = require('sequelize');
 
 module.exports = function setupCongresistaService({
   CongresspersonModel,
   PoliticalPartyModel,
   ParliamentaryGroupModel,
   CommissionModel,
+  LocationModel,
 }) {
   let baseService = new setupBaseService();
 
@@ -36,6 +37,19 @@ module.exports = function setupCongresistaService({
           ],
         },
         limit,
+        include: [
+          {
+            model: LocationModel,
+            as: 'location',
+          },
+          {
+            model: ParliamentaryGroupModel,
+            as: 'parliamentary_group',
+            through: {
+              attributes: [],
+            },
+          },
+        ],
       });
 
       const political_party = await PoliticalPartyModel.findAll({
@@ -63,6 +77,26 @@ module.exports = function setupCongresistaService({
           },
         },
         limit,
+        attributes: {
+          include: [
+            [fn('COUNT', col('congressperson.cv_id')), 'congressperson_count'],
+          ],
+        },
+        include: [
+          {
+            model: CongresspersonModel,
+            as: 'congressperson',
+            attributes: [],
+            //In order to make it work it have to avoid duplicates
+            //https://github.com/sequelize/sequelize/issues/4446
+            duplicating: false,
+            required: false,
+            through: {
+              attributes: [],
+            },
+          },
+        ],
+        group: ['ParliamentaryGroupModel.parliamentary_group_id'],
       });
 
       const commission = await CommissionModel.findAll({
