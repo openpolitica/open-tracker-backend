@@ -1,7 +1,7 @@
 'use strict';
 
 const setupBaseService = require('./base.service');
-const { Op, col, fn } = require('sequelize');
+const { Op, col, fn, Sequelize } = require('sequelize');
 
 module.exports = function setupCongresistaService({
   CongresspersonModel,
@@ -15,26 +15,33 @@ module.exports = function setupCongresistaService({
 
   async function doGetSearchResultList({ query, limit = 3 }) {
     try {
-      const wildcardQuery = '%' + query + '%';
+      const wildcardQuery = '%' + query.replace(/\s+/g, '%') + '%';
 
       const congressperson = await CongresspersonModel.findAll({
         where: {
           [Op.or]: [
-            {
-              id_name: {
-                [Op.iLike]: wildcardQuery,
-              },
-            },
-            {
-              id_first_surname: {
-                [Op.iLike]: wildcardQuery,
-              },
-            },
-            {
-              id_second_surname: {
-                [Op.iLike]: wildcardQuery,
-              },
-            },
+            Sequelize.where(
+              fn(
+                'concat',
+                col('id_name'),
+                ' ',
+                col('id_first_surname'),
+                ' ',
+                col('id_second_surname'),
+              ),
+              { [Op.iLike]: wildcardQuery },
+            ),
+            Sequelize.where(
+              fn(
+                'concat',
+                col('id_first_surname'),
+                ' ',
+                col('id_second_surname'),
+                ' ',
+                col('id_name'),
+              ),
+              { [Op.iLike]: wildcardQuery },
+            ),
             {
               congressperson_slug: {
                 [Op.iLike]: wildcardQuery,
