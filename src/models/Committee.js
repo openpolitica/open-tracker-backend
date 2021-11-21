@@ -16,6 +16,8 @@ module.exports = function (sequelize, DataTypes) {
           key: 'committee_type_id',
         },
       },
+      committee_short_name: DataTypes.TEXT,
+      committee_slug: DataTypes.TEXT,
       start_date: DataTypes.DATE,
       end_date: {
         type: DataTypes.DATE,
