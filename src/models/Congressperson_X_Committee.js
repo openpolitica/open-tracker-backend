@@ -33,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: 'congressperson_x_committee',
+      tableName: 'committee_x_congressperson',
     },
   );
 
@@ -45,6 +45,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson_x_Committee.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
       targetKey: 'cv_id',
+      as: 'congressperson',
     });
 
     Congressperson_x_Committee.belongsTo(CommitteeModel, {
@@ -55,6 +56,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson_x_Committee.belongsTo(RoleModel, {
       foreignKey: 'committee_role_id',
       targetKey: 'role_id',
+      as: 'role_detail',
     });
   };
 

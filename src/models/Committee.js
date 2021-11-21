@@ -40,6 +40,7 @@ module.exports = function (sequelize, DataTypes) {
     Committee.belongsTo(CommitteeTypeModel, {
       foreignKey: 'committee_type_id',
       targetKey: 'committee_type_id',
+      as: 'committee_type',
     });
 
     /**
@@ -56,6 +57,7 @@ module.exports = function (sequelize, DataTypes) {
     Committee.hasMany(ParliamentaryGroupXCommitteeModel, {
       foreignKey: 'committee_id',
       sourceKey: 'committee_id',
+      as: 'committee_parliamentary_groups',
     });
 
     Committee.belongsToMany(CongresspersonModel, {
@@ -67,6 +69,7 @@ module.exports = function (sequelize, DataTypes) {
     Committee.hasMany(CongresspersonXCommitteeModel, {
       foreignKey: 'committee_id',
       sourceKey: 'committee_id',
+      as: 'congresspeople',
     });
   };
 
