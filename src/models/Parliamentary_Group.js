@@ -24,17 +24,17 @@ module.exports = function (sequelize, DataTypes) {
 
   Parliamentary_Group.associate = function ({
     CongresspersonModel,
-    CommissionModel,
-    ParliamentaryGroupXCommissionModel,
+    CommitteeModel,
+    ParliamentaryGroupXCommitteeModel,
     CongresspersonXParliamentaryGroupModel,
   }) {
-    Parliamentary_Group.belongsToMany(CommissionModel, {
-      through: ParliamentaryGroupXCommissionModel,
+    Parliamentary_Group.belongsToMany(CommitteeModel, {
+      through: ParliamentaryGroupXCommitteeModel,
       foreignKey: 'parliamentary_group_id',
-      otherKey: 'commission_id',
+      otherKey: 'committee_id',
     });
 
-    Parliamentary_Group.hasMany(ParliamentaryGroupXCommissionModel, {
+    Parliamentary_Group.hasMany(ParliamentaryGroupXCommitteeModel, {
       foreignKey: 'parliamentary_group_id',
       sourceKey: 'parliamentary_group_id',
     });

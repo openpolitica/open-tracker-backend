@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
-  const Congressperson_x_Commission = sequelize.define(
-    'CongresspersonXCommissionModel',
+  const Congressperson_x_Committee = sequelize.define(
+    'CongresspersonXCommitteeModel',
     {
       cv_id: {
         type: DataTypes.INTEGER,
@@ -10,15 +10,15 @@ module.exports = function (sequelize, DataTypes) {
           key: 'cv_id',
         },
       },
-      commission_id: {
+      committee_id: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: 'CommissionModel',
-          key: 'commission_id',
+          model: 'CommitteeModel',
+          key: 'committee_id',
         },
       },
-      commission_role_id: {
+      committee_role_id: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
@@ -33,30 +33,30 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: 'congressperson_x_commission',
+      tableName: 'congressperson_x_committee',
     },
   );
 
-  Congressperson_x_Commission.associate = function ({
+  Congressperson_x_Committee.associate = function ({
     CongresspersonModel,
-    CommissionModel,
+    CommitteeModel,
     RoleModel,
   }) {
-    Congressperson_x_Commission.belongsTo(CongresspersonModel, {
+    Congressperson_x_Committee.belongsTo(CongresspersonModel, {
       foreignKey: 'cv_id',
       targetKey: 'cv_id',
     });
 
-    Congressperson_x_Commission.belongsTo(CommissionModel, {
-      foreignKey: 'commission_id',
-      targetKey: 'commission_id',
+    Congressperson_x_Committee.belongsTo(CommitteeModel, {
+      foreignKey: 'committee_id',
+      targetKey: 'committee_id',
     });
 
-    Congressperson_x_Commission.belongsTo(RoleModel, {
-      foreignKey: 'commission_role_id',
+    Congressperson_x_Committee.belongsTo(RoleModel, {
+      foreignKey: 'committee_role_id',
       targetKey: 'role_id',
     });
   };
 
-  return Congressperson_x_Commission;
+  return Congressperson_x_Committee;
 };

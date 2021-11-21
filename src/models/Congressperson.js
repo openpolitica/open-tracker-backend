@@ -58,11 +58,11 @@ module.exports = function (sequelize, DataTypes) {
     LocationModel,
     PoliticalPartyModel,
     MainboardModel,
-    CommissionModel,
+    CommitteeModel,
     ParliamentaryGroupModel,
     CongresspersonXPartyModel,
     CongresspersonXMainboardModel,
-    CongresspersonXCommissionModel,
+    CongresspersonXCommitteeModel,
     CongresspersonXParliamentaryGroupModel,
     SocialNetworkXCongresspersonModel,
     ExtraDataModel,
@@ -122,13 +122,13 @@ module.exports = function (sequelize, DataTypes) {
       sourceKey: 'cv_id',
     });
 
-    Congressperson.belongsToMany(CommissionModel, {
-      through: CongresspersonXCommissionModel,
+    Congressperson.belongsToMany(CommitteeModel, {
+      through: CongresspersonXCommitteeModel,
       foreignKey: 'cv_id',
-      otherKey: 'commission_id',
+      otherKey: 'committee_id',
     });
 
-    Congressperson.hasMany(CongresspersonXCommissionModel, {
+    Congressperson.hasMany(CongresspersonXCommitteeModel, {
       foreignKey: 'cv_id',
       sourceKey: 'cv_id',
     });

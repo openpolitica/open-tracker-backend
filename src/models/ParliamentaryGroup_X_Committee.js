@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
-  const ParliamentaryGroup_x_Commission = sequelize.define(
-    'ParliamentaryGroupXCommissionModel',
+  const ParliamentaryGroup_x_Committee = sequelize.define(
+    'ParliamentaryGroupXCommitteeModel',
     {
       parliamentary_group_id: {
         type: DataTypes.UUID,
@@ -10,15 +10,15 @@ module.exports = function (sequelize, DataTypes) {
           key: 'parliamentary_group_id',
         },
       },
-      commission_id: {
+      committee_id: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-          model: 'CommissionModel',
-          key: 'commission_id',
+          model: 'CommitteeModel',
+          key: 'committee_id',
         },
       },
-      commission_role_id: {
+      committee_role_id: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
@@ -28,30 +28,30 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: 'parliamentaryGroup_x_commission',
+      tableName: 'parliamentaryGroup_x_committee',
     },
   );
 
-  ParliamentaryGroup_x_Commission.associate = function ({
-    CommissionModel,
+  ParliamentaryGroup_x_Committee.associate = function ({
+    CommitteeModel,
     ParliamentaryGroupModel,
     RoleModel,
   }) {
-    ParliamentaryGroup_x_Commission.belongsTo(CommissionModel, {
-      foreignKey: 'commission_id',
-      targetKey: 'commission_id',
+    ParliamentaryGroup_x_Committee.belongsTo(CommitteeModel, {
+      foreignKey: 'committee_id',
+      targetKey: 'committee_id',
     });
 
-    ParliamentaryGroup_x_Commission.belongsTo(ParliamentaryGroupModel, {
+    ParliamentaryGroup_x_Committee.belongsTo(ParliamentaryGroupModel, {
       foreignKey: 'parliamentary_group_id',
       targetKey: 'parliamentary_group_id',
     });
 
-    ParliamentaryGroup_x_Commission.belongsTo(RoleModel, {
-      foreignKey: 'commission_role_id',
+    ParliamentaryGroup_x_Committee.belongsTo(RoleModel, {
+      foreignKey: 'committee_role_id',
       targetKey: 'role_id',
     });
   };
 
-  return ParliamentaryGroup_x_Commission;
+  return ParliamentaryGroup_x_Committee;
 };
