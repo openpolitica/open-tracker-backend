@@ -23,6 +23,7 @@ module.exports = function (sequelize, DataTypes) {
   );
 
   Parliamentary_Group.associate = function ({
+    BillModel,
     CongresspersonModel,
     CommitteeModel,
     ParliamentaryGroupXCommitteeModel,
@@ -50,6 +51,12 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: 'parliamentary_group_id',
       sourceKey: 'parliamentary_group_id',
       as: 'congresspeople',
+    });
+
+    Parliamentary_Group.hasMany(BillModel, {
+      foreignKey: 'parliamentary_group_id',
+      sourceKey: 'parliamentary_group_id',
+      as: 'parliamentary_group',
     });
   };
 

@@ -75,6 +75,8 @@ module.exports = function (sequelize, DataTypes) {
     JudgmentECModel,
     AffiliationModel,
     PlenaryModel,
+    BillAuthorshipModel,
+    BillModel,
   }) {
     Congressperson.belongsTo(LocationModel, {
       foreignKey: 'postulation_ubigeo',
@@ -204,6 +206,17 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: 'cv_id',
       sourceKey: 'cv_id',
       as: 'plenary',
+    });
+
+    Congressperson.belongsToMany(BillModel, {
+      through: BillAuthorshipModel,
+      foreignKey: 'cv_id',
+      otherKey: 'id',
+    });
+
+    Congressperson.hasMany(BillAuthorshipModel, {
+      foreignKey: 'congressperson_id',
+      sourceKey: 'cv_id',
     });
   };
 
