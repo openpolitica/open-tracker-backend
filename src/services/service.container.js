@@ -14,6 +14,8 @@ module.exports = async function serviceContainer(serviceName) {
       return services.congresspersonService;
     case 'location':
       return services.locationService;
+    case 'committee':
+      return services.committeeService;
     case 'parliamentary-group':
       return services.parliamentaryGroupService;
     case 'search':

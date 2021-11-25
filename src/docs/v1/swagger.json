@@ -35,6 +35,10 @@
       "description": "Endpoints to retrieve information about location"
     },
     {
+      "name": "Committee",
+      "description": "Endpoints to retrieve information about committee"
+    },
+    {
       "name": "Parliamentary group",
       "description": "Endpoints to retrieve information about parliamentary group"
     },
@@ -273,6 +277,82 @@
       }
     },
 
+    "/api/committee": {
+      "get": {
+        "tags" : [ "Committee" ],
+        "summary": "Returns information about committee. If a query parameter is not defined, returns the complete list of committees. Otherwise return the information about a specific committee. Accepts 'committee_name' as a parameter.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "committee_name",
+            "description": "Name of a specific committee through the committee_name value",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/committee/{slug}": {
+      "get": {
+        "tags" : [ "Committee" ],
+        "summary": "Returns information about a specific committee using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific committee.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/committee/{id}": {
+      "get": {
+        "tags" : [ "Committee" ],
+        "summary": "Returns information about a specific committee using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}",
+            "description": "Unique identificator (UUID) of a specific committee.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/search": {
       "get": {
         "tags" : [ "Search" ],

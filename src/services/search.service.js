@@ -7,7 +7,7 @@ module.exports = function setupCongresistaService({
   CongresspersonModel,
   PoliticalPartyModel,
   ParliamentaryGroupModel,
-  CommissionModel,
+  CommitteeModel,
   LocationModel,
   CongresspersonXParliamentaryGroupModel,
 }) {
@@ -123,9 +123,9 @@ module.exports = function setupCongresistaService({
         group: ['ParliamentaryGroupModel.parliamentary_group_id'],
       });
 
-      const commission = await CommissionModel.findAll({
+      const committee = await CommitteeModel.findAll({
         where: {
-          commission_name: {
+          committee_name: {
             [Op.iLike]: wildcardQuery,
           },
         },
@@ -136,7 +136,7 @@ module.exports = function setupCongresistaService({
         congressperson,
         political_party,
         parliamentary_group,
-        commission,
+        committee,
       };
       return baseService.getServiceResponse(200, 'Success', searchResultList);
     } catch (err) {
