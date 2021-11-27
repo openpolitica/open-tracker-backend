@@ -35,6 +35,10 @@
       "description": "Endpoints to retrieve information about location"
     },
     {
+      "name": "Bill",
+      "description": "Endpoints to retrieve information about bill"
+    },
+    {
       "name": "Committee",
       "description": "Endpoints to retrieve information about committee"
     },
@@ -353,6 +357,47 @@
         }
       }
     },
+
+    "/api/bill": {
+      "get": {
+        "tags" : [ "Bill" ],
+        "summary": "Returns the complete list of committees.",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/bill/{id}": {
+      "get": {
+        "tags" : [ "Bill" ],
+        "summary": "Returns information about a specific bill using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "pattern": "[0-9]{4}-[0-9]{4}-[0-9]{5}",
+            "description": "ID identificator of a specific bill.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
     "/api/search": {
       "get": {
         "tags" : [ "Search" ],
