@@ -46,6 +46,7 @@ module.exports = function (sequelize, DataTypes) {
     ParliamentaryGroup_x_Committee.belongsTo(CommitteeModel, {
       foreignKey: 'committee_id',
       targetKey: 'committee_id',
+      as: 'committee',
     });
 
     ParliamentaryGroup_x_Committee.belongsTo(ParliamentaryGroupModel, {

@@ -5,10 +5,14 @@ const { Sequelize } = require('sequelize');
 
 module.exports = function setupCongresistaService({
   ParliamentaryGroupModel,
+  ParliamentaryGroupXCommitteeModel,
+  CommitteeModel,
+  CommitteeTypeModel,
   CongresspersonXParliamentaryGroupModel,
   CongresspersonModel,
   RoleModel,
   LocationModel,
+  BillModel,
   PlenaryModel,
 }) {
   let baseService = new setupBaseService();
@@ -91,6 +95,30 @@ module.exports = function setupCongresistaService({
               ['congressperson', 'id_first_surname', 'ASC'],
               ['congressperson', 'id_second_surname', 'ASC'],
             ],
+          },
+          {
+            model: ParliamentaryGroupXCommitteeModel,
+            as: 'committees',
+            separate: true,
+            include: [
+              {
+                model: CommitteeModel,
+                as: 'committee',
+                include: [
+                  {
+                    model: CommitteeTypeModel,
+                    as: 'committee_type',
+                  },
+                ],
+              },
+              { model: RoleModel, as: 'role_detail' },
+            ],
+          },
+          {
+            model: BillModel,
+            as: 'bills',
+            separate: true,
+            order: [['presentation_date', 'DESC']],
           },
         ],
       });

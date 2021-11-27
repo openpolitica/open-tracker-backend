@@ -54,6 +54,7 @@ module.exports = function (sequelize, DataTypes) {
       through: ParliamentaryGroupXCommitteeModel,
       foreignKey: 'committee_id',
       otherKey: 'parliamentary_group_id',
+      as: 'parliamentary_group',
     });
 
     Committee.hasMany(ParliamentaryGroupXCommitteeModel, {
