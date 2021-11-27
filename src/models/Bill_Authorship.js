@@ -21,8 +21,7 @@ module.exports = function (sequelize, DataTypes) {
       authorship_type: DataTypes.TEXT,
     },
     {
-      tableName: 'bill',
-      timestamps: false,
+      tableName: 'authorship',
     },
   );
 
@@ -35,6 +34,7 @@ module.exports = function (sequelize, DataTypes) {
     BillAuthorship.belongsTo(CongresspersonModel, {
       foreignKey: 'congressperson_id',
       targetKey: 'cv_id',
+      as: 'congressperson',
     });
 
     /**

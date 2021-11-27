@@ -20,7 +20,7 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: 'bill',
+      tableName: 'grouped_initiative',
       timestamps: false,
     },
   );
@@ -34,10 +34,11 @@ module.exports = function (sequelize, DataTypes) {
     BillGrouped.belongsTo(BillModel, {
       foreignKey: 'grouped_initiative',
       targetKey: 'id',
+      as: 'bill',
     });
 
     /**
-     * Super Many-to-many relationships
+     * Super Manybill-to-many relationships
      * See: https://sequelize.org/master/manual/advanced-many-to-many.html#the-best-of-both-worlds--the-super-many-to-many-relationship
      */
   };

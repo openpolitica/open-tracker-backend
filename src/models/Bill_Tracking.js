@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
       },
       date: DataTypes.DATE,
       details: DataTypes.TEXT,
-      committe_id: {
+      committee_id: {
         type: DataTypes.UUID,
         allowNull: true,
         references: {
@@ -23,7 +23,7 @@ module.exports = function (sequelize, DataTypes) {
       status: DataTypes.TEXT,
     },
     {
-      tableName: 'bill',
+      tableName: 'tracking',
       timestamps: false,
     },
   );
@@ -35,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     BillTracking.belongsTo(CommitteeModel, {
-      foreignKey: 'committe_id',
+      foreignKey: 'committee_id',
       targetKey: 'committee_id',
       as: 'committee',
     });

@@ -80,6 +80,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Committee.belongsToMany(BillModel, {
+      as: 'bill',
       through: BillTrackingModel,
       foreignKey: 'committee_id',
       otherKey: 'id',

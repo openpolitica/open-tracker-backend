@@ -23,7 +23,7 @@ module.exports = function (sequelize, DataTypes) {
       last_status: DataTypes.TEXT,
       title: DataTypes.TEXT,
       summary: DataTypes.TEXT,
-      last_committe_id: {
+      last_committee_id: {
         type: DataTypes.UUID,
         allowNull: true,
         references: {
@@ -50,9 +50,9 @@ module.exports = function (sequelize, DataTypes) {
     CommitteeModel,
   }) {
     Bill.belongsTo(CommitteeModel, {
-      foreignKey: 'last_committe_id',
+      foreignKey: 'last_committee_id',
       targetKey: 'committee_id',
-      as: 'committee',
+      as: 'last_committee',
     });
 
     Bill.belongsTo(ParliamentaryGroupModel, {
@@ -63,25 +63,35 @@ module.exports = function (sequelize, DataTypes) {
 
     Bill.belongsToMany(CommitteeModel, {
       through: BillTrackingModel,
-      foreignKey: 'id',
+      foreignKey: 'bill_id',
       otherKey: 'committee_id',
+      as: 'associated_committee',
     });
 
     Bill.hasMany(BillTrackingModel, {
       foreignKey: 'bill_id',
       sourceKey: 'id',
+      as: 'tracking',
     });
 
     Bill.hasMany(BillGroupedModel, {
       foreignKey: 'bill_id',
       sourceKey: 'id',
+      as: 'grouped_initiative',
     });
 
     Bill.belongsToMany(BillModel, {
       through: BillGroupedModel,
-      foreignKey: 'id',
+      foreignKey: 'bill_id',
+      otherKey: 'grouped_initiative',
+      as: 'bill',
+    });
+
+    Bill.belongsToMany(BillModel, {
+      through: BillGroupedModel,
+      foreignKey: 'grouped_initiative',
       otherKey: 'bill_id',
-      as: 'grouped_initiative',
+      as: 'associated',
     });
 
     Bill.hasMany(BillGroupedModel, {
@@ -90,14 +100,16 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Bill.belongsToMany(CongresspersonModel, {
+      as: 'congressperson',
       through: BillAuthorshipModel,
-      foreignKey: 'id',
+      foreignKey: 'bill_id',
       otherKey: 'cv_id',
     });
 
     Bill.hasMany(BillAuthorshipModel, {
       foreignKey: 'bill_id',
       sourceKey: 'id',
+      as: 'authorship',
     });
   };
 

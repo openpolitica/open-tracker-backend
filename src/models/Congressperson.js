@@ -209,14 +209,15 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Congressperson.belongsToMany(BillModel, {
+      as: 'bill',
       through: BillAuthorshipModel,
-      foreignKey: 'cv_id',
-      otherKey: 'id',
+      foreignKey: 'congressperson_id',
     });
 
     Congressperson.hasMany(BillAuthorshipModel, {
       foreignKey: 'congressperson_id',
       sourceKey: 'cv_id',
+      as: 'authorship',
     });
   };
 
