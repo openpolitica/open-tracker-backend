@@ -20,6 +20,11 @@ module.exports = function setupCongresistaService({
   PlenaryModel,
   CongresspersonXParliamentaryGroupModel,
   CongresspersonXPartyModel,
+  CommitteeModel,
+  CommitteeTypeModel,
+  CongresspersonXCommitteeModel,
+  BillModel,
+  BillAuthorshipModel,
   SocialNetworkModel,
   SocialNetworkXCongresspersonModel,
 }) {
@@ -169,8 +174,37 @@ module.exports = function setupCongresistaService({
             model: PlenaryModel,
             as: 'plenary',
           },
+          {
+            model: CongresspersonXCommitteeModel,
+            as: 'committees',
+            include: [
+              {
+                model: CommitteeModel,
+                as: 'committee',
+                include: [
+                  {
+                    model: CommitteeTypeModel,
+                    as: 'committee_type',
+                  },
+                ],
+              },
+              { model: RoleModel, as: 'role_detail' },
+            ],
+          },
+          {
+            model: BillAuthorshipModel,
+            as: 'bills',
+            include: [
+              {
+                model: BillModel,
+                as: 'bill',
+              },
+            ],
+          },
         ],
         order: [
+          ['bills', 'authorship_type', 'ASC'],
+          ['bills', 'bill', 'presentation_date', 'DESC'],
           ['id_name', 'ASC'],
           ['id_first_surname', 'ASC'],
           ['id_second_surname', 'ASC'],

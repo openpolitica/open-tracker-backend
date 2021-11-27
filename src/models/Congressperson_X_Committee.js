@@ -34,6 +34,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'committee_x_congressperson',
+      timestamps: false,
     },
   );
 
@@ -51,6 +52,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson_x_Committee.belongsTo(CommitteeModel, {
       foreignKey: 'committee_id',
       targetKey: 'committee_id',
+      as: 'committee',
     });
 
     Congressperson_x_Committee.belongsTo(RoleModel, {

@@ -133,6 +133,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson.hasMany(CongresspersonXCommitteeModel, {
       foreignKey: 'cv_id',
       sourceKey: 'cv_id',
+      as: 'committees',
     });
 
     Congressperson.belongsToMany(ParliamentaryGroupModel, {
@@ -217,7 +218,7 @@ module.exports = function (sequelize, DataTypes) {
     Congressperson.hasMany(BillAuthorshipModel, {
       foreignKey: 'congressperson_id',
       sourceKey: 'cv_id',
-      as: 'authorship',
+      as: 'bills',
     });
   };
 

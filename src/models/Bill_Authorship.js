@@ -22,6 +22,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       tableName: 'authorship',
+      timestamps: false,
     },
   );
 
@@ -29,6 +30,7 @@ module.exports = function (sequelize, DataTypes) {
     BillAuthorship.belongsTo(BillModel, {
       foreignKey: 'bill_id',
       targetKey: 'id',
+      as: 'bill',
     });
 
     BillAuthorship.belongsTo(CongresspersonModel, {
