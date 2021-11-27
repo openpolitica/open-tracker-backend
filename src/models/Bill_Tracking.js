@@ -32,6 +32,7 @@ module.exports = function (sequelize, DataTypes) {
     BillTracking.belongsTo(BillModel, {
       foreignKey: 'bill_id',
       targetKey: 'id',
+      as: 'bill',
     });
 
     BillTracking.belongsTo(CommitteeModel, {

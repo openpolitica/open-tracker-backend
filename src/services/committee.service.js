@@ -10,6 +10,8 @@ module.exports = function setupCommitteeService({
   CongresspersonModel,
   CommitteeModel,
   RoleModel,
+  BillModel,
+  BillTrackingModel,
   LocationModel,
   CommitteeTypeModel,
   PlenaryModel,
@@ -41,8 +43,15 @@ module.exports = function setupCommitteeService({
             // active congresspeople
             required: false,
           },
+          {
+            model: CommitteeTypeModel,
+            as: 'committee_type',
+          },
         ],
-        group: ['CommitteeModel.committee_id'],
+        group: [
+          'CommitteeModel.committee_id',
+          'committee_type.committee_type_id',
+        ],
         order: [['committee_name', 'ASC']],
       });
       return baseService.getServiceResponse(200, 'Success', committeeList);
@@ -103,6 +112,22 @@ module.exports = function setupCommitteeService({
                 as: 'parliamentary_group',
               },
               { model: RoleModel, as: 'role_detail' },
+            ],
+          },
+          {
+            model: BillModel,
+            as: 'current_bills',
+            separate: true,
+          },
+          {
+            model: BillTrackingModel,
+            as: 'all_bills',
+            separate: true,
+            include: [
+              {
+                model: BillModel,
+                as: 'bill',
+              },
             ],
           },
         ],

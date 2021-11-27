@@ -74,21 +74,22 @@ module.exports = function (sequelize, DataTypes) {
       as: 'congresspeople',
     });
 
-    Committee.hasOne(BillModel, {
+    Committee.hasMany(BillModel, {
       foreignKey: 'last_committee_id',
       sourceKey: 'committee_id',
+      as: 'current_bills',
     });
 
     Committee.belongsToMany(BillModel, {
       as: 'bill',
       through: BillTrackingModel,
       foreignKey: 'committee_id',
-      otherKey: 'id',
     });
 
     Committee.hasMany(BillTrackingModel, {
       foreignKey: 'committee_id',
       sourceKey: 'committee_id',
+      as: 'all_bills',
     });
   };
 
