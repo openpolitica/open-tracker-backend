@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
           key: 'cv_id',
         },
       },
-      ballot_sat: DataTypes.INTEGER,
+      ballots_sat: DataTypes.INTEGER,
       driver_license: DataTypes.TEXT,
       servir_sanction_registry: DataTypes.TEXT,
       servir_sanction_institution: DataTypes.TEXT,

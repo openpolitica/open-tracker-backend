@@ -7,6 +7,7 @@ const setupLocationService = require('./location.service');
 const setupCommitteeService = require('./committee.service');
 const setupParliamentaryGroupService = require('./parliamentary-group.service');
 const setupSearchService = require('./search.service');
+const setupBillService = require('./bill.service');
 
 module.exports = async function () {
   const congresspersonService = setupCongresspersonService(models);
@@ -14,6 +15,7 @@ module.exports = async function () {
   const committeeService = setupCommitteeService(models);
   const parliamentaryGroupService = setupParliamentaryGroupService(models);
   const searchService = setupSearchService(models);
+  const billService = setupBillService(models);
 
   return {
     congresspersonService,
@@ -21,5 +23,6 @@ module.exports = async function () {
     committeeService,
     parliamentaryGroupService,
     searchService,
+    billService,
   };
 };

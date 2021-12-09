@@ -36,6 +36,8 @@ module.exports = function (sequelize, DataTypes) {
     CommitteeTypeModel,
     ParliamentaryGroupXCommitteeModel,
     CongresspersonXCommitteeModel,
+    BillModel,
+    BillTrackingModel,
   }) {
     Committee.belongsTo(CommitteeTypeModel, {
       foreignKey: 'committee_type_id',
@@ -52,6 +54,7 @@ module.exports = function (sequelize, DataTypes) {
       through: ParliamentaryGroupXCommitteeModel,
       foreignKey: 'committee_id',
       otherKey: 'parliamentary_group_id',
+      as: 'parliamentary_group',
     });
 
     Committee.hasMany(ParliamentaryGroupXCommitteeModel, {
@@ -70,6 +73,24 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: 'committee_id',
       sourceKey: 'committee_id',
       as: 'congresspeople',
+    });
+
+    Committee.hasMany(BillModel, {
+      foreignKey: 'last_committee_id',
+      sourceKey: 'committee_id',
+      as: 'current_bills',
+    });
+
+    Committee.belongsToMany(BillModel, {
+      as: 'bill',
+      through: BillTrackingModel,
+      foreignKey: 'committee_id',
+    });
+
+    Committee.hasMany(BillTrackingModel, {
+      foreignKey: 'committee_id',
+      sourceKey: 'committee_id',
+      as: 'all_bills',
     });
   };
 
