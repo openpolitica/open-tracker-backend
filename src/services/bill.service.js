@@ -15,9 +15,13 @@ module.exports = function setupBillService({
 }) {
   let baseService = new setupBaseService();
 
-  async function doGetBillList() {
+  async function doGetBillList({ page, pageSize }) {
     try {
-      const billList = await BillModel.findAll({
+      let pageNumber = page ? page : 0;
+      let pageSizeElements = pageSize ? pageSize : 10;
+      const billList = await BillModel.findAndCountAll({
+        offset: pageNumber * pageSizeElements,
+        limit: pageSizeElements,
         include: [
           {
             model: CommitteeModel,
@@ -52,7 +56,16 @@ module.exports = function setupBillService({
         ],
         order: [['presentation_date', 'DESC']],
       });
-      return baseService.getServiceResponse(200, 'Success', billList);
+
+      let totalPages = Math.ceil(billList.count / pageSizeElements);
+      return baseService.getServiceResponse(
+        200,
+        'Success',
+        billList.rows,
+        totalPages,
+        billList.count,
+        pageNumber < totalPages - 1,
+      );
     } catch (err) {
       console.error('Error: ', err);
       return baseService.getServiceResponse(500, err.message);

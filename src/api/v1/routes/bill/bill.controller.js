@@ -18,6 +18,9 @@ const getBillList = async (request, response) => {
     responseData = baseController.getSuccessResponse(
       serviceResponse.data,
       serviceResponse.message,
+      serviceResponse.totalPages,
+      serviceResponse.totalElements,
+      serviceResponse.hasNext,
     );
   } catch (error) {
     responseData = baseController.getErrorResponse(
