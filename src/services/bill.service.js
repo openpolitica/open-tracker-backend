@@ -1,4 +1,6 @@
 'use strict';
+const sequelize = require('sequelize');
+const { Op } = require('sequelize');
 
 const setupBaseService = require('./base.service');
 
@@ -17,11 +19,55 @@ module.exports = function setupBillService({
 }) {
   let baseService = new setupBaseService();
 
-  async function doGetBillList({ page, pageSize }) {
+  async function doGetBillList({
+    page,
+    pageSize,
+    legislature,
+    billStatus,
+    committee,
+  }) {
     try {
       let pageNumber = page ? page : 0;
       let pageSizeElements = pageSize ? pageSize : 10;
+      let where_and = [];
+      if (legislature) {
+        where_and.push(
+          sequelize.where(
+            sequelize.col('legislature.legislature_order'),
+            Op.eq,
+            legislature,
+          ),
+        );
+      }
+
+      if (billStatus) {
+        where_and.push(
+          sequelize.where(
+            sequelize.col('last_status.bill_status_slug'),
+            Op.eq,
+            billStatus,
+          ),
+        );
+      }
+
+      if (committee) {
+        where_and.push(
+          sequelize.where(
+            sequelize.col('last_committee.committee_slug'),
+            Op.eq,
+            committee,
+          ),
+        );
+      }
+
+      let where = where_and
+        ? {
+            [Op.and]: where_and,
+          }
+        : {};
+
       const billList = await BillModel.findAndCountAll({
+        where,
         offset: pageNumber * pageSizeElements,
         limit: pageSizeElements,
         include: [
