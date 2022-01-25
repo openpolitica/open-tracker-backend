@@ -65,6 +65,23 @@ module.exports = function setupBillService({
               ['congressperson', 'id_second_surname', 'ASC'],
             ],
           },
+          {
+            model: BillTrackingModel,
+            as: 'tracking',
+            attributes: ['date', 'details'],
+            separate: true,
+            include: [
+              {
+                model: CommitteeModel,
+                as: 'committee',
+              },
+              {
+                model: BillStatusModel,
+                as: 'status',
+              },
+            ],
+            order: [['date', 'DESC']],
+          },
         ],
         order: [['presentation_date', 'DESC']],
       });
