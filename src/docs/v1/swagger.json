@@ -39,6 +39,14 @@
       "description": "Endpoints to retrieve information about bill"
     },
     {
+      "name": "BillStatus",
+      "description": "Endpoints to retrieve information about bill-status"
+    },
+    {
+      "name": "Legislature",
+      "description": "Endpoints to retrieve information about legislature"
+    },
+    {
       "name": "Committee",
       "description": "Endpoints to retrieve information about committee"
     },
@@ -358,12 +366,211 @@
       }
     },
 
+    "/api/bill-status": {
+      "get": {
+        "tags" : [ "BillStatus" ],
+        "summary": "Returns information about bill status. If a query parameter is not defined, returns the complete list of bill status. Otherwise return the information about a specific bill status. Accepts 'slug' as a parameter.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "slug",
+            "description": "Slug for a specific bill status",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/bill-status/{slug}": {
+      "get": {
+        "tags" : [ "BillStatus" ],
+        "summary": "Returns information about a specific bill status using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]|[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific location.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/bill-status/{id}": {
+      "get": {
+        "tags" : [ "BillStatus" ],
+        "summary": "Returns information about a specific bill status using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Number identificator of a specific location.",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/legislature": {
+      "get": {
+        "tags" : [ "Legislature" ],
+        "summary": "Returns information about legislature. If a query parameter is not defined, returns the complete list of legislature. Otherwise return the information about a specific legislature. Accepts 'slug' as a parameter.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "slug",
+            "description": "Slug for a specific legislature",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/legislature/{slug}": {
+      "get": {
+        "tags" : [ "Legislature" ],
+        "summary": "Returns information about a specific legislature using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]|[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific location.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/legislature/{id}": {
+      "get": {
+        "tags" : [ "Legislature" ],
+        "summary": "Returns information about a specific legislature using the id value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Number identificator of a specific location.",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
     "/api/bill": {
       "get": {
         "tags" : [ "Bill" ],
         "summary": "Returns the complete list of committees.",
         "consumes": ["application/json"],
         "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "description": "Size of the page",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Number of the page to retrieve. Starts at 0",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "legislature",
+            "description": "Legislature order number",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "billStatus",
+            "description": "Slug for the bill status",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "committee",
+            "description": "Slug for the committee",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
