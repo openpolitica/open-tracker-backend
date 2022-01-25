@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
       legislature_name: DataTypes.TEXT,
       legislature_period: DataTypes.TEXT,
       legislature_slug: DataTypes.TEXT,
+      legislature_order: DataTypes.TEXT,
     },
     {
       tableName: 'legislature',

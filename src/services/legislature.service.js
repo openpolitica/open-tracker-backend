@@ -28,7 +28,7 @@ module.exports = function setupLegislatureService({
           },
         ],
         group: ['LegislatureModel.legislature_id'],
-        order: [['legislature_name', 'ASC']],
+        order: [['legislature_order', 'DESC']],
       });
       return baseService.getServiceResponse(200, 'Success', legislatureList);
     } catch (err) {
@@ -52,7 +52,7 @@ module.exports = function setupLegislatureService({
             as: 'bill',
             //Separate query for join, if it's not used, trims the response fields
             separate: true,
-            order: [['presentation_date', 'ASC']],
+            order: [['number', 'DESC']],
           },
         ],
       });
