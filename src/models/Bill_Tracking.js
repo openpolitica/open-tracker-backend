@@ -20,7 +20,14 @@ module.exports = function (sequelize, DataTypes) {
           key: 'committee_id',
         },
       },
-      status: DataTypes.TEXT,
+      status_id: {
+        type: DataTypes.UUID,
+        allowNull: true,
+        references: {
+          model: 'BillStatusModel',
+          key: 'bill_status_id',
+        },
+      },
     },
     {
       tableName: 'tracking',
@@ -28,7 +35,11 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  BillTracking.associate = function ({ BillModel, CommitteeModel }) {
+  BillTracking.associate = function ({
+    BillModel,
+    BillStatusModel,
+    CommitteeModel,
+  }) {
     BillTracking.belongsTo(BillModel, {
       foreignKey: 'bill_id',
       targetKey: 'id',
@@ -39,6 +50,12 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: 'committee_id',
       targetKey: 'committee_id',
       as: 'committee',
+    });
+
+    BillTracking.belongsTo(BillStatusModel, {
+      foreignKey: 'status_id',
+      targetKey: 'bill_status_id',
+      as: 'status',
     });
 
     /**

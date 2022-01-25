@@ -6,6 +6,8 @@ module.exports = function setupBillService({
   ParliamentaryGroupModel,
   CongresspersonModel,
   BillModel,
+  BillStatusModel,
+  LegislatureModel,
   BillAuthorshipModel,
   BillTrackingModel,
   BillGroupedModel,
@@ -26,6 +28,16 @@ module.exports = function setupBillService({
           {
             model: CommitteeModel,
             as: 'last_committee',
+            required: false,
+          },
+          {
+            model: LegislatureModel,
+            as: 'legislature',
+            required: false,
+          },
+          {
+            model: BillStatusModel,
+            as: 'last_status',
             required: false,
           },
           {
@@ -83,8 +95,16 @@ module.exports = function setupBillService({
             as: 'last_committee',
           },
           {
+            model: LegislatureModel,
+            as: 'legislature',
+          },
+          {
             model: ParliamentaryGroupModel,
             as: 'parliamentary_group',
+          },
+          {
+            model: BillStatusModel,
+            as: 'last_status',
           },
           {
             model: BillAuthorshipModel,
@@ -118,12 +138,16 @@ module.exports = function setupBillService({
           {
             model: BillTrackingModel,
             as: 'tracking',
-            attributes: ['date', 'details', 'status'],
+            attributes: ['date', 'details'],
             separate: true,
             include: [
               {
                 model: CommitteeModel,
                 as: 'committee',
+              },
+              {
+                model: BillStatusModel,
+                as: 'status',
               },
             ],
             order: [['date', 'DESC']],
