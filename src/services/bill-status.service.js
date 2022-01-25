@@ -4,7 +4,6 @@ const setupBaseService = require('./base.service');
 const { Sequelize } = require('sequelize');
 
 module.exports = function setupLegislatureService({
-  LegislatureModel,
   BillModel,
   BillStatusModel,
 }) {
