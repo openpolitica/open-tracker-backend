@@ -9,7 +9,14 @@ module.exports = function (sequelize, DataTypes) {
       period: DataTypes.TEXT,
       number: DataTypes.INTEGER,
       period_number: DataTypes.TEXT,
-      legislature: DataTypes.TEXT,
+      legislature_id: {
+        type: DataTypes.UUID,
+        allowNull: true,
+        references: {
+          model: 'LegislatureModel',
+          key: 'legislature_id',
+        },
+      },
       presentation_date: DataTypes.DATE,
       proponent: DataTypes.TEXT,
       parliamentary_group_id: {
@@ -20,7 +27,6 @@ module.exports = function (sequelize, DataTypes) {
           key: 'parliamentary_group_id',
         },
       },
-      last_status: DataTypes.TEXT,
       title: DataTypes.TEXT,
       summary: DataTypes.TEXT,
       last_committee_id: {
@@ -29,6 +35,14 @@ module.exports = function (sequelize, DataTypes) {
         references: {
           model: 'CommitteeModel',
           key: 'committee_id',
+        },
+      },
+      last_status_id: {
+        type: DataTypes.UUID,
+        allowNull: true,
+        references: {
+          model: 'BillStatusModel',
+          key: 'bill_status_id',
         },
       },
       file_url: DataTypes.TEXT,
@@ -42,10 +56,12 @@ module.exports = function (sequelize, DataTypes) {
 
   Bill.associate = function ({
     BillModel,
+    BillStatusModel,
     BillAuthorshipModel,
     CongresspersonModel,
     BillTrackingModel,
     BillGroupedModel,
+    LegislatureModel,
     ParliamentaryGroupModel,
     CommitteeModel,
   }) {
@@ -53,6 +69,18 @@ module.exports = function (sequelize, DataTypes) {
       foreignKey: 'last_committee_id',
       targetKey: 'committee_id',
       as: 'last_committee',
+    });
+
+    Bill.belongsTo(BillStatusModel, {
+      foreignKey: 'last_status_id',
+      targetKey: 'bill_status_id',
+      as: 'last_status',
+    });
+
+    Bill.belongsTo(LegislatureModel, {
+      foreignKey: 'legislature_id',
+      targetKey: 'legislature_id',
+      as: 'legislature',
     });
 
     Bill.belongsTo(ParliamentaryGroupModel, {

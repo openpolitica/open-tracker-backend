@@ -8,6 +8,8 @@ const setupCommitteeService = require('./committee.service');
 const setupParliamentaryGroupService = require('./parliamentary-group.service');
 const setupSearchService = require('./search.service');
 const setupBillService = require('./bill.service');
+const setupLegislatureService = require('./legislature.service');
+const setupBillStatusService = require('./bill-status.service');
 
 module.exports = async function () {
   const congresspersonService = setupCongresspersonService(models);
@@ -16,6 +18,8 @@ module.exports = async function () {
   const parliamentaryGroupService = setupParliamentaryGroupService(models);
   const searchService = setupSearchService(models);
   const billService = setupBillService(models);
+  const legislatureService = setupLegislatureService(models);
+  const billStatusService = setupBillStatusService(models);
 
   return {
     congresspersonService,
@@ -24,5 +28,7 @@ module.exports = async function () {
     parliamentaryGroupService,
     searchService,
     billService,
+    billStatusService,
+    legislatureService,
   };
 };

@@ -20,6 +20,10 @@ module.exports = async function serviceContainer(serviceName) {
       return services.parliamentaryGroupService;
     case 'bill':
       return services.billService;
+    case 'bill-status':
+      return services.billStatusService;
+    case 'legislature':
+      return services.legislatureService;
     case 'search':
       return services.searchService;
   }

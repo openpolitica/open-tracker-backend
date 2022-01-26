@@ -1,4 +1,6 @@
 'use strict';
+const sequelize = require('sequelize');
+const { Op } = require('sequelize');
 
 const setupBaseService = require('./base.service');
 
@@ -6,6 +8,8 @@ module.exports = function setupBillService({
   ParliamentaryGroupModel,
   CongresspersonModel,
   BillModel,
+  BillStatusModel,
+  LegislatureModel,
   BillAuthorshipModel,
   BillTrackingModel,
   BillGroupedModel,
@@ -15,17 +19,71 @@ module.exports = function setupBillService({
 }) {
   let baseService = new setupBaseService();
 
-  async function doGetBillList({ page, pageSize }) {
+  async function doGetBillList({
+    page,
+    pageSize,
+    legislature,
+    billStatus,
+    committee,
+  }) {
     try {
       let pageNumber = page ? page : 0;
       let pageSizeElements = pageSize ? pageSize : 10;
+      let where_and = [];
+      if (legislature) {
+        where_and.push(
+          sequelize.where(
+            sequelize.col('legislature.legislature_order'),
+            Op.eq,
+            legislature,
+          ),
+        );
+      }
+
+      if (billStatus) {
+        where_and.push(
+          sequelize.where(
+            sequelize.col('last_status.bill_status_slug'),
+            Op.eq,
+            billStatus,
+          ),
+        );
+      }
+
+      if (committee) {
+        where_and.push(
+          sequelize.where(
+            sequelize.col('last_committee.committee_slug'),
+            Op.eq,
+            committee,
+          ),
+        );
+      }
+
+      let where = where_and
+        ? {
+            [Op.and]: where_and,
+          }
+        : {};
+
       const billList = await BillModel.findAndCountAll({
+        where,
         offset: pageNumber * pageSizeElements,
         limit: pageSizeElements,
         include: [
           {
             model: CommitteeModel,
             as: 'last_committee',
+            required: false,
+          },
+          {
+            model: LegislatureModel,
+            as: 'legislature',
+            required: false,
+          },
+          {
+            model: BillStatusModel,
+            as: 'last_status',
             required: false,
           },
           {
@@ -52,6 +110,23 @@ module.exports = function setupBillService({
               ['congressperson', 'id_first_surname', 'ASC'],
               ['congressperson', 'id_second_surname', 'ASC'],
             ],
+          },
+          {
+            model: BillTrackingModel,
+            as: 'tracking',
+            attributes: ['date', 'details'],
+            separate: true,
+            include: [
+              {
+                model: CommitteeModel,
+                as: 'committee',
+              },
+              {
+                model: BillStatusModel,
+                as: 'status',
+              },
+            ],
+            order: [['date', 'DESC']],
           },
         ],
         order: [['presentation_date', 'DESC']],
@@ -83,8 +158,16 @@ module.exports = function setupBillService({
             as: 'last_committee',
           },
           {
+            model: LegislatureModel,
+            as: 'legislature',
+          },
+          {
             model: ParliamentaryGroupModel,
             as: 'parliamentary_group',
+          },
+          {
+            model: BillStatusModel,
+            as: 'last_status',
           },
           {
             model: BillAuthorshipModel,
@@ -118,12 +201,16 @@ module.exports = function setupBillService({
           {
             model: BillTrackingModel,
             as: 'tracking',
-            attributes: ['date', 'details', 'status'],
+            attributes: ['date', 'details'],
             separate: true,
             include: [
               {
                 model: CommitteeModel,
                 as: 'committee',
+              },
+              {
+                model: BillStatusModel,
+                as: 'status',
               },
             ],
             order: [['date', 'DESC']],
