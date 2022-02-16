@@ -93,7 +93,7 @@ module.exports = function setupCongresistaService({
         : {};
       const congresspersonDetail = await CongresspersonModel.findOne({
         where,
-        benchmack: true,
+        benchmark: true,
         logging: console.log,
         include: [
           {
