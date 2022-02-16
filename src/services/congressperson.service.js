@@ -93,6 +93,8 @@ module.exports = function setupCongresistaService({
         : {};
       const congresspersonDetail = await CongresspersonModel.findOne({
         where,
+        benchmark: true,
+        logging: console.log,
         include: [
           {
             model: ExtraDataModel,
@@ -113,14 +115,6 @@ module.exports = function setupCongresistaService({
           {
             model: ExperienceModel,
             as: 'experience',
-          },
-          {
-            model: GoodsMovableModel,
-            as: 'goods_movable',
-          },
-          {
-            model: GoodsImmovableModel,
-            as: 'goods_immovable',
           },
           {
             model: JudgmentECModel,
@@ -191,23 +185,6 @@ module.exports = function setupCongresistaService({
               { model: RoleModel, as: 'role_detail' },
             ],
           },
-          {
-            model: BillAuthorshipModel,
-            as: 'bills',
-            include: [
-              {
-                model: BillModel,
-                as: 'bill',
-              },
-            ],
-          },
-        ],
-        order: [
-          ['bills', 'authorship_type', 'ASC'],
-          ['bills', 'bill', 'presentation_date', 'DESC'],
-          ['id_name', 'ASC'],
-          ['id_first_surname', 'ASC'],
-          ['id_second_surname', 'ASC'],
         ],
       });
       return baseService.getServiceResponse(
