@@ -27,7 +27,7 @@ module.exports = function setupBillService({
     committee,
   }) {
     try {
-      let pageNumber = page ? page : 0;
+      let pageNumber = page ? (page == 0 ? 1 : page) : 1;
       let pageSizeElements = pageSize ? pageSize : 10;
       let where_and = [];
       if (legislature) {
@@ -68,7 +68,7 @@ module.exports = function setupBillService({
 
       const billList = await BillModel.findAndCountAll({
         where,
-        offset: pageNumber * pageSizeElements,
+        offset: (pageNumber - 1) * pageSizeElements,
         limit: pageSizeElements,
         include: [
           {
