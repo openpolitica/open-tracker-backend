@@ -68,6 +68,7 @@ module.exports = function setupBillService({
 
       const billList = await BillModel.findAndCountAll({
         where,
+        benchmark: true,
         offset: (pageNumber - 1) * pageSizeElements,
         limit: pageSizeElements,
         include: [
@@ -129,7 +130,10 @@ module.exports = function setupBillService({
             order: [['date', 'DESC']],
           },
         ],
-        order: [['presentation_date', 'DESC']],
+        order: [
+          ['presentation_date', 'DESC'],
+          ['number', 'DESC'],
+        ],
       });
 
       let totalPages = Math.ceil(billList.count / pageSizeElements);
