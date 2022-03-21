@@ -30,10 +30,9 @@ module.exports = function setupLegislatureService({
         group: ['LegislatureModel.legislature_id'],
         order: [['legislature_order', 'DESC']],
       });
-      return baseService.getServiceResponse(200, 'Success', legislatureList);
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(legislatureList).getServiceResponse();
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 
@@ -56,10 +55,9 @@ module.exports = function setupLegislatureService({
           },
         ],
       });
-      return baseService.getServiceResponse(200, 'Success', legislatureDetail);
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(legislatureDetail).getServiceResponse();
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 

@@ -1,52 +1,22 @@
-const setupBaseController = require('../base.controller');
-
 //Calling service container
 const serviceContainer = require('../../../../services/service.container');
 
-let baseController = new setupBaseController();
-
-const getCommitteeList = async (request, response) => {
-  let responseCode, responseData;
-
+const getCommitteeList = async (request) => {
   try {
     const committeeService = await serviceContainer('committee');
-    let serviceResponse;
-
-    serviceResponse = await committeeService.doGetCommitteeList(request.query);
-
-    responseCode = serviceResponse.responseCode;
-    responseData = baseController.getSuccessResponse(
-      serviceResponse.data,
-      serviceResponse.message,
-    );
+    return await committeeService.doGetCommitteeList(request.query);
   } catch (error) {
-    responseData = baseController.getErrorResponse(
-      'Error obtaining information',
-    );
+    throw error
   }
-
-  return response.status(responseCode).json(responseData);
 };
 
-const getCommittee = async (request, response) => {
-  let responseCode, responseData;
-
+const getCommittee = async (request) => {
   try {
     const committeeService = await serviceContainer('committee');
-    let serviceResponse = await committeeService.doGetCommittee(request.params);
-
-    responseCode = serviceResponse.responseCode;
-    responseData = baseController.getSuccessResponse(
-      serviceResponse.data,
-      serviceResponse.message,
-    );
+    return await committeeService.doGetCommittee(request.params);
   } catch (error) {
-    responseData = baseController.getErrorResponse(
-      'Error obtaining information',
-    );
+    throw error
   }
-
-  return response.status(responseCode).json(responseData);
 };
 
 module.exports = {

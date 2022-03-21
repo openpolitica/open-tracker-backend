@@ -3,16 +3,18 @@
 const express = require('express');
 const congresspersonController = require('./congressperson.controller');
 
+const expressCallback = require('../../../../helpers/express-callback');
+
 const router = express.Router();
 
-router.get('/', congresspersonController.getCongresspersonList);
+router.get('/', expressCallback(congresspersonController.getCongresspersonList));
 router.get(
   '/:slug([a-z]+(?:-[a-z-]+)*)',
-  congresspersonController.getCongresspersonDetail,
+  expressCallback(congresspersonController.getCongresspersonDetail),
 );
 router.get(
   '/:id([0-9]{0,8})',
-  congresspersonController.getCongresspersonDetail,
+  expressCallback(congresspersonController.getCongresspersonDetail),
 );
 
 module.exports = router;

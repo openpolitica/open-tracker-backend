@@ -137,17 +137,14 @@ module.exports = function setupBillService({
       });
 
       let totalPages = Math.ceil(billList.count / pageSizeElements);
-      return baseService.getServiceResponse(
-        200,
-        'Success',
+      return baseService.setPaginatedResponse(
         billList.rows,
         totalPages,
         billList.count,
         pageNumber < totalPages - 1,
-      );
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      ).getServiceResponse();
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 
@@ -231,10 +228,9 @@ module.exports = function setupBillService({
           },
         ],
       });
-      return baseService.getServiceResponse(200, 'Success', billDetail);
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(billDetail).getServiceResponse();
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 

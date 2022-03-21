@@ -1,58 +1,26 @@
-const setupBaseController = require('../base.controller');
-
 //Calling service container
 const serviceContainer = require('../../../../services/service.container');
 
-let baseController = new setupBaseController();
-
-const getCongresspersonList = async (request, response) => {
-  let responseCode, responseData;
-
+const getCongresspersonList = async (request) => {
   try {
     const congresspersonService = await serviceContainer('congressperson');
-    let serviceResponse;
-
-    serviceResponse = await congresspersonService.doGetCongresspersonList(
+    return await congresspersonService.doGetCongresspersonList(
       request.query,
     );
-
-    responseCode = serviceResponse.responseCode;
-    responseData = baseController.getSuccessResponse(
-      serviceResponse.data,
-      serviceResponse.message,
-    );
   } catch (error) {
-    responseData = baseController.getErrorResponse(
-      'Error obtaining information',
-    );
+    throw error
   }
-
-  return response.status(responseCode).json(responseData);
 };
 
-const getCongresspersonDetail = async (request, response) => {
-  let responseCode, responseData;
-
+const getCongresspersonDetail = async (request) => {
   try {
     const congresspersonService = await serviceContainer('congressperson');
-    let serviceResponse;
-
-    serviceResponse = await congresspersonService.doGetCongresspersonDetail(
+    return await congresspersonService.doGetCongresspersonDetail(
       request.params,
     );
-
-    responseCode = serviceResponse.responseCode;
-    responseData = baseController.getSuccessResponse(
-      serviceResponse.data,
-      serviceResponse.message,
-    );
   } catch (error) {
-    responseData = baseController.getErrorResponse(
-      'Error obtaining information',
-    );
+    throw error
   }
-
-  return response.status(responseCode).json(responseData);
 };
 
 module.exports = {

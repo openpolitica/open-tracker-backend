@@ -30,10 +30,9 @@ module.exports = function setupLegislatureService({
         group: ['BillStatusModel.bill_status_id'],
         order: [['bill_status_name', 'ASC']],
       });
-      return baseService.getServiceResponse(200, 'Success', billStatusList);
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(billStatusList).getServiceResponse();
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 
@@ -56,10 +55,9 @@ module.exports = function setupLegislatureService({
           },
         ],
       });
-      return baseService.getServiceResponse(200, 'Success', billStatusDetail);
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(billStatusDetail).getServiceResponse();
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 
