@@ -137,12 +137,14 @@ module.exports = function setupBillService({
       });
 
       let totalPages = Math.ceil(billList.count / pageSizeElements);
-      return baseService.setPaginatedResponse(
-        billList.rows,
-        totalPages,
-        billList.count,
-        pageNumber < totalPages - 1,
-      ).getServiceResponse();
+      return baseService
+        .setPaginatedResponse(
+          billList.rows,
+          totalPages,
+          billList.count,
+          pageNumber < totalPages - 1,
+        )
+        .getServiceResponse();
     } catch (error) {
       baseService.throwErrorResponse(error);
     }

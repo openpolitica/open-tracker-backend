@@ -1,6 +1,6 @@
 'use strict';
 
-const ApiError = require('../utils/ApiError');
+const ApiError = require('./../utils/ApiError');
 
 class baseService {
   constructor() {
@@ -19,11 +19,8 @@ class baseService {
   }
 
   setPaginationResponse(totalPages, totalElements, hasNext) {
-    this.returnData = { 
-      ...this.returnData, 
-      ...this.pagination 
-    };
-    this.paginated = true
+    this.returnData = { ...this.returnData, ...this.pagination };
+    this.paginated = true;
     this.returnData.totalPages = totalPages;
     this.returnData.totalElements = totalElements;
     this.returnData.hasNext = hasNext;

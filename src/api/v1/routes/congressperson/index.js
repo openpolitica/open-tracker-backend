@@ -7,7 +7,10 @@ const expressCallback = require('../../../../helpers/express-callback');
 
 const router = express.Router();
 
-router.get('/', expressCallback(congresspersonController.getCongresspersonList));
+router.get(
+  '/',
+  expressCallback(congresspersonController.getCongresspersonList),
+);
 router.get(
   '/:slug([a-z]+(?:-[a-z-]+)*)',
   expressCallback(congresspersonController.getCongresspersonDetail),

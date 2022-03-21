@@ -1,7 +1,6 @@
 'use strict';
 
 const setupBaseService = require('./base.service');
-const ApiError = require('../utils/ApiError')
 
 module.exports = function setupCongresistaService({
   CongresspersonModel,
@@ -14,8 +13,6 @@ module.exports = function setupCongresistaService({
   DataECModel,
   EducationModel,
   ExperienceModel,
-  GoodsMovableModel,
-  GoodsImmovableModel,
   JudgmentECModel,
   AffiliationModel,
   PlenaryModel,
@@ -24,8 +21,6 @@ module.exports = function setupCongresistaService({
   CommitteeModel,
   CommitteeTypeModel,
   CongresspersonXCommitteeModel,
-  BillModel,
-  BillAuthorshipModel,
   SocialNetworkModel,
   SocialNetworkXCongresspersonModel,
 }) {
@@ -79,7 +74,7 @@ module.exports = function setupCongresistaService({
         ],
       });
       return baseService.setResponse(congresspersonList).getServiceResponse();
-    } catch (err) {
+    } catch (error) {
       baseService.throwErrorResponse(error);
     }
   }

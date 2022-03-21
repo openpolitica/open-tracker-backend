@@ -1,18 +1,18 @@
-const ApiError = require("../utils/ApiError")
+const ApiError = require('../utils/ApiError');
 
 class ApiResponse {
   constructor() {
-    this.status = ''
-    this.statusCode = 0
-    this.data = []
-    this.message = ''
+    this.status = '';
+    this.statusCode = 0;
+    this.data = [];
+    this.message = '';
   }
 
   setSuccessResponse(apiResponse) {
-    this.status = 'OK'
-    this.statusCode = apiResponse.responseCode
-    this.data = apiResponse.data
-    this.message = apiResponse.message
+    this.status = 'OK';
+    this.statusCode = apiResponse.responseCode;
+    this.data = apiResponse.data;
+    this.message = apiResponse.message;
 
     if (apiResponse.hasPagination) {
       this.totalPages = apiResponse.totalPages;
@@ -22,18 +22,18 @@ class ApiResponse {
   }
 
   setErrorResponse(error) {
-    this.status = 'ERROR'
-    this.statusCode = 500
-    this.data = []
+    this.status = 'ERROR';
+    this.statusCode = 500;
+    this.data = [];
     this.message = error.message;
 
     if (error instanceof ApiError) {
-      this.statusCode = error.httpStatusCode
+      this.statusCode = error.httpStatusCode;
     }
   }
 
   getResponseStatusCode() {
-    return this.statusCode
+    return this.statusCode;
   }
 }
 
