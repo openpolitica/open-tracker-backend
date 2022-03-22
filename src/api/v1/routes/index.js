@@ -1,6 +1,6 @@
 'use strict';
 
-const { router } = require('../../../../helpers/express-callback');
+const { router } = require('../../../helpers/express-callback');
 
 router.use('/congressperson', require('./congressperson'));
 router.use('/location', require('./location'));
