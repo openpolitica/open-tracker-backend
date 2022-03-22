@@ -2,7 +2,10 @@
 
 const parliamentaryGroupController = require('./parliamentary-group.controller');
 
-const { router, controllerHandler } = require('../../../../helpers/express-callback');
+const {
+  router,
+  controllerHandler,
+} = require('../../../../helpers/express-callback');
 
 router.get(
   '/',

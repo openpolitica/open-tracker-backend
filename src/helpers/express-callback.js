@@ -47,8 +47,7 @@ const controllerHandler = function (controller) {
 
 const router = express.Router();
 
-
 module.exports = {
   controllerHandler,
-  router
-}
+  router,
+};

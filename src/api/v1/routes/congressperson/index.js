@@ -2,7 +2,10 @@
 
 const congresspersonController = require('./congressperson.controller');
 
-const { router, controllerHandler }  = require('../../../../helpers/express-callback');
+const {
+  router,
+  controllerHandler,
+} = require('../../../../helpers/express-callback');
 
 router.get(
   '/',

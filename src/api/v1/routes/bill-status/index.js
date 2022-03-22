@@ -2,7 +2,10 @@
 
 const billStatusController = require('./bill-status.controller');
 
-const { router, controllerHandler } = require('../../../../helpers/express-callback');
+const {
+  router,
+  controllerHandler,
+} = require('../../../../helpers/express-callback');
 
 router.get('/', controllerHandler(billStatusController.getBillStatusList));
 router.get(
