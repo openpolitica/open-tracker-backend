@@ -1,9 +1,11 @@
+const express = require('express');
+
 const ApiResponseBuilder = require('./response-builder');
 const defaultHeader = {
   'Content-Type': 'application/json',
 };
 
-module.exports = function makeExpressCallback(controller) {
+const controllerHandler = function (controller) {
   return async (request, response) => {
     const apiRequest = {
       body: request.body,
@@ -42,3 +44,11 @@ module.exports = function makeExpressCallback(controller) {
     }
   };
 };
+
+const router = express.Router();
+
+
+module.exports = {
+  controllerHandler,
+  router
+}

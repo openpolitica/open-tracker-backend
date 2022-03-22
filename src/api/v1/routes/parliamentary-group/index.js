@@ -1,23 +1,20 @@
 'use strict';
 
-const express = require('express');
 const parliamentaryGroupController = require('./parliamentary-group.controller');
 
-const expressCallback = require('../../../../helpers/express-callback');
-
-const router = express.Router();
+const { router, controllerHandler } = require('../../../../helpers/express-callback');
 
 router.get(
   '/',
-  expressCallback(parliamentaryGroupController.getParliamentaryGroupList),
+  controllerHandler(parliamentaryGroupController.getParliamentaryGroupList),
 );
 router.get(
   '/:slug([a-z]+(?:-[a-z-]+)*)',
-  expressCallback(parliamentaryGroupController.getParliamentaryGroup),
+  controllerHandler(parliamentaryGroupController.getParliamentaryGroup),
 );
 router.get(
   '/:id([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})',
-  expressCallback(parliamentaryGroupController.getParliamentaryGroup),
+  controllerHandler(parliamentaryGroupController.getParliamentaryGroup),
 );
 
 module.exports = router;

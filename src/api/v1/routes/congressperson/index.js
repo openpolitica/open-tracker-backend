@@ -1,23 +1,20 @@
 'use strict';
 
-const express = require('express');
 const congresspersonController = require('./congressperson.controller');
 
-const expressCallback = require('../../../../helpers/express-callback');
-
-const router = express.Router();
+const { router, controllerHandler }  = require('../../../../helpers/express-callback');
 
 router.get(
   '/',
-  expressCallback(congresspersonController.getCongresspersonList),
+  controllerHandler(congresspersonController.getCongresspersonList),
 );
 router.get(
   '/:slug([a-z]+(?:-[a-z-]+)*)',
-  expressCallback(congresspersonController.getCongresspersonDetail),
+  controllerHandler(congresspersonController.getCongresspersonDetail),
 );
 router.get(
   '/:id([0-9]{0,8})',
-  expressCallback(congresspersonController.getCongresspersonDetail),
+  controllerHandler(congresspersonController.getCongresspersonDetail),
 );
 
 module.exports = router;

@@ -1,17 +1,14 @@
 'use strict';
 
-const express = require('express');
 const locationController = require('./location.controller');
 
-const expressCallback = require('../../../../helpers/express-callback');
+const { router, controllerHandler } = require('../../../../helpers/express-callback');
 
-const router = express.Router();
-
-router.get('/', expressCallback(locationController.getLocationList));
+router.get('/', controllerHandler(locationController.getLocationList));
 router.get(
   '/:slug([a-z]+|[a-z]+(?:-[a-z-]+)*)',
-  expressCallback(locationController.getLocation),
+  controllerHandler(locationController.getLocation),
 );
-router.get('/:id([0-9]{0,8})', expressCallback(locationController.getLocation));
+router.get('/:id([0-9]{0,8})', controllerHandler(locationController.getLocation));
 
 module.exports = router;
