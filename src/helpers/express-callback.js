@@ -1,5 +1,3 @@
-const express = require('express');
-
 const ApiResponseBuilder = require('./response-builder');
 const defaultHeader = {
   'Content-Type': 'application/json',
@@ -45,9 +43,6 @@ const controllerHandler = function (controller) {
   };
 };
 
-const router = express.Router();
-
 module.exports = {
   controllerHandler,
-  router,
 };

@@ -1,11 +1,11 @@
 'use strict';
 
+const express = require('express');
+const router = express.Router();
+
 const legislatureController = require('./legislature.controller');
 
-const {
-  router,
-  controllerHandler,
-} = require('../../../../helpers/express-callback');
+const { controllerHandler } = require('../../../../helpers/express-callback');
 
 router.get('/', controllerHandler(legislatureController.getLegislatureList));
 router.get(
