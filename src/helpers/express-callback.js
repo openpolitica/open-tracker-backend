@@ -1,4 +1,4 @@
-const responseBuilder = require('./response-builder');
+const ApiResponseBuilder = require('./response-builder');
 const defaultHeader = {
   'Content-Type': 'application/json',
 };
@@ -20,10 +20,12 @@ module.exports = function makeExpressCallback(controller) {
        */
     };
 
+    let responseBuilder = new ApiResponseBuilder();
+
     try {
       const apiResponse = await controller(apiRequest, response);
       let headerResponse = defaultHeader;
-      if (apiResponse && apiResponse.headers) {
+      if (apiResponse.hasHeaders()) {
         headerResponse = apiResponse.headers;
       }
 
@@ -36,7 +38,7 @@ module.exports = function makeExpressCallback(controller) {
       response.type('json');
       response
         .status(responseBuilder.getResponseStatusCode())
-        .send(responseBuilder);
+        .send(responseBuilder.getResponse());
     }
   };
 };

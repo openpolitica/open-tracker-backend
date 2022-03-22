@@ -14,8 +14,9 @@ class baseService {
       totalPages: 0,
       totalElements: 0,
       hasNext: false,
-    }
+    };
     this.paginated = false
+    this.headers = {}
   }
 
   setPaginationResponse(totalPages, totalElements, hasNext) {
@@ -53,8 +54,20 @@ class baseService {
     return this.setResponse(data, message, responseCode)
   }
 
-  getServiceResponse() {
+  setHeaders(headers) {
+    this.headers = headers;
+  }
+
+  hasHeaders() {
+    return !!this.headers;
+  }
+
+  getResponseData() {
     return this.returnData;
+  }
+
+  getServiceResponse() {
+    return this;
   }
 }
 

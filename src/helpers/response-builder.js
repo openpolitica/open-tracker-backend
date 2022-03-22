@@ -1,23 +1,33 @@
 const ApiError = require('../utils/ApiError');
 
-class ApiResponse {
+class ApiResponseBuilder {
   constructor() {
-    this.status = '';
-    this.statusCode = 0;
-    this.data = [];
-    this.message = '';
+    this.response = {
+      status: '',
+      statusCode: 0,
+      data: [],
+      message: ''
+    }
+    this.pagination = {
+      totalPages : 0,
+      totalElements: 0,
+      hasNext: false
+    }
   }
 
-  setSuccessResponse(apiResponse) {
-    this.status = 'OK';
-    this.statusCode = apiResponse.responseCode;
-    this.data = apiResponse.data;
-    this.message = apiResponse.message;
+  setSuccessResponse(response) {
+    let apiResponse = response.getResponseData();
+    
+    this.response.status = 'OK';
+    this.response.statusCode = apiResponse.responseCode;
+    this.response.data = apiResponse.data;
+    this.response.message = apiResponse.message;
 
-    if (apiResponse.hasPagination) {
-      this.totalPages = apiResponse.totalPages;
-      this.totalElements = apiResponse.totalElements;
-      this.hasNext = apiResponse.hasNext;
+    if (response.hasPagination()) {
+      this.response = { ...this.response, ...this.pagination };
+      this.response.totalPages = apiResponse.totalPages;
+      this.response.totalElements = apiResponse.totalElements;
+      this.response.hasNext = apiResponse.hasNext;
     }
   }
 
@@ -33,8 +43,12 @@ class ApiResponse {
   }
 
   getResponseStatusCode() {
-    return this.statusCode;
+    return this.response.statusCode;
+  }
+
+  getResponse() {
+    return this.response;
   }
 }
 
-module.exports = new ApiResponse();
+module.exports = ApiResponseBuilder;
