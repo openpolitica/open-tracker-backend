@@ -30,7 +30,7 @@ module.exports = function setupLegislatureService({
         group: ['BillStatusModel.bill_status_id'],
         order: [['bill_status_name', 'ASC']],
       });
-      return baseService.setResponse(billStatusList).getServiceResponse();
+      return baseService.setResponse(billStatusList);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }
@@ -55,7 +55,7 @@ module.exports = function setupLegislatureService({
           },
         ],
       });
-      return baseService.setResponse(billStatusDetail).getServiceResponse();
+      return baseService.setResponse(billStatusDetail);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }

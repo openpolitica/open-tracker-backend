@@ -39,7 +39,7 @@ module.exports = function setupCongresistaService({
         group: ['LocationModel.ubigeo'],
         order: [['location_name', 'ASC']],
       });
-      return baseService.setResponse(locationList).getServiceResponse();
+      return baseService.setResponse(locationList);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }
@@ -84,7 +84,7 @@ module.exports = function setupCongresistaService({
           },
         ],
       });
-      return baseService.setResponse(locationDetail).getServiceResponse();
+      return baseService.setResponse(locationDetail);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }

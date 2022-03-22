@@ -65,10 +65,6 @@ class baseService {
   getResponseData() {
     return this.returnData;
   }
-
-  getServiceResponse() {
-    return this;
-  }
 }
 
 module.exports = baseService;

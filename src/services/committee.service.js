@@ -54,7 +54,7 @@ module.exports = function setupCommitteeService({
         ],
         order: [['committee_name', 'ASC']],
       });
-      return baseService.setResponse(committeeList).getServiceResponse();
+      return baseService.setResponse(committeeList);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }
@@ -131,7 +131,7 @@ module.exports = function setupCommitteeService({
           },
         ],
       });
-      return baseService.setResponse(committeeDetail).getServiceResponse();
+      return baseService.setResponse(committeeDetail);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }

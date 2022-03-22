@@ -148,7 +148,7 @@ module.exports = function setupCongresistaService({
         parliamentary_group,
         committee,
       };
-      return baseService.setResponse(searchResultList).getServiceResponse();
+      return baseService.setResponse(searchResultList);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }

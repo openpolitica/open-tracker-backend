@@ -30,7 +30,7 @@ module.exports = function setupLegislatureService({
         group: ['LegislatureModel.legislature_id'],
         order: [['legislature_order', 'DESC']],
       });
-      return baseService.setResponse(legislatureList).getServiceResponse();
+      return baseService.setResponse(legislatureList);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }
@@ -55,7 +55,7 @@ module.exports = function setupLegislatureService({
           },
         ],
       });
-      return baseService.setResponse(legislatureDetail).getServiceResponse();
+      return baseService.setResponse(legislatureDetail);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }

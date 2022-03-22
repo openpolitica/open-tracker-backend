@@ -47,8 +47,7 @@ module.exports = function setupCongresistaService({
         order: [['parliamentary_group_name', 'ASC']],
       });
       return baseService
-        .setResponse(parliamentaryGroupList)
-        .getServiceResponse();
+        .setResponse(parliamentaryGroupList);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }
@@ -120,8 +119,7 @@ module.exports = function setupCongresistaService({
         ],
       });
       return baseService
-        .setResponse(parliamentaryGroupDetail)
-        .getServiceResponse();
+        .setResponse(parliamentaryGroupDetail);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }

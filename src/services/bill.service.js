@@ -143,8 +143,7 @@ module.exports = function setupBillService({
           totalPages,
           billList.count,
           pageNumber < totalPages - 1,
-        )
-        .getServiceResponse();
+        );
     } catch (error) {
       baseService.throwErrorResponse(error);
     }
@@ -230,7 +229,7 @@ module.exports = function setupBillService({
           },
         ],
       });
-      return baseService.setResponse(billDetail).getServiceResponse();
+      return baseService.setResponse(billDetail);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }

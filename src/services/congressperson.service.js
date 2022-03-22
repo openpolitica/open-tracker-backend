@@ -73,7 +73,7 @@ module.exports = function setupCongresistaService({
           ['id_second_surname', 'ASC'],
         ],
       });
-      return baseService.setResponse(congresspersonList).getServiceResponse();
+      return baseService.setResponse(congresspersonList);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }
@@ -182,7 +182,7 @@ module.exports = function setupCongresistaService({
           },
         ],
       });
-      return baseService.setResponse(congresspersonDetail).getServiceResponse();
+      return baseService.setResponse(congresspersonDetail);
     } catch (error) {
       baseService.throwErrorResponse(error);
     }
