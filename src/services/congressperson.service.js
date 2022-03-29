@@ -13,8 +13,6 @@ module.exports = function setupCongresistaService({
   DataECModel,
   EducationModel,
   ExperienceModel,
-  GoodsMovableModel,
-  GoodsImmovableModel,
   JudgmentECModel,
   AffiliationModel,
   PlenaryModel,
@@ -23,8 +21,6 @@ module.exports = function setupCongresistaService({
   CommitteeModel,
   CommitteeTypeModel,
   CongresspersonXCommitteeModel,
-  BillModel,
-  BillAuthorshipModel,
   SocialNetworkModel,
   SocialNetworkXCongresspersonModel,
 }) {
@@ -77,10 +73,9 @@ module.exports = function setupCongresistaService({
           ['id_second_surname', 'ASC'],
         ],
       });
-      return baseService.getServiceResponse(200, 'Success', congresspersonList);
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(congresspersonList);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 
@@ -187,14 +182,9 @@ module.exports = function setupCongresistaService({
           },
         ],
       });
-      return baseService.getServiceResponse(
-        200,
-        'Success',
-        congresspersonDetail,
-      );
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(congresspersonDetail);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 

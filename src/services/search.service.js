@@ -2,6 +2,7 @@
 
 const setupBaseService = require('./base.service');
 const { Op, col, fn, Sequelize } = require('sequelize');
+const ApiError = require('../utils/ApiError');
 
 module.exports = function setupCongresistaService({
   CongresspersonModel,
@@ -16,6 +17,10 @@ module.exports = function setupCongresistaService({
 
   async function doGetSearchResultList({ query, limit = 3 }) {
     try {
+      if (!query) {
+        throw new ApiError("Argument 'query' is required", 400);
+      }
+
       const wildcardQuery = '%' + query.replace(/\s+/g, '%') + '%';
 
       const congressperson = await CongresspersonModel.findAll({
@@ -143,10 +148,9 @@ module.exports = function setupCongresistaService({
         parliamentary_group,
         committee,
       };
-      return baseService.getServiceResponse(200, 'Success', searchResultList);
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(searchResultList);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 

@@ -46,14 +46,9 @@ module.exports = function setupCongresistaService({
         group: ['ParliamentaryGroupModel.parliamentary_group_id'],
         order: [['parliamentary_group_name', 'ASC']],
       });
-      return baseService.getServiceResponse(
-        200,
-        'Success',
-        parliamentaryGroupList,
-      );
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(parliamentaryGroupList);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 
@@ -122,14 +117,9 @@ module.exports = function setupCongresistaService({
           },
         ],
       });
-      return baseService.getServiceResponse(
-        200,
-        'Success',
-        parliamentaryGroupDetail,
-      );
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(parliamentaryGroupDetail);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 

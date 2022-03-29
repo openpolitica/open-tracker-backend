@@ -54,10 +54,9 @@ module.exports = function setupCommitteeService({
         ],
         order: [['committee_name', 'ASC']],
       });
-      return baseService.getServiceResponse(200, 'Success', committeeList);
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(committeeList);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 
@@ -132,10 +131,9 @@ module.exports = function setupCommitteeService({
           },
         ],
       });
-      return baseService.getServiceResponse(200, 'Success', committeeDetail);
-    } catch (err) {
-      console.error('Error: ', err);
-      return baseService.getServiceResponse(500, err.message);
+      return baseService.setResponse(committeeDetail);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
     }
   }
 
