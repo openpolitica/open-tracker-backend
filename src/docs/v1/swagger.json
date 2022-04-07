@@ -62,7 +62,7 @@
   "paths": {
     "/api/congressperson": {
       "get": {
-        "tags" : [ "Congressperson" ],
+        "tags": ["Congressperson"],
         "summary": "Returns information about congresspeople. If a query parameter is not defined, returns the complete list of congresspeople. Otherwise return the information about a specific congressperson. Accepts 'id_dni' as a parameter.",
         "parameters": [
           {
@@ -87,7 +87,7 @@
 
     "/api/congressperson/{slug}": {
       "get": {
-        "tags" : [ "Congressperson" ],
+        "tags": ["Congressperson"],
         "summary": "Returns information about a specific congressperson using the slug value as the identificator.",
         "parameters": [
           {
@@ -113,7 +113,7 @@
 
     "/api/congressperson/{id}": {
       "get": {
-        "tags" : [ "Congressperson" ],
+        "tags": ["Congressperson"],
         "summary": "Returns information about a specific congressperson using the id value as the identificator.",
         "parameters": [
           {
@@ -136,9 +136,71 @@
       }
     },
 
+    "/api/congressperson/{slug}/bills": {
+      "get": {
+        "tags": ["Congressperson"],
+        "summary": "Returns the complete list of bills related to a specific congressperson.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific congressperson.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/congressperson/{slug}/bills/legislature/{legislature_slug}": {
+      "get": {
+        "tags": ["Congressperson"],
+        "summary": "Returns the list of bills related to a specific congressperson.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific congressperson.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "legislature_slug",
+            "pattern": "[a-z]|[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific legislature.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
     "/api/location": {
       "get": {
-        "tags" : [ "Location" ],
+        "tags": ["Location"],
         "summary": "Returns information about location. If a query parameter is not defined, returns the complete list of locations. Otherwise return the information about a specific location. Accepts 'ubigeo' as a parameter.",
         "parameters": [
           {
@@ -163,7 +225,7 @@
 
     "/api/location/{slug}": {
       "get": {
-        "tags" : [ "Location" ],
+        "tags": ["Location"],
         "summary": "Returns information about a specific location using the slug value as the identificator.",
         "parameters": [
           {
@@ -189,7 +251,7 @@
 
     "/api/location/{id}": {
       "get": {
-        "tags" : [ "Location" ],
+        "tags": ["Location"],
         "summary": "Returns information about a specific location using the id value as the identificator.",
         "parameters": [
           {
@@ -214,7 +276,7 @@
 
     "/api/parliamentary-group": {
       "get": {
-        "tags" : [ "Parliamentary group" ],
+        "tags": ["Parliamentary group"],
         "summary": "Returns information about parliamentary groups. If a query parameter is not defined, returns the complete list of parliamentary groups. Otherwise return the information about a specific parliamentary group. Accepts 'parliamentary_group_name' as a parameter.",
         "parameters": [
           {
@@ -239,7 +301,7 @@
 
     "/api/parliamentary-group/{slug}": {
       "get": {
-        "tags" : [ "Parliamentary group" ],
+        "tags": ["Parliamentary group"],
         "summary": "Returns information about a specific parliamentary group using the slug value as the identificator.",
         "parameters": [
           {
@@ -265,7 +327,7 @@
 
     "/api/parliamentary-group/{id}": {
       "get": {
-        "tags" : [ "Parliamentary group" ],
+        "tags": ["Parliamentary group"],
         "summary": "Returns information about a specific parliamentary group using the id value as the identificator.",
         "parameters": [
           {
@@ -291,7 +353,7 @@
 
     "/api/committee": {
       "get": {
-        "tags" : [ "Committee" ],
+        "tags": ["Committee"],
         "summary": "Returns information about committee. If a query parameter is not defined, returns the complete list of committees. Otherwise return the information about a specific committee. Accepts 'committee_name' as a parameter.",
         "parameters": [
           {
@@ -316,7 +378,7 @@
 
     "/api/committee/{slug}": {
       "get": {
-        "tags" : [ "Committee" ],
+        "tags": ["Committee"],
         "summary": "Returns information about a specific committee using the slug value as the identificator.",
         "parameters": [
           {
@@ -342,7 +404,7 @@
 
     "/api/committee/{id}": {
       "get": {
-        "tags" : [ "Committee" ],
+        "tags": ["Committee"],
         "summary": "Returns information about a specific committee using the id value as the identificator.",
         "parameters": [
           {
@@ -368,7 +430,7 @@
 
     "/api/bill-status": {
       "get": {
-        "tags" : [ "BillStatus" ],
+        "tags": ["BillStatus"],
         "summary": "Returns information about bill status. If a query parameter is not defined, returns the complete list of bill status. Otherwise return the information about a specific bill status. Accepts 'slug' as a parameter.",
         "parameters": [
           {
@@ -393,7 +455,7 @@
 
     "/api/bill-status/{slug}": {
       "get": {
-        "tags" : [ "BillStatus" ],
+        "tags": ["BillStatus"],
         "summary": "Returns information about a specific bill status using the slug value as the identificator.",
         "parameters": [
           {
@@ -419,7 +481,7 @@
 
     "/api/bill-status/{id}": {
       "get": {
-        "tags" : [ "BillStatus" ],
+        "tags": ["BillStatus"],
         "summary": "Returns information about a specific bill status using the id value as the identificator.",
         "parameters": [
           {
@@ -444,7 +506,7 @@
 
     "/api/legislature": {
       "get": {
-        "tags" : [ "Legislature" ],
+        "tags": ["Legislature"],
         "summary": "Returns information about legislature. If a query parameter is not defined, returns the complete list of legislature. Otherwise return the information about a specific legislature. Accepts 'slug' as a parameter.",
         "parameters": [
           {
@@ -469,14 +531,14 @@
 
     "/api/legislature/{slug}": {
       "get": {
-        "tags" : [ "Legislature" ],
+        "tags": ["Legislature"],
         "summary": "Returns information about a specific legislature using the slug value as the identificator.",
         "parameters": [
           {
             "in": "path",
             "name": "slug",
             "pattern": "[a-z]|[a-z]+(?:-[a-z-]+)*",
-            "description": "URL-friendly name identificator of a specific location.",
+            "description": "URL-friendly name identificator of a specific legislature.",
             "schema": {
               "type": "string"
             },
@@ -495,7 +557,7 @@
 
     "/api/legislature/{id}": {
       "get": {
-        "tags" : [ "Legislature" ],
+        "tags": ["Legislature"],
         "summary": "Returns information about a specific legislature using the id value as the identificator.",
         "parameters": [
           {
@@ -520,11 +582,20 @@
 
     "/api/bill": {
       "get": {
-        "tags" : [ "Bill" ],
+        "tags": ["Bill"],
         "summary": "Returns the complete list of committees.",
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
+          {
+            "in": "query",
+            "name": "author",
+            "description": "Search bills with a specific author",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
           {
             "in": "query",
             "name": "pageSize",
@@ -581,7 +652,7 @@
 
     "/api/bill/{id}": {
       "get": {
-        "tags" : [ "Bill" ],
+        "tags": ["Bill"],
         "summary": "Returns information about a specific bill using the id value as the identificator.",
         "parameters": [
           {
@@ -607,7 +678,7 @@
 
     "/api/search": {
       "get": {
-        "tags" : [ "Search" ],
+        "tags": ["Search"],
         "summary": "Search for a word in multiple tables using 'query' as the word to search on the database. Use the 'limit' query parameter to limit the number of results on the search, if not provided uses 3 as default.",
         "parameters": [
           {

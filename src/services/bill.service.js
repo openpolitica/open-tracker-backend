@@ -25,11 +25,14 @@ module.exports = function setupBillService({
     legislature,
     billStatus,
     committee,
+    author,
   }) {
     try {
       let pageNumber = page ? (page == 0 ? 1 : page) : 1;
       let pageSizeElements = pageSize ? pageSize : 10;
       let where_and = [];
+      let authorship_where = {};
+
       if (legislature) {
         where_and.push(
           sequelize.where(
@@ -60,6 +63,12 @@ module.exports = function setupBillService({
         );
       }
 
+      if (author) {
+        authorship_where = {
+          congressperson_slug: author,
+        };
+      }
+
       let where = where_and
         ? {
             [Op.and]: where_and,
@@ -75,17 +84,17 @@ module.exports = function setupBillService({
           {
             model: CommitteeModel,
             as: 'last_committee',
-            required: false,
+            required: !!committee,
           },
           {
             model: LegislatureModel,
             as: 'legislature',
-            required: false,
+            required: !!legislature,
           },
           {
             model: BillStatusModel,
             as: 'last_status',
-            required: false,
+            required: !!billStatus,
           },
           {
             model: ParliamentaryGroupModel,
@@ -98,11 +107,12 @@ module.exports = function setupBillService({
             attributes: ['authorship_type'],
             //Separate query for join, if it's not used, trims the response fields
             required: false,
-            separate: true,
+            separate: false,
             include: [
               {
                 model: CongresspersonModel,
                 as: 'congressperson',
+                where: authorship_where,
               },
             ],
             order: [

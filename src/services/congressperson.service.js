@@ -1,5 +1,6 @@
 'use strict';
 
+const ApiError = require('../utils/ApiError');
 const setupBaseService = require('./base.service');
 
 module.exports = function setupCongresistaService({
@@ -23,6 +24,8 @@ module.exports = function setupCongresistaService({
   CongresspersonXCommitteeModel,
   SocialNetworkModel,
   SocialNetworkXCongresspersonModel,
+  BillModel,
+  LegislatureModel,
 }) {
   let baseService = new setupBaseService();
 
@@ -188,8 +191,84 @@ module.exports = function setupCongresistaService({
     }
   }
 
+  async function doGetCongresspersonBills({ slug, id }) {
+    const where = slug
+      ? { congressperson_slug: slug }
+      : id
+      ? { cv_id: id }
+      : {};
+
+    try {
+      const congresspersonBills = await CongresspersonModel.findAll({
+        where,
+        attributes: ['cv_id', 'congressperson_slug'],
+        include: [
+          {
+            model: BillModel,
+            as: 'bill',
+            required: true,
+            include: [
+              {
+                model: LegislatureModel,
+                as: 'legislature',
+              },
+            ],
+          },
+        ],
+      });
+      return baseService.setResponse(congresspersonBills);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
+    }
+  }
+
+  async function doGetCongresspersonBillsByLegislature({
+    slug,
+    id,
+    legislature_slug,
+  }) {
+    if (!legislature_slug) {
+      throw new ApiError('Legislature parameter not valid.');
+    }
+
+    const where = slug
+      ? { congressperson_slug: slug }
+      : id
+      ? { cv_id: id }
+      : {};
+
+    try {
+      const congresspersonBillsByLegislature =
+        await CongresspersonModel.findAll({
+          where,
+          attributes: ['cv_id', 'congressperson_slug'],
+          include: [
+            {
+              model: BillModel,
+              as: 'bill',
+              required: true,
+              include: [
+                {
+                  model: LegislatureModel,
+                  as: 'legislature',
+                  where: {
+                    legislature_slug,
+                  },
+                },
+              ],
+            },
+          ],
+        });
+      return baseService.setResponse(congresspersonBillsByLegislature);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
+    }
+  }
+
   return {
     doGetCongresspersonList,
     doGetCongresspersonDetail,
+    doGetCongresspersonBills,
+    doGetCongresspersonBillsByLegislature,
   };
 };
