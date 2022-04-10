@@ -6,18 +6,18 @@ class ApiResponseBuilder {
       status: '',
       statusCode: 0,
       data: [],
-      message: ''
-    }
+      message: '',
+    };
     this.pagination = {
-      totalPages : 0,
+      totalPages: 0,
       totalElements: 0,
-      hasNext: false
-    }
+      hasNext: false,
+    };
   }
 
   setSuccessResponse(response) {
     let apiResponse = response.getResponseData();
-    
+
     this.response.status = 'OK';
     this.response.statusCode = apiResponse.responseCode;
     this.response.data = apiResponse.data;
@@ -32,13 +32,13 @@ class ApiResponseBuilder {
   }
 
   setErrorResponse(error) {
-    this.status = 'ERROR';
-    this.statusCode = 500;
-    this.data = [];
-    this.message = error.message;
+    this.response.status = 'ERROR';
+    this.response.statusCode = 500;
+    this.response.data = [];
+    this.response.message = error.message;
 
     if (error instanceof ApiError) {
-      this.statusCode = error.httpStatusCode;
+      this.response.statusCode = error.httpStatusCode;
     }
   }
 
