@@ -7,7 +7,7 @@ class baseService {
     this.returnData = {
       data: {},
       message: '',
-      responseCode: 200
+      responseCode: 200,
     };
 
     this.pagination = {
@@ -15,8 +15,8 @@ class baseService {
       totalElements: 0,
       hasNext: false,
     };
-    this.paginated = false
-    this.headers = {}
+    this.paginated = false;
+    this.headers = {};
   }
 
   setPaginationResponse(totalPages, totalElements, hasNext) {
@@ -33,7 +33,8 @@ class baseService {
 
   processError(error) {
     console.error('Error: ', error.message);
-    if (process.env.NODE_ENV !== 'production') console.log('StackTrace:\n', error.stack);
+    if (process.env.NODE_ENV !== 'production')
+      console.log('StackTrace:\n', error.stack);
     throw error;
   }
 
@@ -46,12 +47,19 @@ class baseService {
     this.returnData.responseCode = responseCode;
     this.returnData.message = message;
     this.returnData.data = data;
-    return this
+    return this;
   }
 
-  setPaginatedResponse(data, totalPages = 0, totalElements = 0, hasNext = false, message = 'SUCCESS', responseCode = 200) {
-    this.setPaginationResponse(totalPages, totalElements, hasNext)
-    return this.setResponse(data, message, responseCode)
+  setPaginatedResponse(
+    data,
+    totalPages = 0,
+    totalElements = 0,
+    hasNext = false,
+    message = 'SUCCESS',
+    responseCode = 200,
+  ) {
+    this.setPaginationResponse(totalPages, totalElements, hasNext);
+    return this.setResponse(data, message, responseCode);
   }
 
   setHeaders(headers) {
