@@ -13,13 +13,9 @@ const getCongresspersonDetail = async request => {
 
 const getCongresspersonBills = async request => {
   const congresspersonService = await serviceContainer('congressperson');
-  return await congresspersonService.doGetCongresspersonBills(request.params);
-};
-
-const getCongresspersonBillsByLegislature = async request => {
-  const congresspersonService = await serviceContainer('congressperson');
-  return await congresspersonService.doGetCongresspersonBillsByLegislature(
+  return await congresspersonService.doGetCongresspersonBills(
     request.params,
+    request.query,
   );
 };
 
@@ -27,5 +23,4 @@ module.exports = {
   getCongresspersonList,
   getCongresspersonDetail,
   getCongresspersonBills,
-  getCongresspersonBillsByLegislature,
 };

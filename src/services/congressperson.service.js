@@ -191,75 +191,63 @@ module.exports = function setupCongresistaService({
     }
   }
 
-  async function doGetCongresspersonBills({ slug, id }) {
-    const where = slug
-      ? { congressperson_slug: slug }
-      : id
-      ? { cv_id: id }
-      : {};
-
+  async function doGetCongresspersonBills(
+    { slug, id },
+    { page, pageSize, legislatureOrder },
+  ) {
     try {
-      const congresspersonBills = await CongresspersonModel.findAll({
+      if (legislatureOrder && isNaN(legislatureOrder)) {
+        throw new ApiError(
+          'Argument legislatureOrder must be a number and greater than 0.',
+          400,
+        );
+      }
+
+      let pageNumber = page ? (page == 0 ? 1 : parseInt(page)) : 1;
+      let pageSizeElements = pageSize ? parseInt(pageSize) : 10;
+
+      const where = slug
+        ? { congressperson_slug: slug }
+        : id
+        ? { cv_id: id }
+        : {};
+
+      const legislature_where = legislatureOrder
+        ? { legislature_order: legislatureOrder }
+        : null;
+
+      const congresspersonBills = await CongresspersonModel.findAndCountAll({
         where,
         attributes: ['cv_id', 'congressperson_slug'],
+        benchmark: true,
+        offset: (pageNumber - 1) * pageSizeElements,
+        limit: pageSizeElements,
         include: [
           {
             model: BillModel,
             as: 'bill',
             required: true,
+            // If duplicating is not present, the pagination doesn't work
+            duplicating: false,
             include: [
               {
                 model: LegislatureModel,
                 as: 'legislature',
+                where: legislature_where,
               },
             ],
           },
         ],
       });
-      return baseService.setResponse(congresspersonBills);
-    } catch (error) {
-      baseService.throwErrorResponse(error);
-    }
-  }
 
-  async function doGetCongresspersonBillsByLegislature({
-    slug,
-    id,
-    legislature_slug,
-  }) {
-    if (!legislature_slug) {
-      throw new ApiError('Legislature parameter not valid.');
-    }
+      let totalPages = Math.ceil(congresspersonBills.count / pageSizeElements);
 
-    const where = slug
-      ? { congressperson_slug: slug }
-      : id
-      ? { cv_id: id }
-      : {};
-
-    try {
-      const congresspersonBillsByLegislature =
-        await CongresspersonModel.findAll({
-          where,
-          attributes: ['cv_id', 'congressperson_slug'],
-          include: [
-            {
-              model: BillModel,
-              as: 'bill',
-              required: true,
-              include: [
-                {
-                  model: LegislatureModel,
-                  as: 'legislature',
-                  where: {
-                    legislature_slug,
-                  },
-                },
-              ],
-            },
-          ],
-        });
-      return baseService.setResponse(congresspersonBillsByLegislature);
+      return baseService.setPaginatedResponse(
+        congresspersonBills.rows,
+        totalPages,
+        congresspersonBills.count,
+        pageNumber < totalPages - 1,
+      );
     } catch (error) {
       baseService.throwErrorResponse(error);
     }
@@ -269,6 +257,5 @@ module.exports = function setupCongresistaService({
     doGetCongresspersonList,
     doGetCongresspersonDetail,
     doGetCongresspersonBills,
-    doGetCongresspersonBillsByLegislature,
   };
 };

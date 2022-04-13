@@ -139,33 +139,7 @@
     "/api/congressperson/{slug}/bills": {
       "get": {
         "tags": ["Congressperson"],
-        "summary": "Returns the complete list of bills related to a specific congressperson.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "slug",
-            "pattern": "[a-z]+(?:-[a-z-]+)*",
-            "description": "URL-friendly name identificator of a specific congressperson.",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-
-    "/api/congressperson/{slug}/bills/legislature/{legislature_slug}": {
-      "get": {
-        "tags": ["Congressperson"],
-        "summary": "Returns the list of bills related to a specific congressperson.",
+        "summary": "Returns the complete list of bills related to a specific congressperson using the slug value as identificator.",
         "parameters": [
           {
             "in": "path",
@@ -178,14 +152,83 @@
             "required": true
           },
           {
-            "in": "path",
-            "name": "legislature_slug",
-            "pattern": "[a-z]|[a-z]+(?:-[a-z-]+)*",
-            "description": "URL-friendly name identificator of a specific legislature.",
+            "in": "query",
+            "name": "pageSize",
+            "description": "Size of the page",
             "schema": {
-              "type": "string"
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Number of the page to retrieve. Starts at 0",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "legislatureOrder",
+            "description": "Number indicator for a specific legislature.",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/congressperson/{id}/bills": {
+      "get": {
+        "tags": ["Congressperson"],
+        "summary": "Returns the complete list of bills related to a specific congressperson using the id value as identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Number identificator of a specific congressperson.",
+            "schema": {
+              "type": "integer"
             },
             "required": true
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "description": "Size of the page",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Number of the page to retrieve. Starts at 0",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "legislatureOrder",
+            "description": "Number indicator for a specific legislature.",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
           }
         ],
         "consumes": ["application/json"],
@@ -565,7 +608,7 @@
             "name": "id",
             "description": "Number identificator of a specific location.",
             "schema": {
-              "type": "integer"
+              "type": "string"
             },
             "required": true
           }
