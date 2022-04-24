@@ -193,12 +193,12 @@ module.exports = function setupCongresistaService({
 
   async function doGetCongresspersonBills(
     { slug, id },
-    { page, pageSize, legislatureOrder },
+    { page, pageSize, legislature },
   ) {
     try {
-      if (legislatureOrder && isNaN(legislatureOrder)) {
+      if (legislature && isNaN(legislature)) {
         throw new ApiError(
-          'Argument legislatureOrder must be a number and greater than 0.',
+          'Argument legislature must be a number and greater than 0.',
           400,
         );
       }
@@ -212,8 +212,8 @@ module.exports = function setupCongresistaService({
         ? { cv_id: id }
         : {};
 
-      const legislature_where = legislatureOrder
-        ? { legislature_order: legislatureOrder }
+      const legislature_where = legislature
+        ? { legislature_order: legislature }
         : null;
 
       const congresspersonBills = await CongresspersonModel.findAndCountAll({

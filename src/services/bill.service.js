@@ -33,6 +33,28 @@ module.exports = function setupBillService({
       let where_and = [];
       let authorship_where = {};
 
+      // Include statement by default, used when no author parameter is provided
+      let authorship_model_include = {
+        model: BillAuthorshipModel,
+        as: 'authorship',
+        attributes: ['authorship_type'],
+        required: true,
+        //Separate query for join, if it's not used, trims the response fields
+        separate: true,
+        include: [
+          {
+            model: CongresspersonModel,
+            as: 'congressperson',
+          },
+        ],
+        order: [
+          ['authorship_type', 'ASC'],
+          ['congressperson', 'id_name', 'ASC'],
+          ['congressperson', 'id_first_surname', 'ASC'],
+          ['congressperson', 'id_second_surname', 'ASC'],
+        ],
+      };
+
       if (legislature) {
         where_and.push(
           sequelize.where(
@@ -66,6 +88,24 @@ module.exports = function setupBillService({
       if (author) {
         authorship_where = {
           congressperson_slug: author,
+        };
+
+        // Filter the results without affecting the count
+        authorship_model_include = {
+          model: CongresspersonModel,
+          as: 'congressperson',
+          where: authorship_where,
+          through: {
+            attributes: ['authorship_type'],
+            as: 'authorship',
+            separate: false,
+            order: [
+              ['authorship_type', 'ASC'],
+              ['congressperson', 'id_name', 'ASC'],
+              ['congressperson', 'id_first_surname', 'ASC'],
+              ['congressperson', 'id_second_surname', 'ASC'],
+            ],
+          },
         };
       }
 
@@ -101,27 +141,10 @@ module.exports = function setupBillService({
             as: 'parliamentary_group',
             required: false,
           },
-          {
-            model: BillAuthorshipModel,
-            as: 'authorship',
-            attributes: ['authorship_type'],
-            //Separate query for join, if it's not used, trims the response fields
-            required: false,
-            separate: false,
-            include: [
-              {
-                model: CongresspersonModel,
-                as: 'congressperson',
-                where: authorship_where,
-              },
-            ],
-            order: [
-              ['authorship_type', 'ASC'],
-              ['congressperson', 'id_name', 'ASC'],
-              ['congressperson', 'id_first_surname', 'ASC'],
-              ['congressperson', 'id_second_surname', 'ASC'],
-            ],
-          },
+
+          // Authorship model defined by the existence of the 'author' parameter
+          authorship_model_include,
+
           {
             model: BillTrackingModel,
             as: 'tracking',
