@@ -32,28 +32,70 @@ module.exports = function setupBillService({
       let pageSizeElements = pageSize ? pageSize : 10;
       let where_and = [];
       let authorship_where = {};
+      let authorship_model_include = null;
 
-      // Include statement by default, used when no author parameter is provided
-      let authorship_model_include = {
-        model: BillAuthorshipModel,
-        as: 'authorship',
-        attributes: ['authorship_type'],
-        required: true,
-        //Separate query for join, if it's not used, trims the response fields
-        separate: true,
-        include: [
-          {
-            model: CongresspersonModel,
-            as: 'congressperson',
-          },
-        ],
-        order: [
-          ['authorship_type', 'ASC'],
-          ['congressperson', 'id_name', 'ASC'],
-          ['congressperson', 'id_first_surname', 'ASC'],
-          ['congressperson', 'id_second_surname', 'ASC'],
-        ],
-      };
+      let includes = [
+        {
+          model: CommitteeModel,
+          as: 'last_committee',
+          required: !!committee,
+        },
+        {
+          model: LegislatureModel,
+          as: 'legislature',
+          required: !!legislature,
+        },
+        {
+          model: BillStatusModel,
+          as: 'last_status',
+          required: !!billStatus,
+        },
+        {
+          model: ParliamentaryGroupModel,
+          as: 'parliamentary_group',
+          required: false,
+        },
+
+        // Authorship model defined by the existence of the 'author' parameter
+        //
+        {
+          model: BillAuthorshipModel,
+          as: 'authorship',
+          attributes: ['authorship_type'],
+          required: true,
+          //Separate query for join, if it's not used, trims the response fields
+          separate: true,
+          include: [
+            {
+              model: CongresspersonModel,
+              as: 'congressperson',
+            },
+          ],
+          order: [
+            ['authorship_type', 'ASC'],
+            ['congressperson', 'id_name', 'ASC'],
+            ['congressperson', 'id_first_surname', 'ASC'],
+            ['congressperson', 'id_second_surname', 'ASC'],
+          ],
+        },
+        {
+          model: BillTrackingModel,
+          as: 'tracking',
+          attributes: ['date', 'details'],
+          separate: true,
+          include: [
+            {
+              model: CommitteeModel,
+              as: 'committee',
+            },
+            {
+              model: BillStatusModel,
+              as: 'status',
+            },
+          ],
+          order: [['date', 'DESC']],
+        },
+      ];
 
       if (legislature) {
         where_and.push(
@@ -107,6 +149,8 @@ module.exports = function setupBillService({
             ],
           },
         };
+
+        includes.push(authorship_model_include);
       }
 
       let where = where_and
@@ -120,49 +164,7 @@ module.exports = function setupBillService({
         benchmark: true,
         offset: (pageNumber - 1) * pageSizeElements,
         limit: pageSizeElements,
-        include: [
-          {
-            model: CommitteeModel,
-            as: 'last_committee',
-            required: !!committee,
-          },
-          {
-            model: LegislatureModel,
-            as: 'legislature',
-            required: !!legislature,
-          },
-          {
-            model: BillStatusModel,
-            as: 'last_status',
-            required: !!billStatus,
-          },
-          {
-            model: ParliamentaryGroupModel,
-            as: 'parliamentary_group',
-            required: false,
-          },
-
-          // Authorship model defined by the existence of the 'author' parameter
-          authorship_model_include,
-
-          {
-            model: BillTrackingModel,
-            as: 'tracking',
-            attributes: ['date', 'details'],
-            separate: true,
-            include: [
-              {
-                model: CommitteeModel,
-                as: 'committee',
-              },
-              {
-                model: BillStatusModel,
-                as: 'status',
-              },
-            ],
-            order: [['date', 'DESC']],
-          },
-        ],
+        include: includes,
         order: [
           ['presentation_date', 'DESC'],
           ['number', 'DESC'],
