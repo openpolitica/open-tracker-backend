@@ -12,6 +12,14 @@ router.get(
   controllerHandler(congresspersonController.getCongresspersonList),
 );
 router.get(
+  '/:slug([a-z]+(?:-[a-z-]+)*)/bills',
+  controllerHandler(congresspersonController.getCongresspersonBills),
+);
+router.get(
+  '/:id([0-9]{0,8})/bills',
+  controllerHandler(congresspersonController.getCongresspersonBills),
+);
+router.get(
   '/:slug([a-z]+(?:-[a-z-]+)*)',
   controllerHandler(congresspersonController.getCongresspersonDetail),
 );

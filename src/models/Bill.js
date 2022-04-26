@@ -131,7 +131,7 @@ module.exports = function (sequelize, DataTypes) {
       as: 'congressperson',
       through: BillAuthorshipModel,
       foreignKey: 'bill_id',
-      otherKey: 'cv_id',
+      otherKey: 'congressperson_id',
     });
 
     Bill.hasMany(BillAuthorshipModel, {

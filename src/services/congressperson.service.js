@@ -1,5 +1,6 @@
 'use strict';
 
+const ApiError = require('../utils/ApiError');
 const setupBaseService = require('./base.service');
 
 module.exports = function setupCongresistaService({
@@ -23,6 +24,9 @@ module.exports = function setupCongresistaService({
   CongresspersonXCommitteeModel,
   SocialNetworkModel,
   SocialNetworkXCongresspersonModel,
+  BillModel,
+  LegislatureModel,
+  BillAuthorshipModel,
 }) {
   let baseService = new setupBaseService();
 
@@ -188,8 +192,75 @@ module.exports = function setupCongresistaService({
     }
   }
 
+  async function doGetCongresspersonBills(
+    { slug, id },
+    { page, pageSize, legislature },
+  ) {
+    try {
+      if (legislature && isNaN(legislature)) {
+        throw new ApiError(
+          'Argument legislature must be a number and greater than 0.',
+          400,
+        );
+      }
+
+      let pageNumber = page ? (page == 0 ? 1 : parseInt(page)) : 1;
+      let pageSizeElements = pageSize ? parseInt(pageSize) : 10;
+
+      const where = slug
+        ? { congressperson_slug: slug }
+        : id
+        ? { cv_id: id }
+        : {};
+
+      const legislature_where = legislature
+        ? { legislature_order: legislature }
+        : null;
+
+      const congresspersonBills = await CongresspersonModel.findAndCountAll({
+        where,
+        attributes: ['cv_id', 'congressperson_slug'],
+        benchmark: true,
+        offset: (pageNumber - 1) * pageSizeElements,
+        limit: pageSizeElements,
+        include: [
+          {
+            model: BillModel,
+            as: 'bill',
+            required: true,
+            // If duplicating is not present, the pagination doesn't work
+            duplicating: false,
+            include: [
+              {
+                model: LegislatureModel,
+                as: 'legislature',
+                where: legislature_where,
+              },
+            ],
+            through: {
+              as: 'authorship',
+              attributes: ['authorship_type'],
+            },
+          },
+        ],
+      });
+
+      let totalPages = Math.ceil(congresspersonBills.count / pageSizeElements);
+
+      return baseService.setPaginatedResponse(
+        congresspersonBills.rows,
+        totalPages,
+        congresspersonBills.count,
+        pageNumber < totalPages - 1,
+      );
+    } catch (error) {
+      baseService.throwErrorResponse(error);
+    }
+  }
+
   return {
     doGetCongresspersonList,
     doGetCongresspersonDetail,
+    doGetCongresspersonBills,
   };
 };

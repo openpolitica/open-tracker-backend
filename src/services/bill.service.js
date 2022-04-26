@@ -25,11 +25,78 @@ module.exports = function setupBillService({
     legislature,
     billStatus,
     committee,
+    author,
   }) {
     try {
       let pageNumber = page ? (page == 0 ? 1 : page) : 1;
       let pageSizeElements = pageSize ? pageSize : 10;
       let where_and = [];
+      let authorship_where = {};
+      let authorship_model_include = null;
+
+      let includes = [
+        {
+          model: CommitteeModel,
+          as: 'last_committee',
+          required: !!committee,
+        },
+        {
+          model: LegislatureModel,
+          as: 'legislature',
+          required: !!legislature,
+        },
+        {
+          model: BillStatusModel,
+          as: 'last_status',
+          required: !!billStatus,
+        },
+        {
+          model: ParliamentaryGroupModel,
+          as: 'parliamentary_group',
+          required: false,
+        },
+
+        // Authorship model defined by the existence of the 'author' parameter
+        //
+        {
+          model: BillAuthorshipModel,
+          as: 'authorship',
+          attributes: ['authorship_type'],
+          required: true,
+          //Separate query for join, if it's not used, trims the response fields
+          separate: true,
+          include: [
+            {
+              model: CongresspersonModel,
+              as: 'congressperson',
+            },
+          ],
+          order: [
+            ['authorship_type', 'ASC'],
+            ['congressperson', 'id_name', 'ASC'],
+            ['congressperson', 'id_first_surname', 'ASC'],
+            ['congressperson', 'id_second_surname', 'ASC'],
+          ],
+        },
+        {
+          model: BillTrackingModel,
+          as: 'tracking',
+          attributes: ['date', 'details'],
+          separate: true,
+          include: [
+            {
+              model: CommitteeModel,
+              as: 'committee',
+            },
+            {
+              model: BillStatusModel,
+              as: 'status',
+            },
+          ],
+          order: [['date', 'DESC']],
+        },
+      ];
+
       if (legislature) {
         where_and.push(
           sequelize.where(
@@ -60,6 +127,33 @@ module.exports = function setupBillService({
         );
       }
 
+      if (author) {
+        authorship_where = {
+          congressperson_slug: author,
+        };
+
+        // Filter the results without affecting the count
+        authorship_model_include = {
+          model: CongresspersonModel,
+          as: 'congressperson',
+          attributes: [],
+          where: authorship_where,
+          through: {
+            attributes: [],
+            as: 'authorship',
+            separate: false,
+            order: [
+              ['authorship_type', 'ASC'],
+              ['congressperson', 'id_name', 'ASC'],
+              ['congressperson', 'id_first_surname', 'ASC'],
+              ['congressperson', 'id_second_surname', 'ASC'],
+            ],
+          },
+        };
+
+        includes.push(authorship_model_include);
+      }
+
       let where = where_and
         ? {
             [Op.and]: where_and,
@@ -71,65 +165,7 @@ module.exports = function setupBillService({
         benchmark: true,
         offset: (pageNumber - 1) * pageSizeElements,
         limit: pageSizeElements,
-        include: [
-          {
-            model: CommitteeModel,
-            as: 'last_committee',
-            required: false,
-          },
-          {
-            model: LegislatureModel,
-            as: 'legislature',
-            required: false,
-          },
-          {
-            model: BillStatusModel,
-            as: 'last_status',
-            required: false,
-          },
-          {
-            model: ParliamentaryGroupModel,
-            as: 'parliamentary_group',
-            required: false,
-          },
-          {
-            model: BillAuthorshipModel,
-            as: 'authorship',
-            attributes: ['authorship_type'],
-            //Separate query for join, if it's not used, trims the response fields
-            required: false,
-            separate: true,
-            include: [
-              {
-                model: CongresspersonModel,
-                as: 'congressperson',
-              },
-            ],
-            order: [
-              ['authorship_type', 'ASC'],
-              ['congressperson', 'id_name', 'ASC'],
-              ['congressperson', 'id_first_surname', 'ASC'],
-              ['congressperson', 'id_second_surname', 'ASC'],
-            ],
-          },
-          {
-            model: BillTrackingModel,
-            as: 'tracking',
-            attributes: ['date', 'details'],
-            separate: true,
-            include: [
-              {
-                model: CommitteeModel,
-                as: 'committee',
-              },
-              {
-                model: BillStatusModel,
-                as: 'status',
-              },
-            ],
-            order: [['date', 'DESC']],
-          },
-        ],
+        include: includes,
         order: [
           ['presentation_date', 'DESC'],
           ['number', 'DESC'],
