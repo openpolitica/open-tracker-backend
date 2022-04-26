@@ -177,7 +177,7 @@ module.exports = function setupBillService({
         billList.rows,
         totalPages,
         billList.count,
-        pageNumber < totalPages - 1,
+        pageNumber < totalPages,
       );
     } catch (error) {
       baseService.throwErrorResponse(error);

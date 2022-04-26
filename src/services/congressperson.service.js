@@ -251,7 +251,7 @@ module.exports = function setupCongresistaService({
         congresspersonBills.rows,
         totalPages,
         congresspersonBills.count,
-        pageNumber < totalPages - 1,
+        pageNumber < totalPages,
       );
     } catch (error) {
       baseService.throwErrorResponse(error);
