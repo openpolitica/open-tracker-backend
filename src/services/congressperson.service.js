@@ -26,6 +26,7 @@ module.exports = function setupCongresistaService({
   SocialNetworkXCongresspersonModel,
   BillModel,
   LegislatureModel,
+  BillAuthorshipModel,
 }) {
   let baseService = new setupBaseService();
 
@@ -236,6 +237,10 @@ module.exports = function setupCongresistaService({
                 where: legislature_where,
               },
             ],
+            through: {
+              as: 'authorship',
+              attributes: ['authorship_type'],
+            },
           },
         ],
       });

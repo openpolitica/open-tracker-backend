@@ -136,9 +136,10 @@ module.exports = function setupBillService({
         authorship_model_include = {
           model: CongresspersonModel,
           as: 'congressperson',
+          attributes: [],
           where: authorship_where,
           through: {
-            attributes: ['authorship_type'],
+            attributes: [],
             as: 'authorship',
             separate: false,
             order: [
