@@ -57,6 +57,10 @@
     {
       "name": "Search",
       "description": "Endpoints to search in database"
+    },
+    {
+      "name": "Glossary",
+      "description": "Endpoints to retrieve glossary entries in database"
     }
   ],
   "paths": {
@@ -741,6 +745,108 @@
               "type": "integer"
             },
             "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/glossary/term": {
+      "get": {
+        "tags": ["Glossary"],
+        "summary": "Returns information about glossary terms. If a query parameter is not defined, returns the complete list of terms. Otherwise return the information about a specific term. Accepts 'slug' as a parameter.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "slug",
+            "description": "Identificator of a specific glossary term through its slug",
+            "schema": {
+              "type": "text"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/glossary/term/{slug}": {
+      "get": {
+        "tags": ["Glossary"],
+        "summary": "Returns information about a specific glossary term using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]|[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific glossary term.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/glossary/category": {
+      "get": {
+        "tags": ["Glossary"],
+        "summary": "Returns information about glossary categories. If a query parameter is not defined, returns the complete list of categories. Otherwise return the information about a specific categories. Accepts 'slug' as a parameter.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "slug",
+            "description": "Identificator of a specific glossary category through its slug",
+            "schema": {
+              "type": "text"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
+    "/api/glossary/category/{slug}": {
+      "get": {
+        "tags": ["Glossary"],
+        "summary": "Returns information about a specific glossary category using the slug value as the identificator.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "pattern": "[a-z]|[a-z]+(?:-[a-z-]+)*",
+            "description": "URL-friendly name identificator of a specific glossary category.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
           }
         ],
         "consumes": ["application/json"],
