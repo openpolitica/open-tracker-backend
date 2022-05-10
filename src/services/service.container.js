@@ -26,5 +26,7 @@ module.exports = async function serviceContainer(serviceName) {
       return services.legislatureService;
     case 'search':
       return services.searchService;
+    case 'glossary':
+      return services.glossaryService;
   }
 };
