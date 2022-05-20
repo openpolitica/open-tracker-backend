@@ -26,6 +26,7 @@ module.exports = function setupBillService({
     billStatus,
     committee,
     author,
+    date,
   }) {
     try {
       let pageNumber = page ? (page == 0 ? 1 : page) : 1;
@@ -104,6 +105,12 @@ module.exports = function setupBillService({
             Op.eq,
             legislature,
           ),
+        );
+      }
+
+      if (date) {
+        where_and.push(
+          sequelize.where(sequelize.col('presentation_date'), Op.eq, date),
         );
       }
 

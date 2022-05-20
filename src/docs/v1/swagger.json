@@ -687,6 +687,15 @@
               "type": "string"
             },
             "required": false
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "description": "Presentation's date of the bill",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
           }
         ],
         "responses": {
