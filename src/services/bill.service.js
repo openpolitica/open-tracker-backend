@@ -27,6 +27,7 @@ module.exports = function setupBillService({
     committee,
     author,
     date,
+    all,
   }) {
     try {
       let pageNumber = page ? (page == 0 ? 1 : page) : 1;
@@ -167,11 +168,13 @@ module.exports = function setupBillService({
           }
         : {};
 
+      let conditionalAll = all && where_and.length > 0;
+
       const billList = await BillModel.findAndCountAll({
         where,
         benchmark: true,
-        offset: (pageNumber - 1) * pageSizeElements,
-        limit: pageSizeElements,
+        offset: conditionalAll ? null : (pageNumber - 1) * pageSizeElements,
+        limit: conditionalAll ? null : pageSizeElements,
         include: includes,
         order: [
           ['presentation_date', 'DESC'],
@@ -179,7 +182,9 @@ module.exports = function setupBillService({
         ],
       });
 
-      let totalPages = Math.ceil(billList.count / pageSizeElements);
+      let totalPages = conditionalAll
+        ? 1
+        : Math.ceil(billList.count / pageSizeElements);
       return baseService.setPaginatedResponse(
         billList.rows,
         totalPages,
