@@ -7,6 +7,7 @@ const setupBaseService = require('./base.service');
 module.exports = function setupBillService({
   ParliamentaryGroupModel,
   CongresspersonModel,
+  CongresspersonXParliamentaryGroupModel,
   BillModel,
   BillStatusModel,
   LegislatureModel,
@@ -16,6 +17,8 @@ module.exports = function setupBillService({
   LocationModel,
   CommitteeModel,
   PlenaryModel,
+  SocialNetworkModel,
+  SocialNetworkXCongresspersonModel,
 }) {
   let baseService = new setupBaseService();
 
@@ -236,6 +239,29 @@ module.exports = function setupBillService({
                   {
                     model: PlenaryModel,
                     as: 'plenary',
+                  },
+                  {
+                    model: SocialNetworkXCongresspersonModel,
+                    as: 'social_networks',
+                    include: [
+                      {
+                        model: SocialNetworkModel,
+                        as: 'social_network',
+                      },
+                    ],
+                  },
+                  {
+                    model: CongresspersonXParliamentaryGroupModel,
+                    as: 'congressperson_parliamentary_groups',
+                    attributes: ['start_date', 'end_date'],
+                    //Separate query for join, if it's not used, trims the response fields
+                    separate: true,
+                    include: [
+                      {
+                        model: ParliamentaryGroupModel,
+                        as: 'parliamentary_group',
+                      },
+                    ],
                   },
                 ],
               },
