@@ -243,6 +243,7 @@ module.exports = function setupBillService({
                   {
                     model: SocialNetworkXCongresspersonModel,
                     as: 'social_networks',
+                    separate: true,
                     include: [
                       {
                         model: SocialNetworkModel,
