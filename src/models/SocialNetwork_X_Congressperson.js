@@ -19,6 +19,10 @@ module.exports = function (sequelize, DataTypes) {
         },
       },
       social_network_url: DataTypes.TEXT,
+      social_network_username: DataTypes.TEXT,
+      social_network_account_type: DataTypes.TEXT,
+      social_network_is_verified: DataTypes.BOOLEAN,
+      social_network_age: DataTypes.DATE,
       last_update_date: DataTypes.DATE,
     },
     {
