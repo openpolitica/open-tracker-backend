@@ -696,6 +696,16 @@
               "type": "string"
             },
             "required": false
+          },
+          {
+            "in": "query",
+            "name": "enable",
+            "description": "Additional fields enabled in response",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "example": "social_network"
           }
         ],
         "responses": {

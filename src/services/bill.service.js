@@ -31,6 +31,7 @@ module.exports = function setupBillService({
     author,
     date,
     all,
+    enable,
   }) {
     try {
       let pageNumber = page ? (page == 0 ? 1 : page) : 1;
@@ -38,6 +39,55 @@ module.exports = function setupBillService({
       let where_and = [];
       let authorship_where = {};
       let authorship_model_include = null;
+      let enabled_fields = enable ? enable.split(',') : [];
+
+      // Authorship model defined by the existence of the 'author' parameter
+      //
+      let bill_authorship_include = {
+        model: BillAuthorshipModel,
+        as: 'authorship',
+        attributes: ['authorship_type'],
+        required: true,
+        //Separate query for join, if it's not used, trims the response fields
+        separate: true,
+        include: [
+          {
+            model: CongresspersonModel,
+            as: 'congressperson',
+          },
+        ],
+        order: [
+          ['authorship_type', 'ASC'],
+          ['congressperson', 'id_name', 'ASC'],
+          ['congressperson', 'id_first_surname', 'ASC'],
+          ['congressperson', 'id_second_surname', 'ASC'],
+        ],
+      };
+
+      if (enabled_fields.length) {
+        for (const field of enabled_fields) {
+          switch (field) {
+            case 'social_network':
+              bill_authorship_include.include[0].include = [
+                {
+                  model: SocialNetworkXCongresspersonModel,
+                  as: 'social_networks',
+                  separate: true,
+                  include: [
+                    {
+                      model: SocialNetworkModel,
+                      as: 'social_network',
+                    },
+                  ],
+                },
+              ];
+              break;
+
+            default:
+              break;
+          }
+        }
+      }
 
       let includes = [
         {
@@ -60,29 +110,6 @@ module.exports = function setupBillService({
           as: 'parliamentary_group',
           required: false,
         },
-
-        // Authorship model defined by the existence of the 'author' parameter
-        //
-        {
-          model: BillAuthorshipModel,
-          as: 'authorship',
-          attributes: ['authorship_type'],
-          required: true,
-          //Separate query for join, if it's not used, trims the response fields
-          separate: true,
-          include: [
-            {
-              model: CongresspersonModel,
-              as: 'congressperson',
-            },
-          ],
-          order: [
-            ['authorship_type', 'ASC'],
-            ['congressperson', 'id_name', 'ASC'],
-            ['congressperson', 'id_first_surname', 'ASC'],
-            ['congressperson', 'id_second_surname', 'ASC'],
-          ],
-        },
         {
           model: BillTrackingModel,
           as: 'tracking',
@@ -101,6 +128,8 @@ module.exports = function setupBillService({
           order: [['date', 'DESC']],
         },
       ];
+
+      includes.push(bill_authorship_include);
 
       if (legislature) {
         where_and.push(
