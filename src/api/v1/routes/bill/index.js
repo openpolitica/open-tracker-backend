@@ -12,5 +12,6 @@ router.get(
   '/:id([0-9]{4}-[0-9]{4}-[0-9]{5})',
   controllerHandler(billController.getBill),
 );
+router.get('/statistics', controllerHandler(billController.getBillStatistics));
 
 module.exports = router;

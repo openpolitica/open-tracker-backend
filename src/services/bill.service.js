@@ -1,6 +1,11 @@
 'use strict';
 const sequelize = require('sequelize');
 const { Op } = require('sequelize');
+const ApiError = require('../utils/ApiError');
+const {
+  parseStringWithFormat,
+  parseDateToFormat,
+} = require('../utils/DateUtils');
 
 const setupBaseService = require('./base.service');
 
@@ -338,8 +343,68 @@ module.exports = function setupBillService({
     }
   }
 
+  async function doGetBillStatistics({ startdate, enddate, showlist = false }) {
+    try {
+      const dateFormat = 'YYYYMMDD';
+      const start = parseStringWithFormat(startdate, dateFormat);
+      const end = enddate
+        ? parseStringWithFormat(enddate, dateFormat)
+        : new Date();
+
+      const presentedBills = await BillModel.findAll({
+        where: {
+          [Op.and]: [
+            {
+              '$tracking.date$': {
+                [Op.between]: [start, end],
+              },
+            },
+            {
+              '$tracking.status.bill_status_name$': 'Presentado',
+            },
+          ],
+        },
+        include: [
+          {
+            model: BillTrackingModel,
+            as: 'tracking',
+            attributes: ['date'],
+            include: [
+              {
+                model: BillStatusModel,
+                as: 'status',
+                attributes: ['bill_status_name'],
+              },
+            ],
+          },
+        ],
+      });
+
+      let declarativeBills = presentedBills.filter(item => {
+        let title = item.title.toLowerCase();
+        return title.indexOf('declara') >= 0;
+      });
+
+      let response = {
+        total: presentedBills.length,
+        declarative: declarativeBills.length,
+        start_date: parseDateToFormat(start, 'DD/MM/YYYY'),
+        end_date: parseDateToFormat(end, 'DD/MM/YYYY'),
+      };
+
+      if (showlist === 'true') {
+        response = { ...response, billList: presentedBills };
+      }
+
+      return baseService.setResponse(response);
+    } catch (error) {
+      baseService.throwErrorResponse(error);
+    }
+  }
+
   return {
     doGetBillList,
     doGetBill,
+    doGetBillStatistics,
   };
 };
