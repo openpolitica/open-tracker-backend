@@ -345,7 +345,7 @@ module.exports = function setupBillService({
 
   async function doGetBillStatistics({ startdate, enddate, showlist = false }) {
     try {
-      const dateFormat = 'YYYYMMDD';
+      const dateFormat = 'YYYY-MM-DD';
       const start = parseStringWithFormat(startdate, dateFormat);
       const end = enddate
         ? parseStringWithFormat(enddate, dateFormat)

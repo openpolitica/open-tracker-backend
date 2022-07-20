@@ -745,13 +745,13 @@
     "/api/bill/statistics": {
       "get": {
         "tags": ["Bill"],
-        "summary": "Returns statistics and a counter of bills based on the requested date(s).",
+        "summary": "Returns statistics about bills information based on required date(s).",
         "parameters": [
           {
             "in": "query",
             "name": "startdate",
-            "description": "Starting date to count for bills statistics.",
-            "pattern": "YYYYMMDD",
+            "description": "Starting date to count for bills statistics. Uses the YYYY-MM-DD pattern.",
+            "pattern": "YYYY-MM-DD",
             "schema": {
               "type": "string"
             },
@@ -760,8 +760,8 @@
           {
             "in": "query",
             "name": "enddate",
-            "description": "Ending date to count for bills statistics. If not provided, uses the time when the query is executed",
-            "pattern": "YYYYMMDD",
+            "description": "Ending date to count for bills statistics. Uses the YYYY-MM-DD pattern. If not provided, uses the time when the query is executed",
+            "pattern": "YYYY-MM-DD",
             "schema": {
               "type": "string"
             },
