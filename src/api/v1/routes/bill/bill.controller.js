@@ -11,7 +11,13 @@ const getBill = async request => {
   return await billService.doGetBill(request.params);
 };
 
+const getBillStatistics = async request => {
+  const billService = await serviceContainer('bill');
+  return await billService.doGetBillStatistics(request.query);
+};
+
 module.exports = {
   getBillList,
   getBill,
+  getBillStatistics,
 };

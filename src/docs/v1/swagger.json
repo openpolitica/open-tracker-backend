@@ -742,6 +742,51 @@
       }
     },
 
+    "/api/bill/statistics": {
+      "get": {
+        "tags": ["Bill"],
+        "summary": "Returns statistics about bills information based on required date(s).",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "startdate",
+            "description": "Starting date to count for bills statistics. Uses the YYYY-MM-DD pattern.",
+            "pattern": "YYYY-MM-DD",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "enddate",
+            "description": "Ending date to count for bills statistics. Uses the YYYY-MM-DD pattern. If not provided, uses the time when the query is executed",
+            "pattern": "YYYY-MM-DD",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "showlist",
+            "description": "Boolean value that represents if the user want to get the bill list that originated the output numbers. If not provided, uses false as default.",
+            "schema": {
+              "type": "boolean"
+            },
+            "required": false
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+
     "/api/search": {
       "get": {
         "tags": ["Search"],
